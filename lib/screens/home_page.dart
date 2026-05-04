@@ -13,7 +13,21 @@ class _HomePageState extends State<HomePage> {
   Sample selected = samples.first;
   Map<String, dynamic> config = {};
 
-  bool showSettings = false; // ←設定パネルの状態管理
+  bool showSettings = false;
+
+  @override
+  void initState() {
+    super.initState();
+    config = {}; // ← 初期化明示
+  }
+
+  void _selectSample(Sample s) {
+    setState(() {
+      selected = s;
+      config = {}; // ← 必ずリセット（重要）
+      showSettings = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,56 +41,46 @@ class _HomePageState extends State<HomePage> {
   }
 
   /* =========================
-     設定パネル本体（一覧⇄設定UI切替）
+     設定パネル
   ========================= */
   Widget _buildSettingsPanel() {
     if (!showSettings) {
-      // ■ 一覧モード
       return ListView(
         children: samples.map((s) {
           return ListTile(
             title: Text(s.title),
             selected: selected.id == s.id,
-            onTap: () {
-              setState(() {
-                selected = s;
-                config = {};
-                showSettings = true; // ←設定画面へ遷移
-              });
-            },
+            onTap: () => _selectSample(s),
           );
         }).toList(),
       );
-    } else {
-      // ■ 個別設定モード
-      return Column(
-        children: [
-          // 戻る
-          ListTile(
-            leading: const Icon(Icons.arrow_back),
-            title: const Text("Widget一覧へ戻る"),
-            onTap: () {
+    }
+
+    return Column(
+      children: [
+        ListTile(
+          leading: const Icon(Icons.arrow_back),
+          title: const Text("Widget一覧へ戻る"),
+          onTap: () {
+            setState(() {
+              showSettings = false;
+            });
+          },
+        ),
+        const Divider(),
+
+        Expanded(
+          child: selected.settingsBuilder(
+                (newConfig) {
               setState(() {
-                showSettings = false;
+                config = Map<String, dynamic>.from(newConfig);
               });
             },
+            config,
           ),
-          const Divider(),
-
-          // 設定UI（Widgetごと）
-          Expanded(
-            child: selected.settingsBuilder(
-                  (newConfig) {
-                setState(() {
-                  config = newConfig;
-                });
-              },
-              config,
-            ),
-          ),
-        ],
-      );
-    }
+        ),
+      ],
+    );
   }
 
   /* =========================
@@ -85,18 +89,15 @@ class _HomePageState extends State<HomePage> {
   Widget _buildLandscape() {
     return Row(
       children: [
-        // 左：設定パネル
         Container(
           width: 260,
           color: Colors.grey[200],
           child: _buildSettingsPanel(),
         ),
 
-        // 右：プレビュー + コード
         Expanded(
           child: Column(
             children: [
-              // 右上：プレビュー
               Expanded(
                 child: Container(
                   color: Colors.white,
@@ -105,11 +106,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-
-              // 右下：コード
-              Expanded(
-                child: _buildCodePanel(),
-              ),
+              Expanded(child: _buildCodePanel()),
             ],
           ),
         ),
@@ -123,7 +120,6 @@ class _HomePageState extends State<HomePage> {
   Widget _buildPortrait() {
     return Column(
       children: [
-        // 上：プレビュー
         Expanded(
           flex: 4,
           child: Container(
@@ -133,14 +129,10 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-
-        // 中：コード
         Expanded(
           flex: 3,
           child: _buildCodePanel(),
         ),
-
-        // 下：設定パネル（一覧⇄設定）
         Expanded(
           flex: 3,
           child: Container(

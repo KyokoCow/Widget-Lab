@@ -1,23 +1,33 @@
 import 'package:flutter/material.dart';
 
-class Sample {
+/// =========================
+/// 共通インターフェース
+/// =========================
+
+typedef PreviewBuilder<T> = Widget Function(T config);
+
+typedef SettingsBuilder<T> = Widget Function(
+    ValueChanged<T> onChange,
+    T config,
+    );
+
+typedef CodeBuilder<T> = String Function(T config);
+
+/// =========================
+/// Sample（ジェネリック化）
+/// =========================
+
+class Sample<T> {
   final String id;
   final String title;
-  final String code;
 
-  final Widget Function(Map<String, dynamic> config) previewBuilder;
-
-  final Widget Function(
-      ValueChanged<Map<String, dynamic>> onChange,
-      Map<String, dynamic> config,
-      ) settingsBuilder;
-
-  final String Function(Map<String, dynamic> config) codeBuilder;
+  final PreviewBuilder<T> previewBuilder;
+  final SettingsBuilder<T> settingsBuilder;
+  final CodeBuilder<T> codeBuilder;
 
   const Sample({
     required this.id,
     required this.title,
-    required this.code,
     required this.previewBuilder,
     required this.settingsBuilder,
     required this.codeBuilder,
