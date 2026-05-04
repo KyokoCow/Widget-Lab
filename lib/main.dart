@@ -190,6 +190,166 @@ AnimatedContainer(
 ''',
     builder: () => const AnimatedSample(),
   ),
+
+  // ===== 追加20個 =====
+
+  Sample(
+    id: "icon",
+    title: "Icon",
+    code: 'Icon(Icons.favorite)',
+    builder: () => const Center(child: Icon(Icons.favorite, size: 40)),
+  ),
+
+  Sample(
+    id: "image",
+    title: "Image.network",
+    code: 'Image.network("https://picsum.photos/200")',
+    builder: () => Image.network("https://picsum.photos/200"),
+  ),
+
+  Sample(
+    id: "switch",
+    title: "Switch",
+    code: 'Switch(value: true, onChanged: (v){})',
+    builder: () => const Center(child: Switch(value: true, onChanged: null)),
+  ),
+
+  Sample(
+    id: "checkbox",
+    title: "Checkbox",
+    code: 'Checkbox(value: true, onChanged: (v){})',
+    builder: () => const Center(child: Checkbox(value: true, onChanged: null)),
+  ),
+
+  Sample(
+    id: "slider",
+    title: "Slider",
+    code: 'Slider(value: 0.5, onChanged: (v){})',
+    builder: () => const Center(child: Slider(value: 0.5, onChanged: null)),
+  ),
+
+  Sample(
+    id: "progress",
+    title: "CircularProgressIndicator",
+    code: 'CircularProgressIndicator()',
+    builder: () => const Center(child: CircularProgressIndicator()),
+  ),
+
+  Sample(
+    id: "linear_progress",
+    title: "LinearProgressIndicator",
+    code: 'LinearProgressIndicator()',
+    builder: () => const LinearProgressIndicator(),
+  ),
+
+  Sample(
+    id: "divider",
+    title: "Divider",
+    code: 'Divider()',
+    builder: () => const Divider(),
+  ),
+
+  Sample(
+    id: "spacer",
+    title: "Spacer",
+    code: 'Row(children:[Text("A"), Spacer(), Text("B")])',
+    builder: () => const Row(
+      children: [Text("A"), Spacer(), Text("B")],
+    ),
+  ),
+
+  Sample(
+    id: "padding",
+    title: "Padding",
+    code: 'Padding(padding: EdgeInsets.all(16), child: Text("Hi"))',
+    builder: () => const Padding(
+      padding: EdgeInsets.all(16),
+      child: Text("Hi"),
+    ),
+  ),
+
+  Sample(
+    id: "align",
+    title: "Align",
+    code: 'Align(alignment: Alignment.bottomRight)',
+    builder: () => const Align(
+      alignment: Alignment.bottomRight,
+      child: Text("右下"),
+    ),
+  ),
+
+  Sample(
+    id: "center",
+    title: "Center",
+    code: 'Center(child: Text("Center"))',
+    builder: () => const Center(child: Text("Center")),
+  ),
+
+  Sample(
+    id: "stack",
+    title: "Stack",
+    code: 'Stack(children:[...])',
+    builder: () => Stack(
+      children: [
+        Container(width: 100, height: 100, color: Colors.blue),
+        const Positioned(top: 10, left: 10, child: Text("Top")),
+      ],
+    ),
+  ),
+
+  Sample(
+    id: "chip",
+    title: "Chip",
+    code: 'Chip(label: Text("Chip"))',
+    builder: () => const Center(child: Chip(label: Text("Chip"))),
+  ),
+
+  Sample(
+    id: "tooltip",
+    title: "Tooltip",
+    code: 'Tooltip(message:"説明", child: Icon(Icons.info))',
+    builder: () => const Center(
+      child: Tooltip(message: "説明", child: Icon(Icons.info)),
+    ),
+  ),
+
+  Sample(
+    id: "wrap",
+    title: "Wrap",
+    code: 'Wrap(children:[...])',
+    builder: () => Wrap(
+      spacing: 8,
+      children: List.generate(5, (i) => Chip(label: Text("$i"))),
+    ),
+  ),
+
+  Sample(
+    id: "grid",
+    title: "GridView",
+    code: 'GridView.count(crossAxisCount:2)',
+    builder: () => GridView.count(
+      crossAxisCount: 2,
+      children: List.generate(4, (i) => Card(child: Center(child: Text("$i")))),
+    ),
+  ),
+
+  Sample(
+    id: "listtile",
+    title: "ListTile",
+    code: 'ListTile(title: Text("Title"))',
+    builder: () => const ListTile(
+      title: Text("Title"),
+      subtitle: Text("Subtitle"),
+      leading: Icon(Icons.person),
+    ),
+  ),
+
+  Sample(
+    id: "appbar",
+    title: "AppBar",
+    code: 'AppBar(title: Text("Title"))',
+    builder: () => const Center(child: Text("AppBarは上部に表示されます")),
+  ),
 ];
 
 /* =========================
