@@ -368,13 +368,116 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final isLandscape = size.width > size.height;
+
     return Scaffold(
       appBar: AppBar(title: const Text("Flutter Sampler")),
-      body: Row(
-        children: [
-          // 左：リスト
-          Container(
-            width: 220,
+
+      body: isLandscape
+          ? _buildLandscape(context)
+          : _buildPortrait(context),
+    );
+  }
+
+  /* =========================
+     横画面：左設定 / 右プレビュー+コード
+  ========================= */
+  Widget _buildLandscape(BuildContext context) {
+    return Row(
+      children: [
+        // 左：設定（リスト）
+        Container(
+          width: 220,
+          color: Colors.grey[200],
+          child: ListView(
+            children: samples.map((s) {
+              return ListTile(
+                title: Text(s.title),
+                selected: selected.id == s.id,
+                onTap: () {
+                  setState(() => selected = s);
+                },
+              );
+            }).toList(),
+          ),
+        ),
+
+        // 右：プレビュー + コード
+        Expanded(
+          child: Column(
+            children: [
+              Expanded(
+                child: Container(
+                  color: Colors.white,
+                  child: Center(child: selected.builder()),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  color: Colors.black,
+                  padding: const EdgeInsets.all(12),
+                  child: SingleChildScrollView(
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: SelectableText(
+                        selected.code,
+                        style: const TextStyle(
+                          fontFamily: 'monospace',
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  /* =========================
+     縦画面：上プレビュー / 中コード / 下設定
+  ========================= */
+  Widget _buildPortrait(BuildContext context) {
+    return Column(
+      children: [
+        // 上：プレビュー
+        Expanded(
+          flex: 3,
+          child: Container(
+            color: Colors.white,
+            child: Center(child: selected.builder()),
+          ),
+        ),
+
+        // 中：コード
+        Expanded(
+          flex: 2,
+          child: Container(
+            color: Colors.black,
+            padding: const EdgeInsets.all(12),
+            child: SingleChildScrollView(
+              child: SizedBox(
+                width: double.infinity,
+                child: SelectableText(
+                  selected.code,
+                  style: const TextStyle(
+                    fontFamily: 'monospace',
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+
+        // 下：設定（リスト）
+        Expanded(
+          flex: 2,
+          child: Container(
             color: Colors.grey[200],
             child: ListView(
               children: samples.map((s) {
@@ -382,51 +485,14 @@ class _HomePageState extends State<HomePage> {
                   title: Text(s.title),
                   selected: selected.id == s.id,
                   onTap: () {
-                    setState(() {
-                      selected = s;
-                    });
+                    setState(() => selected = s);
                   },
                 );
               }).toList(),
             ),
           ),
-
-          // 右：プレビュー＋コード
-          Expanded(
-            child: Column(
-              children: [
-                // プレビュー
-                Expanded(
-                  child: Container(
-                    color: Colors.white,
-                    child: Center(child: selected.builder()),
-                  ),
-                ),
-
-                // コード
-                Expanded(
-                  child: Container(
-                    color: Colors.black,
-                    padding: const EdgeInsets.all(12),
-                    child: SingleChildScrollView(
-                      child: SizedBox(
-                        width: double.infinity,
-                        child:SelectableText(
-                        selected.code,
-                        style: const TextStyle(
-                          fontFamily: 'monospace',
-                          color: Colors.white,
-                        ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
