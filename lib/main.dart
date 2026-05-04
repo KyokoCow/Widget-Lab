@@ -249,11 +249,14 @@ class _HomePageState extends State<HomePage> {
                     color: Colors.black,
                     padding: const EdgeInsets.all(12),
                     child: SingleChildScrollView(
-                      child: SelectableText(
+                      child: SizedBox(
+                        width: double.infinity,
+                        child:SelectableText(
                         selected.code,
                         style: const TextStyle(
                           fontFamily: 'monospace',
                           color: Colors.white,
+                        ),
                         ),
                       ),
                     ),
