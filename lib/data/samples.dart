@@ -3,39 +3,61 @@ import '../models/sample.dart';
 
 final List<Sample> samples = [
   Sample(
-    id: "text",
-    title: "Text",
-    code: 'Text("Hello Flutter")',
-    builder: () => const Center(child: Text("Hello Flutter")),
-  ),
-
-  Sample(
     id: "container",
     title: "Container",
-    code: '''
-Container(
-  width: 100,
-  height: 100,
-  color: Colors.blue,
-)
-''',
-    builder: () => Center(
-      child: Container(width: 100, height: 100, color: Colors.blue),
-    ),
-  ),
+    code: "Container(...)",
 
-  Sample(
-    id: "row",
-    title: "Row",
-    code: '''
-Row(
-  mainAxisAlignment: MainAxisAlignment.center,
-  children: [Icon(Icons.star), Icon(Icons.star)],
+    previewBuilder: (config) {
+      return Container(
+        width: config["size"] ?? 100,
+        height: config["size"] ?? 100,
+        color: config["color"] ?? Colors.blue,
+      );
+    },
+
+    settingsBuilder: (onChange, config) {
+      final size = config["size"] ?? 100;
+      final color = config["color"] ?? Colors.blue;
+
+      return Column(
+        children: [
+          Slider(
+            value: size.toDouble(),
+            min: 50,
+            max: 300,
+            onChanged: (v) {
+              onChange({
+                ...config,
+                "size": v,
+                "color": color,
+              });
+            },
+          ),
+          ElevatedButton(
+            onPressed: () {
+              onChange({
+                ...config,
+                "size": size,
+                "color": Colors.red,
+              });
+            },
+            child: const Text("赤に変更"),
+          ),
+        ],
+      );
+    },
+
+    codeBuilder: (config) {
+      final size = config["size"] ?? 100;
+      final color = config["color"] ?? "blue";
+
+      return '''
+Container(
+  width: $size,
+  height: $size,
+  color: $color,
 )
-''',
-    builder: () => const Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [Icon(Icons.star), Icon(Icons.star)],
-    ),
-  ),
+''';
+    },
+  )
 ];

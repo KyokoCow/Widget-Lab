@@ -11,6 +11,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Sample selected = samples.first;
+  Map<String, dynamic> config = {};
+
+  bool showSettings = false; // ←設定パネルの状態管理
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +22,61 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(title: const Text("Flutter Sampler")),
-
       body: isLandscape ? _buildLandscape() : _buildPortrait(),
     );
+  }
+
+  /* =========================
+     設定パネル本体（一覧⇄設定UI切替）
+  ========================= */
+  Widget _buildSettingsPanel() {
+    if (!showSettings) {
+      // ■ 一覧モード
+      return ListView(
+        children: samples.map((s) {
+          return ListTile(
+            title: Text(s.title),
+            selected: selected.id == s.id,
+            onTap: () {
+              setState(() {
+                selected = s;
+                config = {};
+                showSettings = true; // ←設定画面へ遷移
+              });
+            },
+          );
+        }).toList(),
+      );
+    } else {
+      // ■ 個別設定モード
+      return Column(
+        children: [
+          // 戻る
+          ListTile(
+            leading: const Icon(Icons.arrow_back),
+            title: const Text("Widget一覧へ戻る"),
+            onTap: () {
+              setState(() {
+                showSettings = false;
+              });
+            },
+          ),
+          const Divider(),
+
+          // 設定UI（Widgetごと）
+          Expanded(
+            child: selected.settingsBuilder(
+                  (newConfig) {
+                setState(() {
+                  config = newConfig;
+                });
+              },
+              config,
+            ),
+          ),
+        ],
+      );
+    }
   }
 
   /* =========================
@@ -30,33 +85,28 @@ class _HomePageState extends State<HomePage> {
   Widget _buildLandscape() {
     return Row(
       children: [
-        // 左：リスト
+        // 左：設定パネル
         Container(
-          width: 220,
+          width: 260,
           color: Colors.grey[200],
-          child: ListView(
-            children: samples.map((s) {
-              return ListTile(
-                title: Text(s.title),
-                selected: selected.id == s.id,
-                onTap: () {
-                  setState(() => selected = s);
-                },
-              );
-            }).toList(),
-          ),
+          child: _buildSettingsPanel(),
         ),
 
         // 右：プレビュー + コード
         Expanded(
           child: Column(
             children: [
+              // 右上：プレビュー
               Expanded(
                 child: Container(
                   color: Colors.white,
-                  child: Center(child: selected.builder()),
+                  child: Center(
+                    child: selected.previewBuilder(config),
+                  ),
                 ),
               ),
+
+              // 右下：コード
               Expanded(
                 child: _buildCodePanel(),
               ),
@@ -68,7 +118,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   /* =========================
-     縦画面（3分割）
+     縦画面
   ========================= */
   Widget _buildPortrait() {
     return Column(
@@ -78,7 +128,9 @@ class _HomePageState extends State<HomePage> {
           flex: 4,
           child: Container(
             color: Colors.white,
-            child: Center(child: selected.builder()),
+            child: Center(
+              child: selected.previewBuilder(config),
+            ),
           ),
         ),
 
@@ -88,22 +140,12 @@ class _HomePageState extends State<HomePage> {
           child: _buildCodePanel(),
         ),
 
-        // 下：設定（リスト）
+        // 下：設定パネル（一覧⇄設定）
         Expanded(
           flex: 3,
           child: Container(
             color: Colors.grey[200],
-            child: ListView(
-              children: samples.map((s) {
-                return ListTile(
-                  title: Text(s.title),
-                  selected: selected.id == s.id,
-                  onTap: () {
-                    setState(() => selected = s);
-                  },
-                );
-              }).toList(),
-            ),
+            child: _buildSettingsPanel(),
           ),
         ),
       ],
@@ -111,7 +153,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   /* =========================
-     共通：コード表示
+     コード表示
   ========================= */
   Widget _buildCodePanel() {
     return Container(
@@ -121,7 +163,7 @@ class _HomePageState extends State<HomePage> {
         child: SizedBox(
           width: double.infinity,
           child: SelectableText(
-            selected.code,
+            selected.codeBuilder(config),
             style: const TextStyle(
               fontFamily: 'monospace',
               color: Colors.white,
