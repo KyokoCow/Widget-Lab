@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui_catalog/data/color_palettes.dart';
 import '../data/samples.dart';
 import '../models/sample.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -12,7 +14,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   Sample selected = samples.first;
   Map<String, dynamic> config = {};
-
+  int selectedPaletteIndex = 0;
   bool showSettings = false;
 
   @override
@@ -33,17 +35,21 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final isLandscape = size.width > size.height;
+    final palette = palettes[selectedPaletteIndex];
+
 
     return Scaffold(
       appBar: AppBar(title: const Text("Flutter Sampler")),
-      body: isLandscape ? _buildLandscape() : _buildPortrait(),
+      body: isLandscape
+          ? _buildLandscape(palette) // ←ここ修正
+          : _buildPortrait(palette), // ←ここも
     );
   }
 
   /* =========================
      設定パネル
   ========================= */
-  Widget _buildSettingsPanel() {
+  Widget _buildSettingsPanel(AppColorPalette palette) {
     if (!showSettings) {
       return ListView(
         children: samples.map((s) {
@@ -77,6 +83,7 @@ class _HomePageState extends State<HomePage> {
               });
             },
             config,
+            palette,
           ),
         ),
       ],
@@ -86,26 +93,21 @@ class _HomePageState extends State<HomePage> {
   /* =========================
      横画面
   ========================= */
-  Widget _buildLandscape() {
+  Widget _buildLandscape(AppColorPalette palette) {
+    final width = MediaQuery.of(context).size.width;
+
     return Row(
       children: [
         Container(
-          width: 260,
+          width: width * 0.4, // ←40%
           color: Colors.grey[200],
-          child: _buildSettingsPanel(),
+          child: _buildSettingsPanel(palette),
         ),
 
         Expanded(
           child: Column(
             children: [
-              Expanded(
-                child: Container(
-                  color: Colors.white,
-                  child: Center(
-                    child: selected.previewBuilder(config),
-                  ),
-                ),
-              ),
+              Expanded(child: _buildPreview()),
               Expanded(child: _buildCodePanel()),
             ],
           ),
@@ -117,27 +119,27 @@ class _HomePageState extends State<HomePage> {
   /* =========================
      縦画面
   ========================= */
-  Widget _buildPortrait() {
+  Widget _buildPortrait(palette) {
     return Column(
       children: [
+        // ▼ プレビュー（小さく）
         Expanded(
-          flex: 4,
-          child: Container(
-            color: Colors.white,
-            child: Center(
-              child: selected.previewBuilder(config),
-            ),
-          ),
+          flex: 2,
+          child: _buildPreview(),
         ),
+
+        // ▼ コード（そのまま or 少し縮める）
         Expanded(
           flex: 3,
           child: _buildCodePanel(),
         ),
+
+        // ▼ 設定（広く）
         Expanded(
-          flex: 3,
+          flex: 5,
           child: Container(
             color: Colors.grey[200],
-            child: _buildSettingsPanel(),
+            child: _buildSettingsPanel(palette),
           ),
         ),
       ],
@@ -165,4 +167,17 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+  /* =========================
+     プレビュー表示
+  ========================= */
+  Widget _buildPreview() {
+    return Container(
+      color: Colors.white,
+      child: Center(
+        child: selected.previewBuilder(config),
+      ),
+    );
+  }
+
 }
+

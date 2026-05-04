@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui_catalog/widgets/color_picker.dart';
 import '../models/sample.dart';
 
 final List<Sample> samples = [
@@ -13,18 +14,38 @@ final List<Sample> samples = [
       ),
     ),
 
-    settingsBuilder: (onChange, config) {
+    settingsBuilder: (onChange, config, palette) {
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
+          // ■ テキスト入力
           TextField(
             decoration: const InputDecoration(labelText: "Text"),
             onChanged: (v) => onChange({...config, "text": v}),
           ),
+
+          const SizedBox(height: 12),
+
+          // ■ サイズ（整数化）
           Slider(
             min: 10,
             max: 50,
+            divisions: 40,
             value: (config["size"] ?? 20).toDouble(),
-            onChanged: (v) => onChange({...config, "size": v}),
+            label: "${config["size"] ?? 20}",
+            onChanged: (v) => onChange({...config, "size": v.round()}),
+          ),
+
+          const SizedBox(height: 16),
+
+          // ■ カラーパレット
+          ColorPicker(
+            colors: palette.colors,
+            selected: config["color"],
+            onSelect: (c) {
+              onChange({...config, "color": c});
+            },
           ),
         ],
       );
@@ -42,28 +63,44 @@ Text("${config["text"] ?? "Hello"}")
     previewBuilder: (config) => Center(
       child: Icon(
         config["icon"] ?? Icons.star,
-        size: config["size"] ?? 40,
+        size: (config["size"] ?? 40).toDouble(),
         color: config["color"] ?? Colors.blue,
       ),
     ),
 
-    settingsBuilder: (onChange, config) {
+    settingsBuilder: (onChange, config, palette) {
       return Column(
         children: [
           Slider(
             min: 20,
             max: 100,
+            divisions: 80,
             value: (config["size"] ?? 40).toDouble(),
-            onChanged: (v) => onChange({...config, "size": v}),
+            onChanged: (v) => onChange({...config, "size": v.round()}),
+          ),
+
+          const SizedBox(height: 16),
+
+          // 色もついでに対応（おすすめ）
+          ColorPicker(
+            colors: palette.colors,
+            selected: config["color"],
+            onSelect: (c) {
+              onChange({...config, "color": c});
+            },
           ),
         ],
       );
     },
 
     codeBuilder: (config) => '''
-Icon(Icons.star)
+Icon(
+  Icons.star,
+  size: ${(config["size"] ?? 40)},
+)
 ''',
   ),
+
   Sample(
     id: "icon_button",
     title: "IconButton",
@@ -72,14 +109,17 @@ Icon(Icons.star)
       child: IconButton(
         icon: Icon(config["icon"] ?? Icons.favorite),
         color: config["color"] ?? Colors.red,
-        iconSize: config["size"] ?? 40,
+        iconSize: (config["size"] ?? 40).toDouble(),
         onPressed: () {},
       ),
     ),
 
-    settingsBuilder: (onChange, config) {
+    settingsBuilder: (onChange, config, palette) {
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
+          // ■ アイコン選択
           DropdownButton<IconData>(
             value: config["icon"] ?? Icons.favorite,
             items: const [
@@ -87,23 +127,65 @@ Icon(Icons.star)
               DropdownMenuItem(value: Icons.star, child: Text("star")),
               DropdownMenuItem(value: Icons.home, child: Text("home")),
             ],
-            onChanged: (v) => onChange({...config, "icon": v}),
+            onChanged: (v) {
+              if (v != null) {
+                onChange({...config, "icon": v});
+              }
+            },
           ),
+
+          const SizedBox(height: 12),
+
+          // ■ サイズ（整数）
           Slider(
             min: 20,
             max: 80,
+            divisions: 60,
             value: (config["size"] ?? 40).toDouble(),
-            onChanged: (v) => onChange({...config, "size": v}),
+            label: "${config["size"] ?? 40}",
+            onChanged: (v) {
+              onChange({...config, "size": v.round()});
+            },
+          ),
+
+          const SizedBox(height: 16),
+
+          // ■ カラーパレット
+          ColorPicker(
+            colors: palette.colors,
+            selected: config["color"],
+            onSelect: (c) {
+              onChange({...config, "color": c});
+            },
           ),
         ],
       );
     },
 
-    codeBuilder: (config) => '''
+    codeBuilder: (config) {
+      final icon = config["icon"] ?? Icons.favorite;
+      final size = config["size"] ?? 40;
+      final color = config["color"] ?? Colors.red;
+
+      String colorToCode(Color c) {
+        return "Color(0x${c.value.toRadixString(16)})";
+      }
+
+      String iconToCode(IconData icon) {
+        if (icon == Icons.star) return "Icons.star";
+        if (icon == Icons.home) return "Icons.home";
+        return "Icons.favorite";
+      }
+
+      return '''
 IconButton(
-  icon: Icon(Icons.favorite),
+  icon: Icon(${iconToCode(icon)}),
+  color: ${colorToCode(color)},
+  iconSize: $size,
+  onPressed: () {},
 )
-''',
+''';
+    },
   ),
   Sample(
     id: "container",
@@ -111,58 +193,113 @@ IconButton(
 
     previewBuilder: (config) => Center(
       child: Container(
-        width: config["size"] ?? 100,
-        height: config["size"] ?? 100,
+        width: (config["width"] ?? 100).toDouble(),
+        height: (config["height"] ?? 100).toDouble(),
         color: config["color"] ?? Colors.blue,
       ),
     ),
 
-    settingsBuilder: (onChange, config) {
+    settingsBuilder: (onChange, config, palette) {
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text("Width"),
           Slider(
             min: 50,
-            max: 200,
-            value: (config["size"] ?? 100).toDouble(),
-            onChanged: (v) => onChange({...config, "size": v}),
+            max: 300,
+            value: (config["width"] ?? 100).toDouble(),
+            onChanged: (v) => onChange({...config, "width": v.round()}),
+          ),
+
+          Text("Height"),
+          Slider(
+            min: 50,
+            max: 300,
+            value: (config["height"] ?? 100).toDouble(),
+            onChanged: (v) => onChange({...config, "height": v.round()}),
+          ),
+
+          const SizedBox(height: 16),
+
+          ColorPicker(
+            colors: palette.colors,
+            selected: config["color"],
+            onSelect: (c) => onChange({...config, "color": c}),
           ),
         ],
       );
     },
 
-    codeBuilder: (config) => '''
+    codeBuilder: (config) {
+      final w = config["width"] ?? 100;
+      final h = config["height"] ?? 100;
+      final color = config["color"] ?? Colors.blue;
+
+      String colorToCode(Color c) =>
+          "Color(0x${c.value.toRadixString(16)})";
+
+      return '''
 Container(
-  width: ${config["size"] ?? 100},
-  height: ${config["size"] ?? 100},
+  width: $w,
+  height: $h,
+  color: ${colorToCode(color)},
 )
-''',
+''';
+    },
   ),
+
   Sample(
     id: "slider",
     title: "Slider",
 
     previewBuilder: (config) => Center(
       child: Slider(
-        value: config["value"] ?? 0.5,
+        value: (config["value"] ?? 0.5).toDouble(),
         onChanged: (_) {},
+        activeColor: config["color"] ?? Colors.blue,
       ),
     ),
 
-    settingsBuilder: (onChange, config) {
+    settingsBuilder: (onChange, config, palette) {
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Slider(
-            value: config["value"] ?? 0.5,
+            min: 0,
+            max: 1,
+            divisions: 100,
+            value: (config["value"] ?? 0.5).toDouble(),
+            label: "${(config["value"] ?? 0.5)}",
             onChanged: (v) => onChange({...config, "value": v}),
+          ),
+          const SizedBox(height: 16),
+
+          ColorPicker(
+            colors: palette.colors,
+            selected: config["color"],
+            onSelect: (c) => onChange({...config, "color": c}),
           ),
         ],
       );
     },
 
-    codeBuilder: (config) => '''
-Slider(value: ${config["value"] ?? 0.5})
-''',
+    codeBuilder: (config) {
+      final value = config["value"] ?? 0.5;
+      final color = config["color"] ?? Colors.blue;
+
+      String colorToCode(Color c) =>
+          "Color(0x${c.value.toRadixString(16)})";
+
+      return '''
+Slider(
+  value: $value,
+  onChanged: (_) {},
+  activeColor: ${colorToCode(color)},
+)
+''';
+    },
   ),
+
   Sample(
     id: "switch",
     title: "Switch",
@@ -171,19 +308,93 @@ Slider(value: ${config["value"] ?? 0.5})
       child: Switch(
         value: config["value"] ?? true,
         onChanged: (_) {},
+        activeColor: config["activeColor"] ?? Colors.blue,
+        activeTrackColor: config["activeTrackColor"] ?? Colors.blue.withOpacity(0.5),
+        inactiveThumbColor: config["inactiveThumbColor"] ?? Colors.grey,
+        inactiveTrackColor: config["inactiveTrackColor"] ?? Colors.grey.shade400,
       ),
     ),
 
-    settingsBuilder: (onChange, config) {
-      return Switch(
-        value: config["value"] ?? true,
-        onChanged: (v) => onChange({...config, "value": v}),
+    settingsBuilder: (onChange, config, palette) {
+      return SingleChildScrollView(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+
+            // ■ ON/OFF
+            Switch(
+              value: config["value"] ?? true,
+              onChanged: (v) => onChange({...config, "value": v}),
+            ),
+
+            const SizedBox(height: 16),
+
+            const Text("Active Thumb"),
+            ColorPicker(
+              colors: palette.colors,
+              selected: config["activeColor"],
+              onSelect: (c) =>
+                  onChange({...config, "activeColor": c}),
+            ),
+
+            const SizedBox(height: 12),
+
+            const Text("Active Track"),
+            ColorPicker(
+              colors: palette.colors,
+              selected: config["activeTrackColor"],
+              onSelect: (c) =>
+                  onChange({...config, "activeTrackColor": c.withOpacity(0.5)}),
+            ),
+
+            const SizedBox(height: 12),
+
+            const Text("Inactive Thumb"),
+            ColorPicker(
+              colors: palette.colors,
+              selected: config["inactiveThumbColor"],
+              onSelect: (c) =>
+                  onChange({...config, "inactiveThumbColor": c}),
+            ),
+
+            const SizedBox(height: 12),
+
+            const Text("Inactive Track"),
+            ColorPicker(
+              colors: palette.colors,
+              selected: config["inactiveTrackColor"],
+              onSelect: (c) =>
+                  onChange({...config, "inactiveTrackColor": c.withOpacity(0.4)}),
+            ),
+          ],
+        ),
       );
     },
 
-    codeBuilder: (config) => '''
-Switch(value: true)
-''',
+    codeBuilder: (config) {
+      final value = config["value"] ?? true;
+      final active = config["activeColor"] ?? Colors.blue;
+      final activeTrack =
+          config["activeTrackColor"] ?? Colors.blue.withOpacity(0.5);
+      final inactive = config["inactiveThumbColor"] ?? Colors.grey;
+      final inactiveTrack =
+          config["inactiveTrackColor"] ?? Colors.grey.shade400;
+
+      String colorToCode(Color c) =>
+          "Color(0x${c.value.toRadixString(16)})";
+
+      return '''
+Switch(
+  value: $value,
+  onChanged: (_) {},
+  activeColor: ${colorToCode(active)},
+  activeTrackColor: ${colorToCode(activeTrack)},
+  inactiveThumbColor: ${colorToCode(inactive)},
+  inactiveTrackColor: ${colorToCode(inactiveTrack)},
+)
+''';
+    },
   ),
   Sample(
     id: "checkbox",
@@ -193,19 +404,65 @@ Switch(value: true)
       child: Checkbox(
         value: config["value"] ?? true,
         onChanged: (_) {},
+        activeColor: config["activeColor"] ?? Colors.blue,
+        checkColor: config["checkColor"] ?? Colors.white,
       ),
     ),
 
-    settingsBuilder: (onChange, config) {
-      return Checkbox(
-        value: config["value"] ?? true,
-        onChanged: (v) => onChange({...config, "value": v}),
+    settingsBuilder: (onChange, config, palette) {
+      return SingleChildScrollView(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+
+            // ■ ON/OFF
+            Checkbox(
+              value: config["value"] ?? true,
+              onChanged: (v) => onChange({...config, "value": v}),
+            ),
+
+            const SizedBox(height: 16),
+
+            const Text("Active Color"),
+            ColorPicker(
+              colors: palette.colors,
+              selected: config["activeColor"],
+              onSelect: (c) =>
+                  onChange({...config, "activeColor": c}),
+            ),
+
+            const SizedBox(height: 12),
+
+            const Text("Check Color"),
+            ColorPicker(
+              colors: palette.colors,
+              selected: config["checkColor"],
+              onSelect: (c) =>
+                  onChange({...config, "checkColor": c}),
+            ),
+          ],
+        ),
       );
     },
 
-    codeBuilder: (config) => '''
-Checkbox(value: true)
-''',
+    codeBuilder: (config) {
+      final value = config["value"] ?? true;
+      final active = config["activeColor"] ?? Colors.blue;
+      final check = config["checkColor"] ?? Colors.white;
+
+      String colorToCode(Color c) =>
+          "Color(0x${c.value.toRadixString(16)})";
+
+      return '''
+Checkbox(
+  value: $value,
+  onChanged: (_) {},
+  activeColor: ${colorToCode(active)},
+  checkColor: ${colorToCode(check)},
+)
+''';
+    },
   ),
   Sample(
     id: "card",
@@ -213,66 +470,400 @@ Checkbox(value: true)
 
     previewBuilder: (config) => Center(
       child: Card(
+        color: config["color"] ?? Colors.white,
+        elevation: (config["elevation"] ?? 4).toDouble(),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+            (config["radius"] ?? 12).toDouble(),
+          ),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: Text(config["text"] ?? "Card"),
+          child: Text(
+            config["text"] ?? "Card",
+            style: TextStyle(
+              color: config["textColor"] ?? Colors.black,
+            ),
+          ),
         ),
       ),
     ),
 
-    settingsBuilder: (onChange, config) {
-      return TextField(
-        onChanged: (v) => onChange({...config, "text": v}),
+    settingsBuilder: (onChange, config, palette) {
+      return SingleChildScrollView(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+
+            // ■ テキスト
+            TextField(
+              decoration: const InputDecoration(labelText: "Text"),
+              onChanged: (v) => onChange({...config, "text": v}),
+            ),
+
+            const SizedBox(height: 12),
+
+            // ■ Elevation
+            const Text("Elevation"),
+            Slider(
+              min: 0,
+              max: 20,
+              divisions: 20,
+              value: (config["elevation"] ?? 4).toDouble(),
+              label: "${config["elevation"] ?? 4}",
+              onChanged: (v) =>
+                  onChange({...config, "elevation": v.round()}),
+            ),
+
+            const SizedBox(height: 12),
+
+            // ■ Radius
+            const Text("Border Radius"),
+            Slider(
+              min: 0,
+              max: 40,
+              divisions: 40,
+              value: (config["radius"] ?? 12).toDouble(),
+              label: "${config["radius"] ?? 12}",
+              onChanged: (v) =>
+                  onChange({...config, "radius": v.round()}),
+            ),
+
+            const SizedBox(height: 16),
+
+            const Text("Card Color"),
+            ColorPicker(
+              colors: palette.colors,
+              selected: config["color"],
+              onSelect: (c) =>
+                  onChange({...config, "color": c}),
+            ),
+
+            const SizedBox(height: 12),
+
+            const Text("Text Color"),
+            ColorPicker(
+              colors: palette.colors,
+              selected: config["textColor"],
+              onSelect: (c) =>
+                  onChange({...config, "textColor": c}),
+            ),
+          ],
+        ),
       );
     },
 
-    codeBuilder: (config) => '''
-Card(child: Text("Card"))
-''',
+    codeBuilder: (config) {
+      final text = config["text"] ?? "Card";
+      final color = config["color"] ?? Colors.white;
+      final textColor = config["textColor"] ?? Colors.black;
+      final elevation = config["elevation"] ?? 4;
+      final radius = config["radius"] ?? 12;
+
+      String colorToCode(Color c) =>
+          "Color(0x${c.value.toRadixString(16)})";
+
+      return '''
+Card(
+  color: ${colorToCode(color)},
+  elevation: $elevation,
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular($radius),
+  ),
+  child: Padding(
+    padding: EdgeInsets.all(16),
+    child: Text(
+      "$text",
+      style: TextStyle(
+        color: ${colorToCode(textColor)},
+      ),
+    ),
+  ),
+)
+''';
+    },
   ),
   Sample(
     id: "textfield",
     title: "TextField",
 
     previewBuilder: (config) => Center(
-      child: TextField(
-        decoration: InputDecoration(
-          hintText: config["hint"] ?? "Enter text",
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: TextField(
+          decoration: InputDecoration(
+            hintText: config["hint"] ?? "Enter text",
+            labelText: config["label"] ?? "Label",
+
+            // 枠線
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(
+                (config["radius"] ?? 8).toDouble(),
+              ),
+            ),
+
+            // フォーカス時
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(
+                (config["radius"] ?? 8).toDouble(),
+              ),
+              borderSide: BorderSide(
+                color: config["focusColor"] ?? Colors.blue,
+                width: 2,
+              ),
+            ),
+          ),
         ),
       ),
     ),
 
-    settingsBuilder: (onChange, config) {
-      return TextField(
-        onChanged: (v) => onChange({...config, "hint": v}),
+    settingsBuilder: (onChange, config, palette) {
+      return SingleChildScrollView(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+
+            // ■ hint
+            TextField(
+              decoration: const InputDecoration(labelText: "Hint"),
+              onChanged: (v) => onChange({...config, "hint": v}),
+            ),
+
+            const SizedBox(height: 12),
+
+            // ■ label
+            TextField(
+              decoration: const InputDecoration(labelText: "Label"),
+              onChanged: (v) => onChange({...config, "label": v}),
+            ),
+
+            const SizedBox(height: 12),
+
+            // ■ radius
+            const Text("Border Radius"),
+            Slider(
+              min: 0,
+              max: 30,
+              divisions: 30,
+              value: (config["radius"] ?? 8).toDouble(),
+              label: "${config["radius"] ?? 8}",
+              onChanged: (v) =>
+                  onChange({...config, "radius": v.round()}),
+            ),
+
+            const SizedBox(height: 16),
+
+            // ■ フォーカスカラー
+            const Text("Focus Color"),
+            ColorPicker(
+              colors: palette.colors,
+              selected: config["focusColor"],
+              onSelect: (c) =>
+                  onChange({...config, "focusColor": c}),
+            ),
+          ],
+        ),
       );
     },
 
-    codeBuilder: (config) => '''
-TextField()
-''',
+    codeBuilder: (config) {
+      final hint = config["hint"] ?? "Enter text";
+      final label = config["label"] ?? "Label";
+      final radius = config["radius"] ?? 8;
+      final focus = config["focusColor"] ?? Colors.blue;
+
+      String colorToCode(Color c) =>
+          "Color(0x${c.value.toRadixString(16)})";
+
+      return '''
+TextField(
+  decoration: InputDecoration(
+    hintText: "$hint",
+    labelText: "$label",
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular($radius),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular($radius),
+      borderSide: BorderSide(
+        color: ${colorToCode(focus)},
+        width: 2,
+      ),
+    ),
   ),
+)
+''';
+    },
+  ),
+
   Sample(
     id: "button",
     title: "Button",
 
-    previewBuilder: (config) => Center(
-      child: ElevatedButton(
-        onPressed: () {},
-        child: Text(config["text"] ?? "Button"),
-      ),
-    ),
+    previewBuilder: (config) {
+      final text = config["text"] ?? "Button";
+      final type = config["type"] ?? "elevated";
+      final color = config["color"] ?? Colors.blue;
 
-    settingsBuilder: (onChange, config) {
-      return TextField(
-        onChanged: (v) => onChange({...config, "text": v}),
+      switch (type) {
+        case "text":
+          return TextButton(
+            onPressed: () {},
+            child: Text(text),
+          );
+
+        case "outlined":
+          return OutlinedButton(
+            onPressed: () {},
+            style: OutlinedButton.styleFrom(
+              side: BorderSide(color: color),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                  (config["radius"] ?? 8).toDouble(),
+                ),
+              ),
+            ),
+            child: Text(text),
+          );
+
+        default:
+          return ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: color,
+              elevation: (config["elevation"] ?? 2).toDouble(),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                  (config["radius"] ?? 8).toDouble(),
+                ),
+              ),
+            ),
+            child: Text(text),
+          );
+      }
+    },
+
+    settingsBuilder: (onChange, config, palette) {
+      return SingleChildScrollView( // ← ★追加
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+
+            DropdownButton<String>(
+              value: config["type"] ?? "elevated",
+              items: const [
+                DropdownMenuItem(value: "elevated", child: Text("Elevated")),
+                DropdownMenuItem(value: "text", child: Text("Text")),
+                DropdownMenuItem(value: "outlined", child: Text("Outlined")),
+              ],
+              onChanged: (v) {
+                if (v != null) {
+                  onChange({...config, "type": v});
+                }
+              },
+            ),
+
+            const SizedBox(height: 12),
+
+            TextField(
+              decoration: const InputDecoration(labelText: "Text"),
+              onChanged: (v) {
+                onChange({...config, "text": v});
+              },
+            ),
+
+            const SizedBox(height: 16),
+
+            ColorPicker(
+              colors: palette.colors,
+              selected: config["color"],
+              onSelect: (c) {
+                onChange({...config, "color": c});
+              },
+            ),
+
+            const SizedBox(height: 16),
+
+            const Text("Elevation"),
+            Slider(
+              min: 0,
+              max: 30,
+              divisions: 30,
+              value: (config["elevation"] ?? 8).toDouble(),
+              label: "${config["elevation"] ?? 8}",
+              onChanged: (v) {
+                onChange({...config, "elevation": v.round()});
+              },
+            ),
+
+            const Text("Border Radius"),
+            Slider(
+              min: 0,
+              max: 30,
+              divisions: 30,
+              value: (config["radius"] ?? 8).toDouble(),
+              label: "${config["radius"] ?? 8}",
+              onChanged: (v) {
+                onChange({...config, "radius": v.round()});
+              },
+            ),
+          ],
+        ),
       );
     },
 
-    codeBuilder: (config) => '''
-ElevatedButton(
-  child: Text("Button"),
+    codeBuilder: (config) {
+      final text = config["text"] ?? "Button";
+      final type = config["type"] ?? "elevated";
+      final color = config["color"] ?? Colors.blue;
+      final elevation = config["elevation"] ?? 2;
+      final radius = config["radius"] ?? 8;
+
+      String colorToCode(Color c) {
+        return "Color(0x${c.value.toRadixString(16)})";
+      }
+
+      switch (type) {
+        case "text":
+          return '''
+TextButton(
+  onPressed: () {},
+  child: Text("$text"),
 )
-''',
-  )
+''';
+
+        case "outlined":
+          return '''
+OutlinedButton(
+  onPressed: () {},
+  style: OutlinedButton.styleFrom(
+    side: BorderSide(color: ${colorToCode(color)}),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular($radius),
+    ),
+  ),
+  child: Text("$text"),
+)
+''';
+
+        default:
+          return '''
+ElevatedButton(
+  onPressed: () {},
+  style: ElevatedButton.styleFrom(
+    backgroundColor: ${colorToCode(color)},
+    elevation: $elevation,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular($radius),
+    ),
+  ),
+  child: Text("$text"),
+)
+''';
+      }
+    },
+  ),
 ];
