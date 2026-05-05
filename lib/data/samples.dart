@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui_catalog/fonts/font_manager.dart';
 import 'package:flutter_ui_catalog/widgets/color_picker.dart';
+import 'package:flutter_ui_catalog/widgets/font_repository.dart';
 import '../models/sample.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 final List<Sample> samples = [
   Sample(
@@ -10,9 +13,11 @@ final List<Sample> samples = [
     previewBuilder: (config, onChange) => Center(
       child: Text(
         config["text"] ?? "Hello",
-        style: TextStyle(
+        style: GoogleFonts.getFont(
+          config["fontFamily"] ?? "Roboto",
+        ).copyWith(
           fontSize: (config["size"] ?? 20).toDouble(),
-          color: config["color"],
+          color: config["color"] ?? Colors.black,
         ),
       ),
     ),
@@ -30,6 +35,33 @@ final List<Sample> samples = [
             ),
             onChanged: (v) =>
                 onChange({...config, "text": v}),
+          ),
+
+          // ★ フォント選択
+          DropdownButton<String>(
+            isExpanded: true,
+
+            value: FontRepository.enabledFonts().contains(
+              config["fontFamily"],
+            )
+                ? config["fontFamily"]
+                : FontRepository.defaultFont,
+
+            items: FontRepository.enabledFonts().map((font) {
+              return DropdownMenuItem(
+                value: font,
+                child: Text(font),
+              );
+            }).toList(),
+
+            onChanged: (font) {
+              if (font == null) return;
+
+              onChange({
+                ...config,
+                "fontFamily": font,
+              });
+            },
           ),
 
           const SizedBox(height: 12),
@@ -62,9 +94,21 @@ final List<Sample> samples = [
 
     codeBuilder: (config) {
       final text = config["text"] ?? "Hello";
+      final font = config["fontFamily"] ?? "Roboto";
+      final size = config["size"] ?? 20;
+      final color = config["color"] ?? Colors.black;
+
+      String colorToCode(Color c) =>
+          "Color(0x${c.value.toRadixString(16)})";
 
       return '''
-Text("$text")
+Text(
+  "$text",
+  style: GoogleFonts.getFont("$font").copyWith(
+    fontSize: $size,
+    color: ${colorToCode(color)},
+  ),
+)
 ''';
     },
   ),
@@ -256,6 +300,8 @@ Container(
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
+
 
           // ★ Slider本体は削除（previewに統一）
 
