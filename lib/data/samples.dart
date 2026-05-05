@@ -7,10 +7,13 @@ final List<Sample> samples = [
     id: "text",
     title: "Text",
 
-    previewBuilder: (config) => Center(
+    previewBuilder: (config, onChange) => Center(
       child: Text(
         config["text"] ?? "Hello",
-        style: TextStyle(fontSize: config["size"] ?? 20),
+        style: TextStyle(
+          fontSize: (config["size"] ?? 20).toDouble(),
+          color: config["color"],
+        ),
       ),
     ),
 
@@ -20,97 +23,66 @@ final List<Sample> samples = [
         children: [
 
           // ■ テキスト入力
+          const Text("Text"),
           TextField(
-            decoration: const InputDecoration(labelText: "Text"),
-            onChanged: (v) => onChange({...config, "text": v}),
+            controller: TextEditingController(
+              text: config["text"] ?? "",
+            ),
+            onChanged: (v) =>
+                onChange({...config, "text": v}),
           ),
 
           const SizedBox(height: 12),
 
-          // ■ サイズ（整数化）
+          // ■ サイズ
+          const Text("Size"),
           Slider(
             min: 10,
             max: 50,
             divisions: 40,
             value: (config["size"] ?? 20).toDouble(),
             label: "${config["size"] ?? 20}",
-            onChanged: (v) => onChange({...config, "size": v.round()}),
+            onChanged: (v) =>
+                onChange({...config, "size": v.round()}),
           ),
 
           const SizedBox(height: 16),
 
-          // ■ カラーパレット
+          // ■ カラー
+          const Text("Color"),
           ColorPicker(
             colors: palette.colors,
             selected: config["color"],
-            onSelect: (c) {
-              onChange({...config, "color": c});
-            },
+            onSelect: (c) =>
+                onChange({...config, "color": c}),
           ),
         ],
       );
     },
 
-    codeBuilder: (config) => '''
-Text("${config["text"] ?? "Hello"}")
-''',
-  ),
+    codeBuilder: (config) {
+      final text = config["text"] ?? "Hello";
 
-  Sample(
-    id: "icon",
-    title: "Icon",
-
-    previewBuilder: (config) => Center(
-      child: Icon(
-        config["icon"] ?? Icons.star,
-        size: (config["size"] ?? 40).toDouble(),
-        color: config["color"] ?? Colors.blue,
-      ),
-    ),
-
-    settingsBuilder: (onChange, config, palette) {
-      return Column(
-        children: [
-          Slider(
-            min: 20,
-            max: 100,
-            divisions: 80,
-            value: (config["size"] ?? 40).toDouble(),
-            onChanged: (v) => onChange({...config, "size": v.round()}),
-          ),
-
-          const SizedBox(height: 16),
-
-          // 色もついでに対応（おすすめ）
-          ColorPicker(
-            colors: palette.colors,
-            selected: config["color"],
-            onSelect: (c) {
-              onChange({...config, "color": c});
-            },
-          ),
-        ],
-      );
+      return '''
+Text("$text")
+''';
     },
-
-    codeBuilder: (config) => '''
-Icon(
-  Icons.star,
-  size: ${(config["size"] ?? 40)},
-)
-''',
   ),
+
+
 
   Sample(
     id: "icon_button",
     title: "IconButton",
 
-    previewBuilder: (config) => Center(
+    previewBuilder: (config, onChange) => Center(
       child: IconButton(
         icon: Icon(config["icon"] ?? Icons.favorite),
         color: config["color"] ?? Colors.red,
         iconSize: (config["size"] ?? 40).toDouble(),
-        onPressed: () {},
+        onPressed: () {
+          // IconButton自体は状態変化がないので空でOK
+        },
       ),
     ),
 
@@ -123,9 +95,18 @@ Icon(
           DropdownButton<IconData>(
             value: config["icon"] ?? Icons.favorite,
             items: const [
-              DropdownMenuItem(value: Icons.favorite, child: Text("favorite")),
-              DropdownMenuItem(value: Icons.star, child: Text("star")),
-              DropdownMenuItem(value: Icons.home, child: Text("home")),
+              DropdownMenuItem(
+                value: Icons.favorite,
+                child: Text("favorite"),
+              ),
+              DropdownMenuItem(
+                value: Icons.star,
+                child: Text("star"),
+              ),
+              DropdownMenuItem(
+                value: Icons.home,
+                child: Text("home"),
+              ),
             ],
             onChanged: (v) {
               if (v != null) {
@@ -136,7 +117,8 @@ Icon(
 
           const SizedBox(height: 12),
 
-          // ■ サイズ（整数）
+          // ■ サイズ
+          const Text("Size"),
           Slider(
             min: 20,
             max: 80,
@@ -150,7 +132,8 @@ Icon(
 
           const SizedBox(height: 16),
 
-          // ■ カラーパレット
+          // ■ カラー
+          const Text("Color"),
           ColorPicker(
             colors: palette.colors,
             selected: config["color"],
@@ -167,9 +150,8 @@ Icon(
       final size = config["size"] ?? 40;
       final color = config["color"] ?? Colors.red;
 
-      String colorToCode(Color c) {
-        return "Color(0x${c.value.toRadixString(16)})";
-      }
+      String colorToCode(Color c) =>
+          "Color(0x${c.value.toRadixString(16)})";
 
       String iconToCode(IconData icon) {
         if (icon == Icons.star) return "Icons.star";
@@ -191,7 +173,7 @@ IconButton(
     id: "container",
     title: "Container",
 
-    previewBuilder: (config) => Center(
+    previewBuilder: (config, onChange) => Center(
       child: Container(
         width: (config["width"] ?? 100).toDouble(),
         height: (config["height"] ?? 100).toDouble(),
@@ -203,28 +185,35 @@ IconButton(
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Width"),
+
+          const Text("Width"),
           Slider(
             min: 50,
             max: 300,
             value: (config["width"] ?? 100).toDouble(),
-            onChanged: (v) => onChange({...config, "width": v.round()}),
+            onChanged: (v) =>
+                onChange({...config, "width": v.round()}),
           ),
 
-          Text("Height"),
+          const SizedBox(height: 12),
+
+          const Text("Height"),
           Slider(
             min: 50,
             max: 300,
             value: (config["height"] ?? 100).toDouble(),
-            onChanged: (v) => onChange({...config, "height": v.round()}),
+            onChanged: (v) =>
+                onChange({...config, "height": v.round()}),
           ),
 
           const SizedBox(height: 16),
 
+          const Text("Color"),
           ColorPicker(
             colors: palette.colors,
             selected: config["color"],
-            onSelect: (c) => onChange({...config, "color": c}),
+            onSelect: (c) =>
+                onChange({...config, "color": c}),
           ),
         ],
       );
@@ -252,10 +241,13 @@ Container(
     id: "slider",
     title: "Slider",
 
-    previewBuilder: (config) => Center(
+    previewBuilder: (config, onChange) => Center(
       child: Slider(
         value: (config["value"] ?? 0.5).toDouble(),
-        onChanged: (_) {},
+        onChanged: (v) => onChange({
+          ...config,
+          "value": v,
+        }),
         activeColor: config["color"] ?? Colors.blue,
       ),
     ),
@@ -264,20 +256,22 @@ Container(
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Slider(
-            min: 0,
-            max: 1,
-            divisions: 100,
-            value: (config["value"] ?? 0.5).toDouble(),
-            label: "${(config["value"] ?? 0.5)}",
-            onChanged: (v) => onChange({...config, "value": v}),
+
+          // ★ Slider本体は削除（previewに統一）
+
+          const Text("Value"),
+          Text(
+            ((config["value"] ?? 0.5).toDouble()).toStringAsFixed(2),
           ),
+
           const SizedBox(height: 16),
 
+          const Text("Active Color"),
           ColorPicker(
             colors: palette.colors,
             selected: config["color"],
-            onSelect: (c) => onChange({...config, "color": c}),
+            onSelect: (c) =>
+                onChange({...config, "color": c}),
           ),
         ],
       );
@@ -304,14 +298,19 @@ Slider(
     id: "switch",
     title: "Switch",
 
-    previewBuilder: (config) => Center(
+    previewBuilder: (config, onChange) => Center(
       child: Switch(
         value: config["value"] ?? true,
-        onChanged: (_) {},
+        onChanged: (v) {
+          onChange({...config, "value": v});
+        },
         activeColor: config["activeColor"] ?? Colors.blue,
-        activeTrackColor: config["activeTrackColor"] ?? Colors.blue.withOpacity(0.5),
-        inactiveThumbColor: config["inactiveThumbColor"] ?? Colors.grey,
-        inactiveTrackColor: config["inactiveTrackColor"] ?? Colors.grey.shade400,
+        activeTrackColor:
+        config["activeTrackColor"] ?? Colors.blue.withOpacity(0.5),
+        inactiveThumbColor:
+        config["inactiveThumbColor"] ?? Colors.grey,
+        inactiveTrackColor:
+        config["inactiveTrackColor"] ?? Colors.grey.shade400,
       ),
     ),
 
@@ -322,13 +321,7 @@ Slider(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            // ■ ON/OFF
-            Switch(
-              value: config["value"] ?? true,
-              onChanged: (v) => onChange({...config, "value": v}),
-            ),
-
-            const SizedBox(height: 16),
+            // ★ ON/OFF削除（プレビューで操作）
 
             const Text("Active Thumb"),
             ColorPicker(
@@ -345,7 +338,10 @@ Slider(
               colors: palette.colors,
               selected: config["activeTrackColor"],
               onSelect: (c) =>
-                  onChange({...config, "activeTrackColor": c.withOpacity(0.5)}),
+                  onChange({
+                    ...config,
+                    "activeTrackColor": c.withOpacity(0.5)
+                  }),
             ),
 
             const SizedBox(height: 12),
@@ -365,7 +361,10 @@ Slider(
               colors: palette.colors,
               selected: config["inactiveTrackColor"],
               onSelect: (c) =>
-                  onChange({...config, "inactiveTrackColor": c.withOpacity(0.4)}),
+                  onChange({
+                    ...config,
+                    "inactiveTrackColor": c.withOpacity(0.4)
+                  }),
             ),
           ],
         ),
@@ -387,7 +386,7 @@ Slider(
       return '''
 Switch(
   value: $value,
-  onChanged: (_) {},
+  onChanged: (v) {},
   activeColor: ${colorToCode(active)},
   activeTrackColor: ${colorToCode(activeTrack)},
   inactiveThumbColor: ${colorToCode(inactive)},
@@ -400,10 +399,12 @@ Switch(
     id: "checkbox",
     title: "Checkbox",
 
-    previewBuilder: (config) => Center(
+    previewBuilder: (config, onChange) => Center(
       child: Checkbox(
         value: config["value"] ?? true,
-        onChanged: (_) {},
+        onChanged: (v) {
+          onChange({...config, "value": v});
+        },
         activeColor: config["activeColor"] ?? Colors.blue,
         checkColor: config["checkColor"] ?? Colors.white,
       ),
@@ -468,7 +469,7 @@ Checkbox(
     id: "card",
     title: "Card",
 
-    previewBuilder: (config) => Center(
+    previewBuilder: (config, onChange) => Center(
       child: Card(
         color: config["color"] ?? Colors.white,
         elevation: (config["elevation"] ?? 4).toDouble(),
@@ -496,13 +497,18 @@ Checkbox(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            // ■ テキスト
+            // ■ Text（主操作）
+            const Text("Text"),
             TextField(
-              decoration: const InputDecoration(labelText: "Text"),
-              onChanged: (v) => onChange({...config, "text": v}),
+              decoration: const InputDecoration(labelText: "Card Text"),
+              controller: TextEditingController(
+                text: config["text"] ?? "Card",
+              ),
+              onChanged: (v) =>
+                  onChange({...config, "text": v}),
             ),
 
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
 
             // ■ Elevation
             const Text("Elevation"),
@@ -532,6 +538,7 @@ Checkbox(
 
             const SizedBox(height: 16),
 
+            // ■ Colors（ここが主戦場）
             const Text("Card Color"),
             ColorPicker(
               colors: palette.colors,
@@ -588,7 +595,7 @@ Card(
     id: "textfield",
     title: "TextField",
 
-    previewBuilder: (config) => Center(
+    previewBuilder: (config, onChange) => Center(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: TextField(
@@ -596,14 +603,12 @@ Card(
             hintText: config["hint"] ?? "Enter text",
             labelText: config["label"] ?? "Label",
 
-            // 枠線
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(
                 (config["radius"] ?? 8).toDouble(),
               ),
             ),
 
-            // フォーカス時
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(
                 (config["radius"] ?? 8).toDouble(),
@@ -626,17 +631,25 @@ Card(
           children: [
 
             // ■ hint
+            const Text("Hint"),
             TextField(
-              decoration: const InputDecoration(labelText: "Hint"),
-              onChanged: (v) => onChange({...config, "hint": v}),
+              controller: TextEditingController(
+                text: config["hint"] ?? "",
+              ),
+              onChanged: (v) =>
+                  onChange({...config, "hint": v}),
             ),
 
             const SizedBox(height: 12),
 
             // ■ label
+            const Text("Label"),
             TextField(
-              decoration: const InputDecoration(labelText: "Label"),
-              onChanged: (v) => onChange({...config, "label": v}),
+              controller: TextEditingController(
+                text: config["label"] ?? "",
+              ),
+              onChanged: (v) =>
+                  onChange({...config, "label": v}),
             ),
 
             const SizedBox(height: 12),
@@ -655,7 +668,7 @@ Card(
 
             const SizedBox(height: 16),
 
-            // ■ フォーカスカラー
+            // ■ focus color
             const Text("Focus Color"),
             ColorPicker(
               colors: palette.colors,
@@ -702,7 +715,7 @@ TextField(
     id: "button",
     title: "Button",
 
-    previewBuilder: (config) {
+    previewBuilder: (config, onChange) {
       final text = config["text"] ?? "Button";
       final type = config["type"] ?? "elevated";
       final color = config["color"] ?? Colors.blue;
@@ -744,14 +757,14 @@ TextField(
           );
       }
     },
-
     settingsBuilder: (onChange, config, palette) {
-      return SingleChildScrollView( // ← ★追加
+      return SingleChildScrollView(
         padding: const EdgeInsets.all(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
+            // ■ type（主軸）
             DropdownButton<String>(
               value: config["type"] ?? "elevated",
               items: const [
@@ -768,37 +781,44 @@ TextField(
 
             const SizedBox(height: 12),
 
+            // ■ text
             TextField(
               decoration: const InputDecoration(labelText: "Text"),
-              onChanged: (v) {
-                onChange({...config, "text": v});
-              },
+              controller: TextEditingController(
+                text: config["text"] ?? "",
+              ),
+              onChanged: (v) =>
+                  onChange({...config, "text": v}),
             ),
 
             const SizedBox(height: 16),
 
+            // ■ color
+            const Text("Color"),
             ColorPicker(
               colors: palette.colors,
               selected: config["color"],
-              onSelect: (c) {
-                onChange({...config, "color": c});
-              },
+              onSelect: (c) =>
+                  onChange({...config, "color": c}),
             ),
 
             const SizedBox(height: 16),
 
+            // ■ elevation（elevatedのみ意味あり）
             const Text("Elevation"),
             Slider(
               min: 0,
               max: 30,
               divisions: 30,
-              value: (config["elevation"] ?? 8).toDouble(),
-              label: "${config["elevation"] ?? 8}",
-              onChanged: (v) {
-                onChange({...config, "elevation": v.round()});
-              },
+              value: (config["elevation"] ?? 2).toDouble(),
+              label: "${config["elevation"] ?? 2}",
+              onChanged: (v) =>
+                  onChange({...config, "elevation": v.round()}),
             ),
 
+            const SizedBox(height: 12),
+
+            // ■ radius（共通）
             const Text("Border Radius"),
             Slider(
               min: 0,
@@ -806,9 +826,8 @@ TextField(
               divisions: 30,
               value: (config["radius"] ?? 8).toDouble(),
               label: "${config["radius"] ?? 8}",
-              onChanged: (v) {
-                onChange({...config, "radius": v.round()});
-              },
+              onChanged: (v) =>
+                  onChange({...config, "radius": v.round()}),
             ),
           ],
         ),
@@ -822,9 +841,8 @@ TextField(
       final elevation = config["elevation"] ?? 2;
       final radius = config["radius"] ?? 8;
 
-      String colorToCode(Color c) {
-        return "Color(0x${c.value.toRadixString(16)})";
-      }
+      String colorToCode(Color c) =>
+          "Color(0x${c.value.toRadixString(16)})";
 
       switch (type) {
         case "text":

@@ -5,7 +5,10 @@ import 'package:flutter_ui_catalog/data/color_palettes.dart';
 /// 共通インターフェース
 /// =========================
 
-typedef PreviewBuilder<T> = Widget Function(T config);
+typedef PreviewBuilder<T> = Widget Function(
+    T config,
+    ValueChanged<T> onChange,
+    );
 
 typedef SettingsBuilder<T> = Widget Function(
     ValueChanged<T> onChange,

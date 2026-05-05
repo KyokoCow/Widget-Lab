@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui_catalog/data/color_palettes.dart';
+import 'package:flutter_ui_catalog/screens/settings_page.dart';
 import '../data/samples.dart';
 import '../models/sample.dart';
 
@@ -39,10 +40,25 @@ class _HomePageState extends State<HomePage> {
 
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Flutter Sampler")),
+      appBar: AppBar(
+        title: const Text("Flutter Sampler"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const SettingsPage(),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
       body: isLandscape
-          ? _buildLandscape(palette) // ←ここ修正
-          : _buildPortrait(palette), // ←ここも
+          ? _buildLandscape(palette)
+          : _buildPortrait(palette),
     );
   }
 
@@ -174,7 +190,14 @@ class _HomePageState extends State<HomePage> {
     return Container(
       color: Colors.white,
       child: Center(
-        child: selected.previewBuilder(config),
+        child: selected.previewBuilder(
+          config,
+              (newConfig) {
+            setState(() {
+              config = newConfig;
+            });
+          },
+        ),
       ),
     );
   }
