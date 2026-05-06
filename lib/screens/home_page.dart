@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ui_catalog/data/color_palettes.dart';
+import 'package:flutter_ui_catalog/config/app_settings.dart';
+import 'package:flutter_ui_catalog/config/color_palettes.dart';
 import 'package:flutter_ui_catalog/screens/settings_page.dart';
 import '../data/samples.dart';
 import '../models/sample.dart';
@@ -38,7 +39,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final isLandscape = size.width > size.height;
-    final palette = palettes[selectedPaletteIndex];
+    final paletteName = AppSettings.palette.value;
+    final colors = AppPalettes.all[paletteName]!;
 
 
     return Scaffold(
@@ -59,15 +61,15 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: isLandscape
-          ? _buildLandscape(palette)
-          : _buildPortrait(palette),
+          ? _buildLandscape(colors)
+          : _buildPortrait(colors),
     );
   }
 
   /* =========================
      設定パネル
   ========================= */
-  Widget _buildSettingsPanel(AppColorPalette palette) {
+  Widget _buildSettingsPanel(List<Color> colors) {
     if (!showSettings) {
       return Container(
         color: AppTheme.sidebarColor,
@@ -116,7 +118,6 @@ class _HomePageState extends State<HomePage> {
               });
             },
             config,
-            palette,
           ),
         ),
       ],
@@ -126,7 +127,7 @@ class _HomePageState extends State<HomePage> {
   /* =========================
      横画面
   ========================= */
-  Widget _buildLandscape(AppColorPalette palette) {
+  Widget _buildLandscape(List<Color> colors) {
     final width = MediaQuery.of(context).size.width;
 
     return Row(
@@ -134,7 +135,7 @@ class _HomePageState extends State<HomePage> {
         Container(
           width: width * 0.4, // ←40%
           color: AppTheme.sidebarColor,
-          child: _buildSettingsPanel(palette),
+          child: _buildSettingsPanel(colors),
         ),
 
         Expanded(
@@ -152,7 +153,7 @@ class _HomePageState extends State<HomePage> {
   /* =========================
      縦画面
   ========================= */
-  Widget _buildPortrait(palette) {
+  Widget _buildPortrait(List<Color> colors) {
     return Column(
       children: [
         // ▼ プレビュー（小さく）
@@ -172,7 +173,7 @@ class _HomePageState extends State<HomePage> {
           flex: 5,
           child: Container(
             color: AppTheme.sidebarColor,
-            child: _buildSettingsPanel(palette),
+            child: _buildSettingsPanel(colors),
           ),
         ),
       ],

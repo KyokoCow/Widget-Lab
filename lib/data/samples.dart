@@ -24,7 +24,7 @@ final List<Sample> samples = [
       ),
     ),
 
-    settingsBuilder: (onChange, config, palette) {
+    settingsBuilder: (onChange, config) {
       final fonts = FontRepository.enabledFonts();
 
       debugPrint("🔵 settingsBuilder config = $config");
@@ -147,7 +147,7 @@ Text(
       ),
     ),
 
-    settingsBuilder: (onChange, config, palette) {
+    settingsBuilder: (onChange, config) {
       return SingleChildScrollView(
         padding: const EdgeInsets.all(12),
         child: Column(
@@ -248,7 +248,7 @@ IconButton(
       ),
     ),
 
-    settingsBuilder: (onChange, config, palette) {
+    settingsBuilder: (onChange, config) {
       return SingleChildScrollView(
         padding: const EdgeInsets.all(12),
         child: Column(
@@ -329,7 +329,7 @@ Container(
       ),
     ),
 
-    settingsBuilder: (onChange, config, palette) {
+    settingsBuilder: (onChange, config) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -394,7 +394,7 @@ Slider(
       ),
     ),
 
-    settingsBuilder: (onChange, config, palette) {
+    settingsBuilder: (onChange, config) {
       return SingleChildScrollView(
         padding: const EdgeInsets.all(12),
         child: Column(
@@ -509,7 +509,7 @@ Switch(
       );
     },
 
-    settingsBuilder: (onChange, config, palette) {
+    settingsBuilder: (onChange, config) {
       return SingleChildScrollView(
         padding: const EdgeInsets.all(12),
         child: Column(
@@ -583,7 +583,7 @@ Checkbox(
       ),
     ),
 
-    settingsBuilder: (onChange, config, palette) {
+    settingsBuilder: (onChange, config) {
       return SingleChildScrollView(
         padding: const EdgeInsets.all(12),
         child: Column(
@@ -719,7 +719,7 @@ Card(
       ),
     ),
 
-    settingsBuilder: (onChange, config, palette) {
+    settingsBuilder: (onChange, config) {
       return SingleChildScrollView(
         padding: const EdgeInsets.all(12),
         child: Column(
@@ -856,7 +856,7 @@ TextField(
           );
       }
     },
-    settingsBuilder: (onChange, config, palette) {
+    settingsBuilder: (onChange, config) {
       return SingleChildScrollView(
         padding: const EdgeInsets.all(12),
         child: Column(

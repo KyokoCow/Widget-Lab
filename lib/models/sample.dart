@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ui_catalog/data/color_palettes.dart';
+import 'package:flutter_ui_catalog/config/color_palettes.dart';
 
 /// =========================
 /// 共通インターフェース
@@ -13,7 +13,6 @@ typedef PreviewBuilder<T> = Widget Function(
 typedef SettingsBuilder<T> = Widget Function(
     ValueChanged<T> onChange,
     T config,
-    AppColorPalette palette,
     );
 
 typedef CodeBuilder<T> = String Function(T config);
