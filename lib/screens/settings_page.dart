@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui_catalog/fonts/font_manager.dart';
 import 'package:flutter_ui_catalog/screens/font_settings_page.dart';
+import 'package:flutter_ui_catalog/config/app_settings.dart';
+import 'package:flutter_ui_catalog/screens/palette_settings_page.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -28,10 +30,27 @@ class _SettingsPageState extends State<SettingsPage> {
 
           const Divider(),
 
-          const ListTile(
-            title: Text("Color Palette"),
-            subtitle: Text("Not implemented yet"),
-            leading: Icon(Icons.palette),
+          /// ■ カラーパレット選択（修正済み）
+          ValueListenableBuilder<String>(
+            valueListenable: AppSettings.palette,
+            builder: (_, paletteName, __) {
+              return ListTile(
+                title: const Text("Color Palette"),
+                subtitle: Text(paletteName),
+                leading: const Icon(Icons.palette),
+                trailing: const Icon(Icons.chevron_right),
+
+                onTap: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const PaletteSettingsPage(),
+                    ),
+                  );
+                  // setState不要（自動更新される）
+                },
+              );
+            },
           ),
 
           const Divider(),
@@ -52,7 +71,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               );
 
-              setState(() {}); // ★これで更新
+              setState(() {}); // フォントはNotifier化してないので必要
             },
           ),
         ],

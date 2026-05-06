@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui_catalog/config/app_settings.dart';
+import 'package:flutter_ui_catalog/config/color_palettes.dart';
 import 'package:flutter_ui_catalog/fonts/font_manager.dart';
 import 'package:flutter_ui_catalog/widgets/color_picker.dart';
 import 'package:flutter_ui_catalog/widgets/font_repository.dart';
@@ -92,7 +94,6 @@ final List<Sample> samples = [
                   const Text("Color"),
 
                   ColorPicker(
-                    colors: palette.colors,
                     selected: config["color"],
                     onSelect: (c) => onChange({
                       ...config,
@@ -195,11 +196,11 @@ Text(
           // ■ カラー
           const Text("Color"),
           ColorPicker(
-            colors: palette.colors,
             selected: config["color"],
-            onSelect: (c) {
-              onChange({...config, "color": c});
-            },
+            onSelect: (c) => onChange({
+              ...config,
+              "color": c,
+            }),
           ),
         ],
       );
@@ -270,10 +271,11 @@ IconButton(
 
           const Text("Color"),
           ColorPicker(
-            colors: palette.colors,
             selected: config["color"],
-            onSelect: (c) =>
-                onChange({...config, "color": c}),
+            onSelect: (c) => onChange({
+              ...config,
+              "color": c,
+            }),
           ),
         ],
       );
@@ -330,10 +332,11 @@ Container(
 
           const Text("Active Color"),
           ColorPicker(
-            colors: palette.colors,
             selected: config["color"],
-            onSelect: (c) =>
-                onChange({...config, "color": c}),
+            onSelect: (c) => onChange({
+              ...config,
+              "color": c,
+            }),
           ),
         ],
       );
@@ -387,46 +390,44 @@ Slider(
 
             const Text("Active Thumb"),
             ColorPicker(
-              colors: palette.colors,
               selected: config["activeColor"],
-              onSelect: (c) =>
-                  onChange({...config, "activeColor": c}),
+              onSelect: (c) => onChange({
+                ...config,
+                "activeColor": c,
+              }),
             ),
 
             const SizedBox(height: 12),
 
             const Text("Active Track"),
             ColorPicker(
-              colors: palette.colors,
               selected: config["activeTrackColor"],
-              onSelect: (c) =>
-                  onChange({
-                    ...config,
-                    "activeTrackColor": c.withOpacity(0.5)
-                  }),
+              onSelect: (c) => onChange({
+                ...config,
+                "activeTrackColor": c,
+              }),
             ),
 
             const SizedBox(height: 12),
 
             const Text("Inactive Thumb"),
             ColorPicker(
-              colors: palette.colors,
               selected: config["inactiveThumbColor"],
-              onSelect: (c) =>
-                  onChange({...config, "inactiveThumbColor": c}),
+              onSelect: (c) => onChange({
+                ...config,
+                "inactiveThumbColor": c,
+              }),
             ),
 
             const SizedBox(height: 12),
 
             const Text("Inactive Track"),
             ColorPicker(
-              colors: palette.colors,
               selected: config["inactiveTrackColor"],
-              onSelect: (c) =>
-                  onChange({
-                    ...config,
-                    "inactiveTrackColor": c.withOpacity(0.4)
-                  }),
+              onSelect: (c) => onChange({
+                ...config,
+                "inactiveTrackColor": c,
+              }),
             ),
           ],
         ),
@@ -461,16 +462,37 @@ Switch(
     id: "checkbox",
     title: "Checkbox",
 
-    previewBuilder: (config, onChange) => Center(
-      child: Checkbox(
-        value: config["value"] ?? true,
-        onChanged: (v) {
-          onChange({...config, "value": v});
-        },
-        activeColor: config["activeColor"] ?? Colors.blue,
-        checkColor: config["checkColor"] ?? Colors.white,
-      ),
-    ),
+    previewBuilder: (config, onChange) {
+      final value = config["value"] ?? true;
+
+      return Center(
+        child: GestureDetector(
+          onTap: () {
+            onChange({
+              ...config,
+              "value": !value,
+            });
+          },
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Checkbox(
+                value: value,
+                onChanged: (v) {
+                  onChange({
+                    ...config,
+                    "value": v,
+                  });
+                },
+                activeColor: config["activeColor"] ?? Colors.blue,
+                checkColor: config["checkColor"] ?? Colors.white,
+              ),
+              const Text("Check me"),
+            ],
+          ),
+        ),
+      );
+    },
 
     settingsBuilder: (onChange, config, palette) {
       return SingleChildScrollView(
@@ -479,30 +501,24 @@ Switch(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            // ■ ON/OFF
-            Checkbox(
-              value: config["value"] ?? true,
-              onChanged: (v) => onChange({...config, "value": v}),
-            ),
-
-            const SizedBox(height: 16),
-
             const Text("Active Color"),
             ColorPicker(
-              colors: palette.colors,
               selected: config["activeColor"],
-              onSelect: (c) =>
-                  onChange({...config, "activeColor": c}),
+              onSelect: (c) => onChange({
+                ...config,
+                "activeColor": c,
+              }),
             ),
 
             const SizedBox(height: 12),
 
             const Text("Check Color"),
             ColorPicker(
-              colors: palette.colors,
               selected: config["checkColor"],
-              onSelect: (c) =>
-                  onChange({...config, "checkColor": c}),
+              onSelect: (c) => onChange({
+                ...config,
+                "checkColor": c,
+              }),
             ),
           ],
         ),
@@ -604,20 +620,22 @@ Checkbox(
             // ■ Colors（ここが主戦場）
             const Text("Card Color"),
             ColorPicker(
-              colors: palette.colors,
               selected: config["color"],
-              onSelect: (c) =>
-                  onChange({...config, "color": c}),
+              onSelect: (c) => onChange({
+                ...config,
+                "color": c,
+              }),
             ),
 
             const SizedBox(height: 12),
 
             const Text("Text Color"),
             ColorPicker(
-              colors: palette.colors,
               selected: config["textColor"],
-              onSelect: (c) =>
-                  onChange({...config, "textColor": c}),
+              onSelect: (c) => onChange({
+                ...config,
+                "textColor": c,
+              }),
             ),
           ],
         ),
@@ -736,10 +754,11 @@ Card(
             // ■ focus color
             const Text("Focus Color"),
             ColorPicker(
-              colors: palette.colors,
-              selected: config["focusColor"],
-              onSelect: (c) =>
-                  onChange({...config, "focusColor": c}),
+              selected: config["color"],
+              onSelect: (c) => onChange({
+                ...config,
+                "color": c,
+              }),
             ),
           ],
         ),
@@ -861,10 +880,11 @@ TextField(
             // ■ color
             const Text("Color"),
             ColorPicker(
-              colors: palette.colors,
               selected: config["color"],
-              onSelect: (c) =>
-                  onChange({...config, "color": c}),
+              onSelect: (c) => onChange({
+                ...config,
+                "color": c,
+              }),
             ),
 
             const SizedBox(height: 16),
