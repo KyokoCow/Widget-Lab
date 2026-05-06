@@ -14,7 +14,7 @@ Flutterの各種Widgetを実際に操作しながら確認できるように設�
 
 ## 📸 Screenshot
 
-<img src="docs/screenshot.png" width="800">
+![Screenshot](assets/images/screenshot.png)
 
 ---
 
