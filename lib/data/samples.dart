@@ -148,61 +148,67 @@ Text(
     ),
 
     settingsBuilder: (onChange, config, palette) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+      return SingleChildScrollView(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
 
-          // ■ アイコン選択
-          DropdownButton<IconData>(
-            value: config["icon"] ?? Icons.favorite,
-            items: const [
-              DropdownMenuItem(
-                value: Icons.favorite,
-                child: Text("favorite"),
-              ),
-              DropdownMenuItem(
-                value: Icons.star,
-                child: Text("star"),
-              ),
-              DropdownMenuItem(
-                value: Icons.home,
-                child: Text("home"),
-              ),
-            ],
-            onChanged: (v) {
-              if (v != null) {
-                onChange({...config, "icon": v});
-              }
-            },
-          ),
+            // ■ アイコン選択
+            DropdownButton<IconData>(
+              isExpanded: true, // ←これも地味に重要（横はみ出し防止）
+              value: config["icon"] ?? Icons.favorite,
+              items: const [
+                DropdownMenuItem(
+                  value: Icons.favorite,
+                  child: Text("favorite"),
+                ),
+                DropdownMenuItem(
+                  value: Icons.star,
+                  child: Text("star"),
+                ),
+                DropdownMenuItem(
+                  value: Icons.home,
+                  child: Text("home"),
+                ),
+              ],
+              onChanged: (v) {
+                if (v != null) {
+                  onChange({...config, "icon": v});
+                }
+              },
+            ),
 
-          const SizedBox(height: 12),
+            const SizedBox(height: 12),
 
-          // ■ サイズ
-          const Text("Size"),
-          Slider(
-            min: 20,
-            max: 80,
-            divisions: 60,
-            value: (config["size"] ?? 40).toDouble(),
-            label: "${config["size"] ?? 40}",
-            onChanged: (v) {
-              onChange({...config, "size": v.round()});
-            },
-          ),
+            // ■ サイズ
+            const Text("Size"),
+            Slider(
+              min: 20,
+              max: 80,
+              divisions: 60,
+              value: (config["size"] ?? 40).toDouble(),
+              label: "${config["size"] ?? 40}",
+              onChanged: (v) {
+                onChange({...config, "size": v.round()});
+              },
+            ),
 
-          const SizedBox(height: 16),
+            const SizedBox(height: 16),
 
-          // ■ カラー
-          const Text("Color"),
-          ColorPicker(
-            selected: config["color"],
-            onSelect: (c) => onChange({
-              ...config,
-              "color": c,
-            }),
-          ),
-        ],
+            // ■ カラー
+            const Text("Color"),
+            ColorPicker(
+              selected: config["color"],
+              onSelect: (c) => onChange({
+                ...config,
+                "color": c,
+              }),
+            ),
+
+            const SizedBox(height: 24), // ← 下余白（ナビバー対策）
+          ],
+        ),
       );
     },
 
@@ -243,41 +249,50 @@ IconButton(
     ),
 
     settingsBuilder: (onChange, config, palette) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+      return SingleChildScrollView(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
 
-          const Text("Width"),
-          Slider(
-            min: 50,
-            max: 300,
-            value: (config["width"] ?? 100).toDouble(),
-            onChanged: (v) =>
-                onChange({...config, "width": v.round()}),
-          ),
+            const Text("Width"),
+            Slider(
+              min: 50,
+              max: 300,
+              divisions: 250,
+              value: (config["width"] ?? 100).toDouble(),
+              label: "${config["width"] ?? 100}",
+              onChanged: (v) =>
+                  onChange({...config, "width": v.round()}),
+            ),
 
-          const SizedBox(height: 12),
+            const SizedBox(height: 12),
 
-          const Text("Height"),
-          Slider(
-            min: 50,
-            max: 300,
-            value: (config["height"] ?? 100).toDouble(),
-            onChanged: (v) =>
-                onChange({...config, "height": v.round()}),
-          ),
+            const Text("Height"),
+            Slider(
+              min: 50,
+              max: 300,
+              divisions: 250,
+              value: (config["height"] ?? 100).toDouble(),
+              label: "${config["height"] ?? 100}",
+              onChanged: (v) =>
+                  onChange({...config, "height": v.round()}),
+            ),
 
-          const SizedBox(height: 16),
+            const SizedBox(height: 16),
 
-          const Text("Color"),
-          ColorPicker(
-            selected: config["color"],
-            onSelect: (c) => onChange({
-              ...config,
-              "color": c,
-            }),
-          ),
-        ],
+            const Text("Color"),
+            ColorPicker(
+              selected: config["color"],
+              onSelect: (c) => onChange({
+                ...config,
+                "color": c,
+              }),
+            ),
+
+            const SizedBox(height: 24), // ← ナビバー対策
+          ],
+        ),
       );
     },
 
@@ -914,6 +929,7 @@ TextField(
               onChanged: (v) =>
                   onChange({...config, "radius": v.round()}),
             ),
+            const SizedBox(height: 24), // ← ナビバー対策
           ],
         ),
       );
