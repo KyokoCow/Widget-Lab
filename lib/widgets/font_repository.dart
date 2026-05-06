@@ -2,7 +2,7 @@ import 'package:flutter_ui_catalog/fonts/font_manager.dart';
 import 'package:flutter_ui_catalog/fonts/google_font_catalog.dart';
 
 class FontRepository {
-  /// デフォルトフォント（全Widget共通）
+  /// デフォルトフォント
   static const String defaultFont = "Roboto";
 
   /// 全フォント一覧（マスタ）
@@ -10,11 +10,9 @@ class FontRepository {
     return googleFontCatalog.map((f) => f.name).toList();
   }
 
-  /// 有効フォント一覧（UI表示用）
+  /// 有効フォント一覧（唯一の参照元に統一）
   static List<String> enabledFonts() {
-    return FontManager.availableFonts
-        .where((f) => FontManager.isEnabled(f))
-        .toList();
+    return FontManager.enabledFonts.toList();
   }
 
   /// Widget用の安全なフォント解決

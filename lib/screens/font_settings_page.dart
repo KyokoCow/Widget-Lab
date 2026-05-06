@@ -10,14 +10,7 @@ class FontSettingsPage extends StatefulWidget {
 }
 
 class _FontSettingsPageState extends State<FontSettingsPage> {
-  late Set<String> tempEnabled;
   final TextEditingController _controller = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    tempEnabled = Set.from(FontManager.enabledFonts);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +19,12 @@ class _FontSettingsPageState extends State<FontSettingsPage> {
     return Scaffold(
       appBar: AppBar(title: const Text("Fonts")),
 
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _applyChanges,
-        icon: const Icon(Icons.check),
-        label: const Text("Apply"),
+      // =========================
+      // FAB：フォント追加
+      // =========================
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: _showAddFontDialog,
       ),
 
       body: ListView.builder(
@@ -37,7 +32,7 @@ class _FontSettingsPageState extends State<FontSettingsPage> {
         itemBuilder: (context, index) {
           final font = fonts[index];
           final name = font.name;
-          final enabled = tempEnabled.contains(name);
+          final enabled = FontManager.isEnabled(name);
 
           return ListTile(
             title: Text(name),
@@ -47,11 +42,7 @@ class _FontSettingsPageState extends State<FontSettingsPage> {
               value: enabled,
               onChanged: (v) {
                 setState(() {
-                  if (v == true) {
-                    tempEnabled.add(name);
-                  } else {
-                    tempEnabled.remove(name);
-                  }
+                  FontManager.toggleFont(name, v ?? false);
                 });
               },
             ),
@@ -60,8 +51,7 @@ class _FontSettingsPageState extends State<FontSettingsPage> {
               icon: const Icon(Icons.delete),
               onPressed: () {
                 setState(() {
-                  tempEnabled.remove(name);
-                  FontManager.availableFonts.remove(name);
+                  FontManager.removeFont(name);
                 });
               },
             ),
@@ -69,25 +59,6 @@ class _FontSettingsPageState extends State<FontSettingsPage> {
         },
       ),
     );
-  }
-
-  // =========================
-  // Apply（確実反映版）
-  // =========================
-  void _applyChanges() {
-    setState(() {
-      FontManager.enabledFonts = Set.from(tempEnabled);
-
-      // availableFontsも同期（ズレ防止）
-      FontManager.availableFonts = googleFontCatalog
-          .map((f) => f.name)
-          .where((name) =>
-      FontManager.enabledFonts.contains(name) ||
-          tempEnabled.contains(name))
-          .toList();
-    });
-
-    Navigator.pop(context);
   }
 
   // =========================
@@ -118,8 +89,7 @@ class _FontSettingsPageState extends State<FontSettingsPage> {
 
                 if (font.isNotEmpty) {
                   setState(() {
-                    FontManager.availableFonts.add(font);
-                    tempEnabled.add(font);
+                    FontManager.addFont(font);
                   });
                 }
 

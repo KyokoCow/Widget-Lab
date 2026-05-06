@@ -14,7 +14,7 @@ final List<Sample> samples = [
       child: Text(
         config["text"] ?? "Hello",
         style: GoogleFonts.getFont(
-          config["fontFamily"] ?? "Roboto",
+          FontRepository.resolve(config["fontFamily"]),
         ).copyWith(
           fontSize: (config["size"] ?? 20).toDouble(),
           color: config["color"] ?? Colors.black,
@@ -23,72 +23,89 @@ final List<Sample> samples = [
     ),
 
     settingsBuilder: (onChange, config, palette) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+      final fonts = FontRepository.enabledFonts();
 
-          // ■ テキスト入力
-          const Text("Text"),
-          TextField(
-            controller: TextEditingController(
-              text: config["text"] ?? "",
+      debugPrint("🔵 settingsBuilder config = $config");
+      debugPrint("🔵 config fontFamily = ${config["fontFamily"]}");
+      debugPrint("🟡 Dropdown fonts = $fonts");
+
+      final current = fonts.contains(config["fontFamily"])
+          ? config["fontFamily"]
+          : FontRepository.defaultFont;
+
+      return LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            padding: EdgeInsets.fromLTRB(
+              12,
+              12,
+              12,
+              MediaQuery.of(context).viewInsets.bottom + 24, // キーボード対応
             ),
-            onChanged: (v) =>
-                onChange({...config, "text": v}),
-          ),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: constraints.maxHeight,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
 
-          // ★ フォント選択
-          DropdownButton<String>(
-            isExpanded: true,
+                  // ■ テキスト入力
+                  const Text("Text"),
 
-            value: FontRepository.enabledFonts().contains(
-              config["fontFamily"],
-            )
-                ? config["fontFamily"]
-                : FontRepository.defaultFont,
+                  TextFormField(
+                    initialValue: config["text"] ?? "Hello",
+                    onChanged: (v) => onChange({
+                      ...config,
+                      "text": v,
+                    }),
+                  ),
 
-            items: FontRepository.enabledFonts().map((font) {
-              return DropdownMenuItem(
-                value: font,
-                child: Text(font),
-              );
-            }).toList(),
+                  const SizedBox(height: 12),
 
-            onChanged: (font) {
-              if (font == null) return;
+                  // ■ フォント選択
+                  const Text("Font"),
 
-              onChange({
-                ...config,
-                "fontFamily": font,
-              });
-            },
-          ),
+                  DropdownButton<String>(
+                    isExpanded: true,
+                    key: ValueKey(config["fontFamily"]),
+                    value: current,
+                    items: fonts.map((font) {
+                      return DropdownMenuItem(
+                        value: font,
+                        child: Text(font),
+                      );
+                    }).toList(),
+                    onChanged: (font) {
+                      if (font == null) return;
 
-          const SizedBox(height: 12),
+                      onChange({
+                        ...config,
+                        "fontFamily": font,
+                      });
+                    },
+                  ),
 
-          // ■ サイズ
-          const Text("Size"),
-          Slider(
-            min: 10,
-            max: 50,
-            divisions: 40,
-            value: (config["size"] ?? 20).toDouble(),
-            label: "${config["size"] ?? 20}",
-            onChanged: (v) =>
-                onChange({...config, "size": v.round()}),
-          ),
+                  const SizedBox(height: 16),
 
-          const SizedBox(height: 16),
+                  // ■ カラー
+                  const Text("Color"),
 
-          // ■ カラー
-          const Text("Color"),
-          ColorPicker(
-            colors: palette.colors,
-            selected: config["color"],
-            onSelect: (c) =>
-                onChange({...config, "color": c}),
-          ),
-        ],
+                  ColorPicker(
+                    colors: palette.colors,
+                    selected: config["color"],
+                    onSelect: (c) => onChange({
+                      ...config,
+                      "color": c,
+                    }),
+                  ),
+
+                  const SizedBox(height: 24), // 下余白
+                ],
+              ),
+            ),
+          );
+        },
       );
     },
 
@@ -112,7 +129,6 @@ Text(
 ''';
     },
   ),
-
 
 
   Sample(
@@ -545,13 +561,14 @@ Checkbox(
 
             // ■ Text（主操作）
             const Text("Text"),
-            TextField(
+
+            TextFormField(
+              initialValue: config["text"] ?? "Card",
               decoration: const InputDecoration(labelText: "Card Text"),
-              controller: TextEditingController(
-                text: config["text"] ?? "Card",
-              ),
-              onChanged: (v) =>
-                  onChange({...config, "text": v}),
+              onChanged: (v) => onChange({
+                ...config,
+                "text": v,
+              }),
             ),
 
             const SizedBox(height: 16),
@@ -676,26 +693,28 @@ Card(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            // ■ hint
+            /// ■ hint
             const Text("Hint"),
-            TextField(
-              controller: TextEditingController(
-                text: config["hint"] ?? "",
-              ),
-              onChanged: (v) =>
-                  onChange({...config, "hint": v}),
+
+            TextFormField(
+              initialValue: config["hint"] ?? "",
+              onChanged: (v) => onChange({
+                ...config,
+                "hint": v,
+              }),
             ),
 
             const SizedBox(height: 12),
 
-            // ■ label
+            /// ■ label
             const Text("Label"),
-            TextField(
-              controller: TextEditingController(
-                text: config["label"] ?? "",
-              ),
-              onChanged: (v) =>
-                  onChange({...config, "label": v}),
+
+            TextFormField(
+              initialValue: config["label"] ?? "",
+              onChanged: (v) => onChange({
+                ...config,
+                "label": v,
+              }),
             ),
 
             const SizedBox(height: 12),

@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ui_catalog/fonts/font_manager.dart';
 import 'package:flutter_ui_catalog/screens/font_settings_page.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final enabledCount = FontManager.enabledFonts.length;
-    final totalCount = FontManager.availableFonts.length;
+  State<SettingsPage> createState() => _SettingsPageState();
+}
 
+class _SettingsPageState extends State<SettingsPage> {
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Settings"),
@@ -17,9 +20,6 @@ class SettingsPage extends StatelessWidget {
       body: ListView(
         children: [
 
-          // =========================
-          // 背景色設定（仮）
-          // =========================
           const ListTile(
             title: Text("Background Color"),
             subtitle: Text("Not implemented yet"),
@@ -28,9 +28,6 @@ class SettingsPage extends StatelessWidget {
 
           const Divider(),
 
-          // =========================
-          // カラーパレット設定（仮）
-          // =========================
           const ListTile(
             title: Text("Color Palette"),
             subtitle: Text("Not implemented yet"),
@@ -39,24 +36,23 @@ class SettingsPage extends StatelessWidget {
 
           const Divider(),
 
-          // =========================
-          // フォント設定
-          // =========================
           ListTile(
             title: const Text("Fonts"),
             subtitle: Text(
-              "Enabled: $enabledCount / $totalCount",
+              "Enabled: ${FontManager.enabledFonts.length}",
             ),
             leading: const Icon(Icons.font_download),
             trailing: const Icon(Icons.chevron_right),
 
-            onTap: () {
-              Navigator.push(
+            onTap: () async {
+              await Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (_) => const FontSettingsPage(),
                 ),
               );
+
+              setState(() {}); // ★これで更新
             },
           ),
         ],

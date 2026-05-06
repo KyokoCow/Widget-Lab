@@ -3,6 +3,7 @@ import 'package:flutter_ui_catalog/data/color_palettes.dart';
 import 'package:flutter_ui_catalog/screens/settings_page.dart';
 import '../data/samples.dart';
 import '../models/sample.dart';
+import 'package:flutter_ui_catalog/theme/app_theme.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -67,14 +68,29 @@ class _HomePageState extends State<HomePage> {
   ========================= */
   Widget _buildSettingsPanel(AppColorPalette palette) {
     if (!showSettings) {
-      return ListView(
-        children: samples.map((s) {
-          return ListTile(
-            title: Text(s.title),
-            selected: selected.id == s.id,
-            onTap: () => _selectSample(s),
-          );
-        }).toList(),
+      return Container(
+        color: AppTheme.sidebarColor,
+        child: ListView.separated(
+          itemCount: samples.length,
+          separatorBuilder: (context, index) {
+            return const Divider(
+              height: 1,
+              thickness: 1,
+              color: Colors.black12,
+            );
+          },
+          itemBuilder: (context, index) {
+            final s = samples[index];
+
+            return ListTile(
+              title: Text(s.title),
+              selected: selected.id == s.id,
+              selectedTileColor: Colors.white.withOpacity(0.3),
+
+              onTap: () => _selectSample(s),
+            );
+          },
+        ),
       );
     }
 
@@ -116,7 +132,7 @@ class _HomePageState extends State<HomePage> {
       children: [
         Container(
           width: width * 0.4, // ←40%
-          color: Colors.grey[200],
+          color: AppTheme.sidebarColor,
           child: _buildSettingsPanel(palette),
         ),
 
@@ -154,7 +170,7 @@ class _HomePageState extends State<HomePage> {
         Expanded(
           flex: 5,
           child: Container(
-            color: Colors.grey[200],
+            color: AppTheme.sidebarColor,
             child: _buildSettingsPanel(palette),
           ),
         ),

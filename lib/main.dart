@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'screens/home_page.dart';
+import 'fonts/font_manager.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ValueListenableBuilder(
+      valueListenable: FontManager.notifier,
+      builder: (_, __, ___) {
+        return const MyApp();
+      },
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -10,9 +18,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: HomePage(),
+
+      theme: ThemeData(
+        fontFamily: "NotoSansJP",
+      ),
     );
   }
 }
