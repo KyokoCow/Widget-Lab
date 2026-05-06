@@ -847,13 +847,13 @@ TextField(
             const SizedBox(height: 12),
 
             // ■ text
-            TextField(
+            TextFormField(
+              initialValue: config["text"] ?? "Button",
               decoration: const InputDecoration(labelText: "Text"),
-              controller: TextEditingController(
-                text: config["text"] ?? "",
-              ),
-              onChanged: (v) =>
-                  onChange({...config, "text": v}),
+              onChanged: (v) => onChange({
+                ...config,
+                "text": v,
+              }),
             ),
 
             const SizedBox(height: 16),

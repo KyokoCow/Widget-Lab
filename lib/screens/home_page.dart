@@ -4,6 +4,7 @@ import 'package:flutter_ui_catalog/screens/settings_page.dart';
 import '../data/samples.dart';
 import '../models/sample.dart';
 import 'package:flutter_ui_catalog/theme/app_theme.dart';
+import 'package:flutter/services.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -184,18 +185,48 @@ class _HomePageState extends State<HomePage> {
   Widget _buildCodePanel() {
     return Container(
       color: Colors.black,
-      padding: const EdgeInsets.all(12),
-      child: SingleChildScrollView(
-        child: SizedBox(
-          width: double.infinity,
-          child: SelectableText(
-            selected.codeBuilder(config),
-            style: const TextStyle(
-              fontFamily: 'monospace',
-              color: Colors.white,
+      child: Stack(
+        children: [
+
+          // ■ コード表示
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: SingleChildScrollView(
+              child: SizedBox(
+                width: double.infinity,
+                child: SelectableText(
+                  selected.codeBuilder(config),
+                  style: const TextStyle(
+                    fontFamily: 'monospace',
+                    color: Colors.white,
+                  ),
+                ),
+              ),
             ),
           ),
-        ),
+
+          // ■ コピーアイコン（右上）
+          Positioned(
+            top: 4,
+            right: 4,
+            child: IconButton(
+              icon: const Icon(Icons.copy, color: Colors.white),
+              tooltip: 'コピー',
+              onPressed: () {
+                final code = selected.codeBuilder(config);
+
+                Clipboard.setData(ClipboardData(text: code));
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Copied!'),
+                    duration: Duration(seconds: 1),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
