@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui_catalog/fonts/font_manager.dart';
 import 'package:flutter_ui_catalog/fonts/google_font_catalog.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class FontSettingsPage extends StatefulWidget {
   const FontSettingsPage({super.key});
@@ -17,7 +18,9 @@ class _FontSettingsPageState extends State<FontSettingsPage> {
     final fonts = googleFontCatalog;
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Fonts")),
+      appBar: AppBar(
+        title: const Text("Fonts"),
+      ),
 
       // =========================
       // FAB：フォント追加
@@ -27,28 +30,73 @@ class _FontSettingsPageState extends State<FontSettingsPage> {
         onPressed: _showAddFontDialog,
       ),
 
-      body: ListView.builder(
+      body: ListView.separated(
         itemCount: fonts.length,
+
+        separatorBuilder: (_, __) => const Divider(
+          height: 1,
+        ),
+
         itemBuilder: (context, index) {
           final font = fonts[index];
           final name = font.name;
           final enabled = FontManager.isEnabled(name);
 
-          return ListTile(
-            title: Text(name),
-            subtitle: Text(font.category),
+          final hasFont =
+          GoogleFonts.asMap().containsKey(name);
 
+          return ListTile(
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 4,
+            ),
+
+            // =========================
+            // フォント名プレビュー
+            // =========================
+            title: Text(
+              "$name   AaBbCc あいうえお",
+
+              style: hasFont
+                  ? GoogleFonts.getFont(name).copyWith(
+                fontSize: 16,
+              )
+                  : const TextStyle(
+                fontSize: 16,
+              ),
+
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            ),
+
+            // =========================
+            // カテゴリ
+            // =========================
+            subtitle: Text(
+              font.category.toUpperCase(),
+            ),
+
+            // =========================
+            // ON/OFF
+            // =========================
             leading: Checkbox(
               value: enabled,
               onChanged: (v) {
                 setState(() {
-                  FontManager.toggleFont(name, v ?? false);
+                  FontManager.toggleFont(
+                    name,
+                    v ?? false,
+                  );
                 });
               },
             ),
 
+            // =========================
+            // 削除
+            // =========================
             trailing: IconButton(
               icon: const Icon(Icons.delete),
+
               onPressed: () {
                 setState(() {
                   FontManager.removeFont(name);
@@ -72,20 +120,28 @@ class _FontSettingsPageState extends State<FontSettingsPage> {
       builder: (context) {
         return AlertDialog(
           title: const Text("Add Font"),
+
           content: TextField(
             controller: _controller,
+
             decoration: const InputDecoration(
               hintText: "e.g. Roboto",
             ),
           ),
+
           actions: [
             TextButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+
               child: const Text("Cancel"),
             ),
+
             ElevatedButton(
               onPressed: () {
-                final font = _controller.text.trim();
+                final font =
+                _controller.text.trim();
 
                 if (font.isNotEmpty) {
                   setState(() {
@@ -95,6 +151,7 @@ class _FontSettingsPageState extends State<FontSettingsPage> {
 
                 Navigator.pop(context);
               },
+
               child: const Text("Add"),
             ),
           ],

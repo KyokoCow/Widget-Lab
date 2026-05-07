@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Flutter Sampler"),
+        title: const Text("Flutter UI Catalog"),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),

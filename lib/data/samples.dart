@@ -3,6 +3,7 @@ import 'package:flutter_ui_catalog/config/app_settings.dart';
 import 'package:flutter_ui_catalog/config/color_palettes.dart';
 import 'package:flutter_ui_catalog/fonts/font_manager.dart';
 import 'package:flutter_ui_catalog/widgets/color_picker.dart';
+import 'package:flutter_ui_catalog/widgets/font_picker.dart';
 import 'package:flutter_ui_catalog/widgets/font_repository.dart';
 import '../models/sample.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,16 +26,6 @@ final List<Sample> samples = [
     ),
 
     settingsBuilder: (onChange, config) {
-      final fonts = FontRepository.enabledFonts();
-
-      debugPrint("🔵 settingsBuilder config = $config");
-      debugPrint("🔵 config fontFamily = ${config["fontFamily"]}");
-      debugPrint("🟡 Dropdown fonts = $fonts");
-
-      final current = fonts.contains(config["fontFamily"])
-          ? config["fontFamily"]
-          : FontRepository.defaultFont;
-
       return LayoutBuilder(
         builder: (context, constraints) {
           return SingleChildScrollView(
@@ -65,27 +56,14 @@ final List<Sample> samples = [
 
                   const SizedBox(height: 12),
 
-                  // ■ フォント選択
                   const Text("Font"),
 
-                  DropdownButton<String>(
-                    isExpanded: true,
-                    key: ValueKey(config["fontFamily"]),
-                    value: current,
-                    items: fonts.map((font) {
-                      return DropdownMenuItem(
-                        value: font,
-                        child: Text(font),
-                      );
-                    }).toList(),
-                    onChanged: (font) {
-                      if (font == null) return;
-
-                      onChange({
-                        ...config,
-                        "fontFamily": font,
-                      });
-                    },
+                  FontPicker(
+                    selected: config["fontFamily"],
+                    onSelect: (font) => onChange({
+                      ...config,
+                      "fontFamily": font,
+                    }),
                   ),
 
                   const SizedBox(height: 16),
