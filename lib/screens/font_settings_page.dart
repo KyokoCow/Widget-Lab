@@ -123,7 +123,6 @@ class _FontSettingsPageState extends State<FontSettingsPage> {
 
           content: TextField(
             controller: _controller,
-
             decoration: const InputDecoration(
               hintText: "e.g. Roboto",
             ),
@@ -134,24 +133,35 @@ class _FontSettingsPageState extends State<FontSettingsPage> {
               onPressed: () {
                 Navigator.pop(context);
               },
-
               child: const Text("Cancel"),
             ),
 
             ElevatedButton(
               onPressed: () {
-                final font =
-                _controller.text.trim();
+                final font = _controller.text.trim();
 
-                if (font.isNotEmpty) {
-                  setState(() {
-                    FontManager.addFont(font);
-                  });
+                if (font.isEmpty) return;
+
+                final exists =
+                GoogleFonts.asMap().containsKey(font);
+
+                if (!exists) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        "Font not found: $font",
+                      ),
+                    ),
+                  );
+                  return;
                 }
+
+                setState(() {
+                  FontManager.addFont(font);
+                });
 
                 Navigator.pop(context);
               },
-
               child: const Text("Add"),
             ),
           ],
