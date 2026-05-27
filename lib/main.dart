@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screens/home_page.dart';
+import 'screens/mode_select_page.dart';
 import 'fonts/font_manager.dart';
 
 void main() {
@@ -20,7 +21,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+
+      home: const ModeSelectPage(),
 
       theme: ThemeData(
         fontFamily: "NotoSansJP",
