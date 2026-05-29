@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui_catalog/config/color_palettes.dart';
+import 'package:flutter_ui_catalog/models/parameter_schema.dart';
 
 /// =========================
 /// 共通インターフェース
@@ -25,15 +26,21 @@ class Sample<T> {
   final String id;
   final String title;
 
-  final PreviewBuilder<T> previewBuilder;
-  final SettingsBuilder<T> settingsBuilder; // ←ここ修正
-  final CodeBuilder<T> codeBuilder;
+  final PreviewBuilder<T>
+  previewBuilder;
+
+  final CodeBuilder<T>
+  codeBuilder;
+
+  final List<ParameterSchema>
+  parameters;
 
   const Sample({
     required this.id,
     required this.title,
     required this.previewBuilder,
-    required this.settingsBuilder,
     required this.codeBuilder,
+
+    this.parameters = const [],
   });
 }

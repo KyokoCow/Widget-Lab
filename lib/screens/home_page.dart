@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ui_catalog/config/app_settings.dart';
 import 'package:flutter_ui_catalog/config/color_palettes.dart';
 import 'package:flutter_ui_catalog/screens/settings_page.dart';
+import 'package:flutter_ui_catalog/widgets/settings_panel.dart';
 import '../data/samples.dart';
 import '../models/sample.dart';
 import 'package:flutter_ui_catalog/theme/app_theme.dart';
@@ -111,13 +112,15 @@ class _HomePageState extends State<HomePage> {
         const Divider(),
 
         Expanded(
-          child: selected.settingsBuilder(
-                (newConfig) {
+          child: SettingsPanel(
+            parameters: selected.parameters,
+            config: config,
+
+            onChange: (newConfig) {
               setState(() {
                 config = Map<String, dynamic>.from(newConfig);
               });
             },
-            config,
           ),
         ),
       ],

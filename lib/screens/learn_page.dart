@@ -62,23 +62,6 @@ class _LearnPageState extends State<LearnPage> {
     }
   }
 
-  Color _getCategoryColor(String category) {
-    switch (category) {
-      case 'layout':
-        return const Color(0xFFFFE4EC);
-      case 'input':
-        return const Color(0xFFFFF6C7);
-      case 'navigation':
-        return const Color(0xFFD6ECFF);
-      case 'style':
-        return const Color(0xFFE6FFE6);
-      case 'async':
-        return const Color(0xFFFFE9D6);
-      default:
-        return Colors.white;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     if (data == null) {
@@ -96,24 +79,92 @@ class _LearnPageState extends State<LearnPage> {
         itemCount: keys.length,
         itemBuilder: (context, index) {
           final key = keys[index];
+
+          // _meta を一覧から除外
+          if (key == '_meta') {
+            return const SizedBox.shrink();
+          }
+
           final widgetData = data![key];
 
-          final category = (widgetData['category'] ?? '').toString();
+          final category =
+          (widgetData['category'] ?? '').toString();
+
+          // Touch対応
+          final touch =
+              widgetData['touch'] ?? false;
+
+          // Param数
+          final paramCount =
+              (widgetData['params'] as List?)?.length ?? 0;
 
           return Card(
-            color: _getCategoryColor(category),
             margin: const EdgeInsets.symmetric(vertical: 6),
+
             child: ListTile(
               leading: Icon(
                 _getCategoryIcon(category),
                 color: Colors.black54,
               ),
+
               title: Text(
                 key,
-                style: const TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              subtitle: Text(category),
-              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+              // Param数バッジ
+              subtitle: Padding(
+                padding: const EdgeInsets.only(top: 6),
+
+                child: Row(
+                  children: [
+
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
+
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.7),
+                        borderRadius:
+                        BorderRadius.circular(999),
+                      ),
+
+                      child: Text(
+                        '$paramCount params',
+
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (touch)
+                    const Padding(
+                      padding: EdgeInsets.only(right: 8),
+                      child: Icon(
+                        Icons.touch_app,
+                        size: 20,
+                        color: Colors.orange,
+                      ),
+                    ),
+
+                  const Icon(
+                    Icons.arrow_forward_ios,
+                    size: 16,
+                  ),
+                ],
+              ),
+
               onTap: () {
                 Navigator.push(
                   context,
