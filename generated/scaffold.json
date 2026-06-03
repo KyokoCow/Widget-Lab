@@ -1,0 +1,258 @@
+{
+  "widget": "Scaffold",
+  "classDescription": "",
+  "params": [
+    {
+      "name": "key",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "appBar",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "body",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "floatingActionButton",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "floatingActionButtonLocation",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "floatingActionButtonAnimator",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "persistentFooterButtons",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "persistentFooterAlignment",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "persistentFooterDecoration",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "drawer",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "onDrawerChanged",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "endDrawer",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "onEndDrawerChanged",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "bottomNavigationBar",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "bottomSheet",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "backgroundColor",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "resizeToAvoidBottomInset",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "primary",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "drawerDragStartBehavior",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "extendBody",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "drawerBarrierDismissible",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "extendBodyBehindAppBar",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "drawerScrimColor",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "bottomSheetScrimBuilder",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "drawerEdgeDragWidth",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "drawerEnableOpenDragGesture",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "endDrawerEnableOpenDragGesture",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "restorationId",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    }
+  ]
+}

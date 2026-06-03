@@ -1,0 +1,87 @@
+{
+  "widget": "Row",
+  "classDescription": "",
+  "params": [
+    {
+      "name": "key",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "mainAxisAlignment",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "mainAxisSize",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "crossAxisAlignment",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "textDirection",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "verticalDirection",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "textBaseline",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "spacing",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "children",
+      "type": "dynamic",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    }
+  ]
+}

@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'screens/home_page.dart';
-import 'screens/mode_select_page.dart';
-import 'fonts/font_manager.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_ui_catalog/pages/learn_page.dart';
 
-void main() {
-  runApp(
-    ValueListenableBuilder(
-      valueListenable: FontManager.notifier,
-      builder: (_, __, ___) {
-        return const MyApp();
-      },
-    ),
-  );
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -21,12 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-
-      home: const ModeSelectPage(),
-
-      theme: ThemeData(
-        fontFamily: "NotoSansJP",
-      ),
+      home: const LearnPage(),
     );
   }
 }

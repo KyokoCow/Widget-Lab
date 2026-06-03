@@ -1,5 +1,5 @@
 name: flutter_ui_catalog
-description: "Touch & Learn Flutter UI"
+description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.11.4
+  sdk: ">=3.0.0 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -30,19 +30,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_fonts: ^6.2.1
-
-
-
-
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  path: ^1.9.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  analyzer: ^6.0.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -51,42 +48,16 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
 
-  flutter_launcher_icons: ^0.13.1
-  analyzer: ^10.0.1
-
-flutter_launcher_icons:
-  android: true
-  ios: true
-
-  image_path: "assets/icon/app_icon2.png"
-
-  # Android adaptive icon
-  adaptive_icon_background: "#FFFFFF"
-  adaptive_icon_foreground: "assets/icon/app_icon2.png"
-
-  # iOS設定（任意だが推奨）
-  remove_alpha_ios: true
-
-
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
 flutter:
-  assets:
-    - assets/images/screenshot.png
-    - assets/widget_data/
-    - assets/images/mode_header.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
-  fonts:
-    - family: NotoSansJP
-      fonts:
-        - asset: assets/fonts/NotoSansJP-VariableFont_wght.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:

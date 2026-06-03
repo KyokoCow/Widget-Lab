@@ -1,0 +1,66 @@
+{
+  "widget": "Stack",
+  "classDescription": "",
+  "params": [
+    {
+      "name": "key",
+      "type": "dynamic",
+      "typeKind": "primitive",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "alignment",
+      "type": "AlignmentGeometry",
+      "typeKind": "enum",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": "AlignmentDirectional.topStart"
+    },
+    {
+      "name": "textDirection",
+      "type": "TextDirection?",
+      "typeKind": "class",
+      "required": false,
+      "nullable": true,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    },
+    {
+      "name": "fit",
+      "type": "BoxFit?",
+      "typeKind": "class",
+      "required": false,
+      "nullable": true,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": "StackFit.loose"
+    },
+    {
+      "name": "clipBehavior",
+      "type": "Clip",
+      "typeKind": "enum",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": "Clip.hardEdge"
+    },
+    {
+      "name": "children",
+      "type": "List<Widget>",
+      "typeKind": "class",
+      "required": false,
+      "nullable": false,
+      "description": "",
+      "sdkDescription": "",
+      "defaultValue": ""
+    }
+  ]
+}

@@ -1,11 +1,11 @@
 {
-    "name": "flutter_ui_catalog",
-    "short_name": "flutter_ui_catalog",
+    "name": "new_flutter_ui_catalog",
+    "short_name": "new_flutter_ui_catalog",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Touch & Learn Flutter UI",
+    "description": "A new Flutter project.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
