@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui_catalog/pages/touch_page.dart';
 import 'package:flutter_ui_catalog/pages/widget_detail_page.dart';
 import '../models/widget_definition.dart';
 import '../widget_definitions/widget_definitions.dart';
@@ -142,13 +143,21 @@ class _LearnPageState extends State<LearnPage>
                           ],
                         ),
 
-                        trailing: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            if (def.ui != null)
-                              const Icon(Icons.touch_app),
-                          ],
-                        ),
+                        trailing: def.ui.rules.overrides.isNotEmpty
+                            ? IconButton(
+                          icon: const Icon(Icons.touch_app),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => TouchPage(
+                                  definition: def,
+                                ),
+                              ),
+                            );
+                          },
+                        )
+                            : null,
 
                         onTap: () {
                           Navigator.push(

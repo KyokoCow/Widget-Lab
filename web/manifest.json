@@ -1,6 +1,6 @@
 {
-    "name": "new_flutter_ui_catalog",
-    "short_name": "new_flutter_ui_catalog",
+    "name": "flutter_ui_catalog",
+    "short_name": "flutter_ui_catalog",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
