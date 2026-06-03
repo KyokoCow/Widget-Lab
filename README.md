@@ -1,17 +1,9 @@
 # flutter_ui_catalog
 
-A new Flutter project.
+## お知らせ
 
-## Getting Started
+アプリの内部構造を大幅に刷新しました。
 
-This project is a starting point for a Flutter application.
+現在も開発を継続中であり、対応 Widget の追加や操作機能の拡充、学習コンテンツの改善を順次進めています。
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+⚠️ 本アプリは開発途中のため、今後のアップデートで機能や画面構成が変更される場合があります。
