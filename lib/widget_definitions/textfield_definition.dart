@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/widget_definition.dart';
 import '../models/widget_param.dart';
-import '../ui/touch_ui_type.dart';
-import '../ui/ui_constraints.dart';
-import '../ui/ui_rules.dart';
-import '../ui/widget_ui.dart';
+
 
 final textFieldDefinition = WidgetDefinition(
   id: 'textfield',
@@ -25,17 +22,6 @@ final textFieldDefinition = WidgetDefinition(
 
   miniPreviewBuilder: () => const Icon(Icons.text_fields),
 
-  ui: WidgetUi(
-    rules: UiRules(
-      overrides: {
-        'text': TouchUiType.text,
-      },
-    ),
-    constraints: const UiConstraints(
-      sliders: {},
-      enums: {},
-    ),
-  ),
 
   params: [
     WidgetParam(

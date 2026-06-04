@@ -3,9 +3,7 @@ import '../models/widget_touchparam.dart';
 import '../ui/touch_ui_type.dart';
 import '../models/widget_definition.dart';
 import '../models/widget_param.dart';
-import '../ui/ui_constraints.dart';
-import '../ui/ui_rules.dart';
-import '../ui/widget_ui.dart';
+
 
 final rowDefinition = WidgetDefinition(
   id: 'row',
@@ -14,6 +12,9 @@ final rowDefinition = WidgetDefinition(
   description: '子Widgetを横一列に並べるレイアウト',
 
     previewBuilder: (values) {
+      final mainAxisAlignment =
+          values['mainAxisAlignment'] ?? 'spaceEvenly';
+
       return Container(
         width: 320,
         height: 180,
@@ -21,7 +22,14 @@ final rowDefinition = WidgetDefinition(
           border: Border.all(width: 1),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: switch (mainAxisAlignment) {
+            'start' => MainAxisAlignment.start,
+            'center' => MainAxisAlignment.center,
+            'end' => MainAxisAlignment.end,
+            'spaceBetween' => MainAxisAlignment.spaceBetween,
+            'spaceAround' => MainAxisAlignment.spaceAround,
+            _ => MainAxisAlignment.spaceEvenly,
+          },
           children: const [
             ColoredBox(
               color: Colors.red,

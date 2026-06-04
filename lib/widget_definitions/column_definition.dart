@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import '../ui/touch_ui_type.dart';
 import '../models/widget_definition.dart';
 import '../models/widget_param.dart';
-import '../ui/ui_constraints.dart';
-import '../ui/ui_rules.dart';
-import '../ui/widget_ui.dart';
+
 
 final columnDefinition = WidgetDefinition(
     id: 'column',
@@ -30,42 +27,6 @@ final columnDefinition = WidgetDefinition(
       ],
     ),
 
-    ui: WidgetUi(
-      rules: UiRules(
-        overrides: {
-          'mainAxisAlignment': TouchUiType.enumDropdown,
-        },
-      ),
-      constraints: UiConstraints(
-        enums: {
-          'mainAxisAlignment': const EnumConfig(
-            values: [
-              'start',
-              'center',
-              'end',
-              'spaceBetween',
-              'spaceAround',
-              'spaceEvenly',
-            ],
-          ),
-          'crossAxisAlignment': const EnumConfig(
-            values: [
-              'start',
-              'center',
-              'end',
-              'stretch',
-              'baseline',
-            ],
-          ),
-          'mainAxisSize': const EnumConfig(
-            values: [
-              'min',
-              'max',
-            ],
-          ),
-        },
-      ),
-    ),
 
     params: [
 

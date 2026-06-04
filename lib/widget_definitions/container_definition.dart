@@ -4,9 +4,7 @@ import '../touch/touch_constants.dart';
 import '../ui/touch_ui_type.dart';
 import '../models/widget_definition.dart';
 import '../models/widget_param.dart';
-import '../ui/ui_constraints.dart';
-import '../ui/ui_rules.dart';
-import '../ui/widget_ui.dart';
+
 
 final containerDefinition = WidgetDefinition(
   id: 'container',
@@ -223,29 +221,6 @@ Container(
   ],
 
 
-
-  ui: WidgetUi(
-    rules: UiRules(
-      overrides: {
-        'width': TouchUiType.slider,
-      },
-    ),
-    constraints: UiConstraints(
-      sliders: {
-        'width': SliderConfig(min: 0, max: 300),
-      },
-      enums: {
-        'clipBehavior': const EnumConfig(
-          values: [
-            'none',
-            'hardEdge',
-            'antiAlias',
-            'antiAliasWithSaveLayer',
-          ],
-        ),
-      },
-    ),
-  ),
     params: [
 
       WidgetParam(
