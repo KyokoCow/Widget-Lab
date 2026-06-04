@@ -21,7 +21,7 @@ class WidgetDetailPage extends StatelessWidget {
         title: Text(definition.title),
 
         actions: [
-          if (definition.ui.rules.overrides.isNotEmpty)
+          if (definition.touchParams.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(right: 8),
               child: FilledButton.icon(
@@ -232,6 +232,8 @@ class WidgetDetailPage extends StatelessWidget {
         return Icons.sell;
       case ParameterKind.requiredNamed:
         return Icons.star;
+      case ParameterKind.inherited:
+        return Icons.account_tree;
     }
   }
 
@@ -243,6 +245,8 @@ class WidgetDetailPage extends StatelessWidget {
         return 'Named';
       case ParameterKind.requiredNamed:
         return 'Required Named';
+      case ParameterKind.inherited:
+        return 'Inherited';
     }
   }
 

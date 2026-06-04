@@ -246,168 +246,132 @@ Container(
       },
     ),
   ),
-  params: [
-    WidgetParam(
-      name: 'key',
-      type: 'Key?',
-      typeKind: TypeKind.classType,
-      parameterKind: ParameterKind.named,
-      nullable: true,
-      description: 'Widgetを識別するためのキー',
-      sdkDescription: '',
-    ),
+    params: [
 
-    WidgetParam(
-      name: 'alignment',
-      type: 'AlignmentGeometry?',
-      typeKind: TypeKind.classType,
-      parameterKind: ParameterKind.named,
-      nullable: true,
-      description: 'childの配置位置',
-      sdkDescription:
-      'Align the child within the container.   If non-null, the container will expand to fill its parent and position its  child within itself according to the given value. If the incoming  constraints are unbounded, then the child will be shrink-wrapped instead.   Ignored if child is null.   See also:    * Alignment, a class with convenient constants typically used to     specify an AlignmentGeometry.   * AlignmentDirectional, like Alignment for specifying alignments     relative to text direction.',
-    ),
+      WidgetParam(
+        name: 'alignment',
+        type: 'AlignmentGeometry?',
+        typeKind: TypeKind.classType,
+        parameterKind: ParameterKind.named,
+        nullable: true,
+        description: 'childの配置位置',
+      ),
 
-    WidgetParam(
-      name: 'padding',
-      type: 'EdgeInsetsGeometry?',
-      typeKind: TypeKind.classType,
-      parameterKind: ParameterKind.named,
-      nullable: true,
-      description: '内側の余白',
-      sdkDescription:
-      'Empty space to inscribe inside the decoration. The child, if any, is  placed inside this padding.   This padding is in addition to any padding inherent in the decoration;  see Decoration.padding.',
-    ),
+      WidgetParam(
+        name: 'padding',
+        type: 'EdgeInsetsGeometry?',
+        typeKind: TypeKind.classType,
+        parameterKind: ParameterKind.named,
+        nullable: true,
+        description: 'childの内側余白',
+      ),
 
-    WidgetParam(
-      name: 'color',
-      type: 'Color?',
-      typeKind: TypeKind.classType,
-      parameterKind: ParameterKind.named,
-      nullable: true,
-      description: '背景色',
-      sdkDescription:
-      'The color to paint behind the child...',
-    ),
+      WidgetParam(
+        name: 'color',
+        type: 'Color?',
+        typeKind: TypeKind.classType,
+        parameterKind: ParameterKind.named,
+        nullable: true,
+        description: '背景色',
+      ),
 
-    WidgetParam(
-      name: 'isAntiAlias',
-      type: 'bool',
-      typeKind: TypeKind.primitive,
-      parameterKind: ParameterKind.named,
-      nullable: false,
-      defaultValue: true,
-      description: '境界を滑らかに描画するか',
-      sdkDescription: '',
-    ),
+      WidgetParam(
+        name: 'decoration',
+        type: 'Decoration?',
+        typeKind: TypeKind.classType,
+        parameterKind: ParameterKind.named,
+        nullable: true,
+        description: '背景や枠線などの装飾',
+      ),
 
-    WidgetParam(
-      name: 'decoration',
-      type: 'Decoration?',
-      typeKind: TypeKind.classType,
-      parameterKind: ParameterKind.named,
-      nullable: true,
-      description: '背景や枠線などの装飾',
-      sdkDescription:
-      'The decoration to paint behind the child...',
-    ),
+      WidgetParam(
+        name: 'foregroundDecoration',
+        type: 'Decoration?',
+        typeKind: TypeKind.classType,
+        parameterKind: ParameterKind.named,
+        nullable: true,
+        description: 'childの前面に描画する装飾',
+      ),
 
-    WidgetParam(
-      name: 'foregroundDecoration',
-      type: 'Decoration?',
-      typeKind: TypeKind.classType,
-      parameterKind: ParameterKind.named,
-      nullable: true,
-      description: 'childの前面に表示する装飾',
-      sdkDescription:
-      'The decoration to paint in front of the child.',
-    ),
+      WidgetParam(
+        name: 'width',
+        type: 'double?',
+        typeKind: TypeKind.primitive,
+        parameterKind: ParameterKind.named,
+        nullable: true,
+        description: '横幅',
+      ),
 
-    WidgetParam(
-      name: 'width',
-      type: 'double?',
-      typeKind: TypeKind.primitive,
-      parameterKind: ParameterKind.named,
-      nullable: true,
-      description: '横幅',
-      sdkDescription: '',
-    ),
+      WidgetParam(
+        name: 'height',
+        type: 'double?',
+        typeKind: TypeKind.primitive,
+        parameterKind: ParameterKind.named,
+        nullable: true,
+        description: '高さ',
+      ),
 
-    WidgetParam(
-      name: 'height',
-      type: 'double?',
-      typeKind: TypeKind.primitive,
-      parameterKind: ParameterKind.named,
-      nullable: true,
-      description: '高さ',
-      sdkDescription: '',
-    ),
+      WidgetParam(
+        name: 'constraints',
+        type: 'BoxConstraints?',
+        typeKind: TypeKind.classType,
+        parameterKind: ParameterKind.named,
+        nullable: true,
+        description: 'サイズ制約',
+      ),
 
-    WidgetParam(
-      name: 'constraints',
-      type: 'BoxConstraints?',
-      typeKind: TypeKind.classType,
-      parameterKind: ParameterKind.named,
-      nullable: true,
-      description: 'サイズ制約',
-      sdkDescription:
-      'Additional constraints to apply to the child...',
-    ),
+      WidgetParam(
+        name: 'margin',
+        type: 'EdgeInsetsGeometry?',
+        typeKind: TypeKind.classType,
+        parameterKind: ParameterKind.named,
+        nullable: true,
+        description: '外側余白',
+      ),
 
-    WidgetParam(
-      name: 'margin',
-      type: 'EdgeInsetsGeometry?',
-      typeKind: TypeKind.classType,
-      parameterKind: ParameterKind.named,
-      nullable: true,
-      description: '外側の余白',
-      sdkDescription:
-      'Empty space to surround the decoration and child.',
-    ),
+      WidgetParam(
+        name: 'transform',
+        type: 'Matrix4?',
+        typeKind: TypeKind.classType,
+        parameterKind: ParameterKind.named,
+        nullable: true,
+        description: '変形行列',
+      ),
 
-    WidgetParam(
-      name: 'transform',
-      type: 'Matrix4?',
-      typeKind: TypeKind.classType,
-      parameterKind: ParameterKind.named,
-      nullable: true,
-      description: '回転や拡大縮小などの変形',
-      sdkDescription:
-      'The transformation matrix to apply before painting...',
-    ),
+      WidgetParam(
+        name: 'transformAlignment',
+        type: 'AlignmentGeometry?',
+        typeKind: TypeKind.classType,
+        parameterKind: ParameterKind.named,
+        nullable: true,
+        description: '変形の基準位置',
+      ),
 
-    WidgetParam(
-      name: 'transformAlignment',
-      type: 'AlignmentGeometry?',
-      typeKind: TypeKind.classType,
-      parameterKind: ParameterKind.named,
-      nullable: true,
-      description: 'transformの基準位置',
-      sdkDescription:
-      'The alignment of the origin...',
-    ),
+      WidgetParam(
+        name: 'clipBehavior',
+        type: 'Clip',
+        typeKind: TypeKind.enumType,
+        parameterKind: ParameterKind.named,
+        nullable: false,
+        description: 'はみ出した内容の切り取り方法',
+      ),
 
-    WidgetParam(
-      name: 'child',
-      type: 'Widget?',
-      typeKind: TypeKind.classType,
-      parameterKind: ParameterKind.named,
-      nullable: true,
-      description: '中に表示するWidget',
-      sdkDescription:
-      'The child contained by the container...',
-    ),
+      WidgetParam(
+        name: 'child',
+        type: 'Widget?',
+        typeKind: TypeKind.classType,
+        parameterKind: ParameterKind.named,
+        nullable: true,
+        description: '中に配置する子Widget',
+      ),
 
-    WidgetParam(
-      name: 'clipBehavior',
-      type: 'Clip',
-      typeKind: TypeKind.enumType,
-      parameterKind: ParameterKind.named,
-      nullable: false,
-      defaultValue: 'none',
-      description: 'はみ出した部分の切り取り方法',
-      sdkDescription:
-      'The clip behavior when Container.decoration is not null...',
-    ),
-  ],
+      WidgetParam(
+        name: 'key',
+        type: 'Key?',
+        typeKind: TypeKind.classType,
+        parameterKind: ParameterKind.named,
+        nullable: true,
+        description: 'Widgetを識別するためのキー',
+      ),
+    ]
 );

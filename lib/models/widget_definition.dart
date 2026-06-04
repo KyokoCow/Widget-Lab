@@ -15,7 +15,7 @@ class WidgetDefinition {
   final List<TouchParam> touchParams;
 
   /// UIルール（唯一のUI定義）
-  final WidgetUi ui;
+  final WidgetUi? ui;
 
   final Widget Function(Map<String, dynamic> values)? previewBuilder;
   final Widget Function()? miniPreviewBuilder;
@@ -28,7 +28,7 @@ class WidgetDefinition {
     required this.category,
     required this.description,
     required this.params,
-    required this.ui,
+    this.ui,
     this.previewBuilder,
     this.miniPreviewBuilder,
     this.codeBuilder,

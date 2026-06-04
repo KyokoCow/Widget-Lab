@@ -8,6 +8,7 @@ enum ParameterKind {
   positional,
   named,
   requiredNamed,
+  inherited,
 }
 
 enum ParamType {
@@ -43,7 +44,7 @@ class WidgetParam {
     required this.nullable,
     this.defaultValue,
     required this.description,
-    required this.sdkDescription,
+    this.sdkDescription = '',
   });
 }
 

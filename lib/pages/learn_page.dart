@@ -143,9 +143,11 @@ class _LearnPageState extends State<LearnPage>
                           ],
                         ),
 
-                        trailing: def.ui.rules.overrides.isNotEmpty
-                            ? IconButton(
-                          icon: const Icon(Icons.touch_app),
+                        trailing: def.touchParams.isNotEmpty
+                            ? FilledButton(
+                          style: FilledButton.styleFrom(
+                            elevation: 3,
+                          ),
                           onPressed: () {
                             Navigator.push(
                               context,
@@ -156,6 +158,10 @@ class _LearnPageState extends State<LearnPage>
                               ),
                             );
                           },
+                          child: const Icon(
+                            Icons.touch_app,
+                            size: 22,
+                          ),
                         )
                             : null,
 
