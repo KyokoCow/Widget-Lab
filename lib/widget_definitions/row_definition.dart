@@ -89,7 +89,7 @@ final rowDefinition = WidgetDefinition(
       TouchParam(
         key: 'mainAxisAlignment',
         uiType: TouchUiType.enumDropdown,
-        label: 'MainAxisAlignment',
+        label: 'MainAxisAlignment(Horizontal)',
         initialValue: 'center',
         items: [
           'start',
@@ -104,7 +104,7 @@ final rowDefinition = WidgetDefinition(
       TouchParam(
         key: 'crossAxisAlignment',
         uiType: TouchUiType.enumDropdown,
-        label: 'CrossAxisAlignment',
+        label: 'CrossAxisAlignment (Vertical)',
         initialValue: 'center',
         items: [
           'start',
