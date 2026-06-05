@@ -64,7 +64,7 @@ class _LearnPageState extends State<LearnPage>
           children: const [
             Text("Learn"),
             Text(
-              "v1.0 | 42 widgets",
+              "v1.0 | 4 widgets",
               style: TextStyle(fontSize: 12),
             ),
           ],

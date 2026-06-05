@@ -14,10 +14,17 @@ final rowDefinition = WidgetDefinition(
     previewBuilder: (values) {
       final mainAxisAlignment =
           values['mainAxisAlignment'] ?? 'spaceEvenly';
+      final crossAxisAlignment =
+          values['crossAxisAlignment'] ?? 'center';
+      final mainAxisSize = values['mainAxisSize'] ?? 'max';
+      final spacing = (values['spacing'] ?? 0).toDouble();
+      final verticalDirection = values['verticalDirection'] ?? 'down';
+      final textDirection = values['textDirection'] ?? 'ltr';
 
       return Container(
-        width: 320,
-        height: 180,
+        width: null,
+        height: double.infinity,
+        margin: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           border: Border.all(width: 1),
         ),
@@ -30,16 +37,36 @@ final rowDefinition = WidgetDefinition(
             'spaceAround' => MainAxisAlignment.spaceAround,
             _ => MainAxisAlignment.spaceEvenly,
           },
-          children: const [
-            ColoredBox(
+          crossAxisAlignment: switch (crossAxisAlignment) {
+            'start' => CrossAxisAlignment.start,
+            'center' => CrossAxisAlignment.center,
+            'end' => CrossAxisAlignment.end,
+            'stretch' => CrossAxisAlignment.stretch,
+            _ => CrossAxisAlignment.center,
+          },
+          mainAxisSize: switch (mainAxisSize) {
+            'min' => MainAxisSize.min,
+            _ => MainAxisSize.max,
+          },
+          verticalDirection: switch (verticalDirection) {
+            'up' => VerticalDirection.up,
+            _ => VerticalDirection.down,
+          },
+          textDirection: switch (textDirection) {
+            'rtl' => TextDirection.rtl,
+            _ => TextDirection.ltr,
+          },
+          spacing:spacing,
+          children: [
+            const ColoredBox(
               color: Colors.red,
               child: SizedBox(width: 40, height: 40),
             ),
-            ColoredBox(
+            const ColoredBox(
               color: Colors.green,
               child: SizedBox(width: 40, height: 80),
             ),
-            ColoredBox(
+            const ColoredBox(
               color: Colors.blue,
               child: SizedBox(width: 40, height: 60),
             ),
@@ -63,7 +90,7 @@ final rowDefinition = WidgetDefinition(
         key: 'mainAxisAlignment',
         uiType: TouchUiType.enumDropdown,
         label: 'MainAxisAlignment',
-        initialValue: 'start',
+        initialValue: 'center',
         items: [
           'start',
           'center',
@@ -117,6 +144,14 @@ final rowDefinition = WidgetDefinition(
         ],
       ),
 
+      TouchParam(
+        key: 'textDirection',
+        uiType: TouchUiType.enumDropdown,
+        label: 'TextDirection',
+        initialValue: 'ltr',
+        items: ['ltr', 'rtl'],
+      ),
+
     ],
 
 
@@ -151,15 +186,6 @@ final rowDefinition = WidgetDefinition(
       ),
 
       WidgetParam(
-        name: 'mainAxisSize',
-        type: 'MainAxisSize',
-        typeKind: TypeKind.enumType,
-        parameterKind: ParameterKind.named,
-        nullable: false,
-        description: 'Row自身の横幅の決め方',
-      ),
-
-      WidgetParam(
         name: 'crossAxisAlignment',
         type: 'CrossAxisAlignment',
         typeKind: TypeKind.enumType,
@@ -169,12 +195,21 @@ final rowDefinition = WidgetDefinition(
       ),
 
       WidgetParam(
-        name: 'textDirection',
-        type: 'TextDirection?',
+        name: 'mainAxisSize',
+        type: 'MainAxisSize',
         typeKind: TypeKind.enumType,
         parameterKind: ParameterKind.named,
-        nullable: true,
-        description: '子Widgetを並べる方向',
+        nullable: false,
+        description: 'Row自身の横幅の決め方',
+      ),
+
+      WidgetParam(
+        name: 'spacing',
+        type: 'double',
+        typeKind: TypeKind.primitive,
+        parameterKind: ParameterKind.named,
+        nullable: false,
+        description: '子Widget同士の間隔（ピクセル）を指定します。',
       ),
 
       WidgetParam(
@@ -187,6 +222,15 @@ final rowDefinition = WidgetDefinition(
       ),
 
       WidgetParam(
+        name: 'textDirection',
+        type: 'TextDirection?',
+        typeKind: TypeKind.enumType,
+        parameterKind: ParameterKind.named,
+        nullable: true,
+        description: '子Widgetを並べる方向',
+      ),
+
+      WidgetParam(
         name: 'textBaseline',
         type: 'TextBaseline?',
         typeKind: TypeKind.enumType,
@@ -194,16 +238,6 @@ final rowDefinition = WidgetDefinition(
         nullable: true,
         description: 'baseline配置時の基準線',
       ),
-
-      WidgetParam(
-        name: 'spacing',
-        type: 'double',
-        typeKind: TypeKind.primitive,
-        parameterKind: ParameterKind.named,
-        nullable: false,
-        description: '子Widget間の間隔',
-      ),
-
 
 
       // ===== 継承プロパティ =====
@@ -215,6 +249,15 @@ final rowDefinition = WidgetDefinition(
         parameterKind: ParameterKind.inherited,
         nullable: false,
         description: 'はみ出した内容を切り取る方法',
+      ),
+
+      WidgetParam(
+        name: 'direction',
+        type: 'Axis',
+        typeKind: TypeKind.enumType,
+        parameterKind: ParameterKind.inherited,
+        nullable: false,
+        description: '主軸方向',
       ),
 
 
