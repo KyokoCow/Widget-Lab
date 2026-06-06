@@ -75,7 +75,10 @@ final flexibleDefinition = WidgetDefinition(
                         height: 60,
                         child: ColoredBox(
                           color: Colors.red.withOpacity(0.25),
-                          child: Text('A-1'),
+                          child: Center(
+                            widthFactor: 1,
+                            child: Text('A-1'),
+                          ),
                         ),
                       ),
                     ),
@@ -86,7 +89,10 @@ final flexibleDefinition = WidgetDefinition(
                         height: 60,
                         child: ColoredBox(
                           color: Colors.red.withOpacity(0.35),
-                          child: Text('A-2'),
+                          child: Center(
+                            widthFactor: 1,
+                            child: Text('A-2'),
+                          ),
                         ),
                       ),
                     ),
