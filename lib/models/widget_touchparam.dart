@@ -8,7 +8,8 @@ class TouchParam {
   final num? max;
   final dynamic initialValue;
 
-  final List<String>? items; // ← 追加
+  final List<String>? items;
+  final List<int>? intItems;
 
   const TouchParam({
     required this.key,
@@ -18,5 +19,6 @@ class TouchParam {
     this.max,
     this.initialValue,
     this.items,
+    this.intItems,
   });
 }

@@ -46,6 +46,45 @@ class ParamRenderer extends StatelessWidget {
         );
 
     // ----------------------------
+    // discreteSlider
+    // ----------------------------
+      case TouchUiType.discreteSlider:
+        final value =
+        ((values[param.key] ?? param.initialValue ?? 0) as num)
+            .toDouble();
+
+        final min = (param.min ?? 0).toDouble();
+        final max = (param.max ?? 100).toDouble();
+
+        // 目盛り間隔を自動計算
+        int divisions;
+        final range = max - min;
+
+        if (range <= 10) {
+          divisions = range.toInt(); // 0～10 → 1刻み
+        } else {
+          divisions = (range / 10).round(); // 0～100 → 10刻み
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('${param.key}: ${value.toInt()}'),
+            Slider(
+              min: min,
+              max: max,
+              divisions: divisions,
+              value: value.clamp(min, max),
+              label: value.toInt().toString(), // 吹き出し表示
+              onChanged: (v) => onChanged(
+                param.key,
+                v.round(),
+              ),
+            ),
+          ],
+        );
+
+    // ----------------------------
     // Checkbox
     // ----------------------------
       case TouchUiType.checkbox:
@@ -105,6 +144,92 @@ class ParamRenderer extends StatelessWidget {
                 if (v == null) return;
                 onChanged(param.key, v);
               },
+            ),
+          ],
+        );
+
+    // ----------------------------
+    // Triple Dropdown
+    // ----------------------------
+      case TouchUiType.tripleDropdown:
+        final items = param.intItems ?? [];
+
+        if (items.isEmpty) {
+          return Text('Missing intItems: ${param.key}');
+        }
+
+        final rawInitial = param.initialValue;
+
+        final value =
+            (values[param.key] as List<int>?) ??
+                (rawInitial is List ? rawInitial.map((e) => e as int).toList() : null) ??
+                [items.first, items.first, items.first];
+
+        int getValue(int index) {
+          if (index >= value.length) {
+            return items.first;
+          }
+
+          final v = value[index];
+          return items.contains(v) ? v : items.first;
+        }
+
+        Widget buildDropdown(int index) {
+          return Expanded(
+            child: DropdownButtonFormField<int>(
+              value: getValue(index),
+              isExpanded: true,
+              items: items
+                  .map(
+                    (e) => DropdownMenuItem<int>(
+                  value: e,
+                  child: Text('$e'),
+                ),
+              )
+                  .toList(),
+              onChanged: (v) {
+                if (v == null) return;
+
+                final newValue = List<int>.from(value);
+
+                while (newValue.length < 3) {
+                  newValue.add(items.first);
+                }
+
+                newValue[index] = v;
+
+                onChanged(param.key, newValue);
+              },
+            ),
+          );
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              param.label ?? param.key,
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 4),
+
+            Row(
+              children: [
+                buildDropdown(0),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(':'),
+                ),
+                buildDropdown(1),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(':'),
+                ),
+                buildDropdown(2),
+              ],
             ),
           ],
         );
