@@ -88,7 +88,30 @@ class WidgetDetailPage extends StatelessWidget {
 
                     const SizedBox(height: 12),
 
-                    // 🔥 ここが重要：Rowの外に出す
+                    const SizedBox(height: 8),
+
+                    if (definition.parentId != null)
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.account_tree,
+                            size: 18,
+                            color: Colors.grey,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            definition.parentId!,
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.grey.shade700,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+
+                    const SizedBox(height: 12),
+
                     Text(
                       definition.description,
                       style: const TextStyle(
@@ -232,8 +255,6 @@ class WidgetDetailPage extends StatelessWidget {
         return Icons.sell;
       case ParameterKind.requiredNamed:
         return Icons.star;
-      case ParameterKind.inherited:
-        return Icons.account_tree;
     }
   }
 
@@ -245,8 +266,6 @@ class WidgetDetailPage extends StatelessWidget {
         return 'Named';
       case ParameterKind.requiredNamed:
         return 'Required Named';
-      case ParameterKind.inherited:
-        return 'Inherited';
     }
   }
 

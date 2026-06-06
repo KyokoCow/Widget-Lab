@@ -8,15 +8,8 @@ enum ParameterKind {
   positional,
   named,
   requiredNamed,
-  inherited,
 }
 
-enum ParamType {
-  bool,
-  double,
-  int,
-  string,
-}
 
 
 class WidgetParam {

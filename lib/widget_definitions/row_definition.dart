@@ -9,6 +9,7 @@ final rowDefinition = WidgetDefinition(
   id: 'row',
   title: 'Row',
   category: 'Layout',
+  parentId: 'flex',
   description: '子Widgetを横一列に並べるレイアウト',
 
     previewBuilder: (values) {
@@ -159,15 +160,6 @@ final rowDefinition = WidgetDefinition(
     params: [
 
       WidgetParam(
-        name: 'key',
-        type: 'Key?',
-        typeKind: TypeKind.classType,
-        parameterKind: ParameterKind.named,
-        nullable: true,
-        description: 'Widgetを識別するためのキー',
-      ),
-
-      WidgetParam(
         name: 'children',
         type: 'List<Widget>',
         typeKind: TypeKind.classType,
@@ -246,18 +238,9 @@ final rowDefinition = WidgetDefinition(
         name: 'clipBehavior',
         type: 'Clip',
         typeKind: TypeKind.enumType,
-        parameterKind: ParameterKind.inherited,
+        parameterKind: ParameterKind.named,
         nullable: false,
         description: 'はみ出した内容を切り取る方法',
-      ),
-
-      WidgetParam(
-        name: 'direction',
-        type: 'Axis',
-        typeKind: TypeKind.enumType,
-        parameterKind: ParameterKind.inherited,
-        nullable: false,
-        description: '主軸方向',
       ),
 
 

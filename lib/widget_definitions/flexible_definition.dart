@@ -9,8 +9,9 @@ final flexibleDefinition = WidgetDefinition(
     id: 'flexible',
     title: 'Flexible',
     category: 'Layout',
+    parentId:'ParentDataWidget<FlexParentData>',
     description: 'RowやColumn内で余ったスペースを柔軟に分配するWidget',
-    miniPreviewBuilder: () => const Icon(Icons.text_fields),
+    miniPreviewBuilder: () => const Icon(Icons.fit_screen_outlined),
 
     previewBuilder: (values) {
       final outer =
@@ -185,6 +186,15 @@ final flexibleDefinition = WidgetDefinition(
     ],
     params: [
       WidgetParam(
+        name: 'child',
+        type: 'Widget',
+        typeKind: TypeKind.classType,
+        parameterKind: ParameterKind.named,
+        nullable: false,
+        description: '表示する子Widget',
+      ),
+
+      WidgetParam(
         name: 'flex',
         type: 'int',
         typeKind: TypeKind.primitive,
@@ -202,14 +212,7 @@ final flexibleDefinition = WidgetDefinition(
         description: '割り当てられた領域をどのように使用するか',
       ),
 
-      WidgetParam(
-        name: 'child',
-        type: 'Widget',
-        typeKind: TypeKind.classType,
-        parameterKind: ParameterKind.named,
-        nullable: false,
-        description: '表示する子Widget',
-      ),
+
     ]
 );
 

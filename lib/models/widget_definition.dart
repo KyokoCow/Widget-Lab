@@ -8,6 +8,7 @@ class WidgetDefinition {
   final String id;
   final String title;
   final String category;
+  final String? parentId;
   final String description;
 
   final List<WidgetParam> params;
@@ -23,6 +24,7 @@ class WidgetDefinition {
     required this.id,
     required this.title,
     required this.category,
+    this.parentId,
     required this.description,
     required this.params,
     this.previewBuilder,

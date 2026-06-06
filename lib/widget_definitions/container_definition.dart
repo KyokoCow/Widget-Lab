@@ -10,6 +10,7 @@ final containerDefinition = WidgetDefinition(
   id: 'container',
   title: 'Container',
   category: 'Layout',
+  parentId: 'stateless_widget',
   description: 'サイズや背景色を設定できる箱',
 
 
@@ -224,6 +225,16 @@ Container(
     params: [
 
       WidgetParam(
+        name: 'child',
+        type: 'Widget?',
+        typeKind: TypeKind.classType,
+        parameterKind: ParameterKind.named,
+        nullable: true,
+        description: '中に配置する子Widget',
+      ),
+
+
+      WidgetParam(
         name: 'alignment',
         type: 'AlignmentGeometry?',
         typeKind: TypeKind.classType,
@@ -331,22 +342,5 @@ Container(
         description: 'はみ出した内容の切り取り方法',
       ),
 
-      WidgetParam(
-        name: 'child',
-        type: 'Widget?',
-        typeKind: TypeKind.classType,
-        parameterKind: ParameterKind.named,
-        nullable: true,
-        description: '中に配置する子Widget',
-      ),
-
-      WidgetParam(
-        name: 'key',
-        type: 'Key?',
-        typeKind: TypeKind.classType,
-        parameterKind: ParameterKind.named,
-        nullable: true,
-        description: 'Widgetを識別するためのキー',
-      ),
     ]
 );
