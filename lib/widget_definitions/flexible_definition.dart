@@ -132,7 +132,7 @@ final flexibleDefinition = WidgetDefinition(
                       color: Colors.green,
                         child: Center(
                           widthFactor: 1,
-                          child: Text('B'),
+                          child: Text('B\n40px'),
                         ),
                     ),
                   ),
@@ -155,7 +155,7 @@ final flexibleDefinition = WidgetDefinition(
                       color: Colors.blue,
                       child: Center(
                         widthFactor: 1,
-                        child: Text('C'),
+                        child: Text('C\n60px'),
                       ),
                     ),
                   ),
