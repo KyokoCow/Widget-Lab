@@ -63,10 +63,12 @@ final flexibleDefinition = WidgetDefinition(
             // ------------------
             Flexible(
               flex: a,
-              child: Container(
+              fit: fitOuter,
+              child: ColoredBox(
                 color: Colors.red.withOpacity(0.15),
 
                 child: Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Flexible(
                       flex: a1,
@@ -169,12 +171,14 @@ final flexibleDefinition = WidgetDefinition(
       TouchParam(
         key: 'flexRatio',
         uiType: TouchUiType.tripleDropdown,
+        label: 'Flex Outer',
         intItems: [0, 1, 2, 3],
         initialValue: [1, 1, 1],
       ),
       TouchParam(
         key: 'flexA',
         uiType: TouchUiType.tripleDropdown,
+        label: 'Flex Inner',
         intItems: [0, 1, 2, 3],
         initialValue: [1, 1, 1],
       ),
