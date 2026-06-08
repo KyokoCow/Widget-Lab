@@ -13,7 +13,32 @@ final iconDefinition = WidgetDefinition(
   category: 'Display',
   parentId: 'StatelessWidget',
   description: 'Material Designなどのアイコンを表示するWidget',
-  miniPreviewBuilder: () => const Icon(Icons.star),
+  miniPreviewBuilder: () => Column(
+    mainAxisSize: MainAxisSize.min,
+    children: const [
+      Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.favorite, size: 16),
+          SizedBox(width: 4),
+          Icon(Icons.home, size: 16),
+          SizedBox(width: 4),
+          Icon(Icons.star, size: 16),
+        ],
+      ),
+      SizedBox(height: 4),
+      Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.face, size: 16),
+          SizedBox(width: 4),
+          Icon(Icons.pets, size: 16),
+          SizedBox(width: 4),
+          Icon(Icons.cake, size: 16),
+        ],
+      ),
+    ],
+  ),
 
   previewBuilder: (values) {
     final dataset = values['dataset'] ?? 'Material Icons';
