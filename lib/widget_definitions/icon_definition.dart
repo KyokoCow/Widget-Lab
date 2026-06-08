@@ -5,6 +5,7 @@ import 'package:material_symbols_icons/symbols.dart';
 import '../models/widget_definition.dart';
 import '../models/widget_param.dart';
 import '../models/widget_touchparam.dart';
+import '../touch/touch_category.dart';
 import '../ui/touch_ui_type.dart';
 
 final iconDefinition = WidgetDefinition(
@@ -53,6 +54,14 @@ final iconDefinition = WidgetDefinition(
     final showShadow = values['showShadow'] ?? false;
     final colorValue =
         (values['color'] as num?)?.toInt() ?? 0xFF2196F3;
+    final applyTextScaling =
+        values['applyTextScaling'] ?? true;
+
+    final textScale =
+    (values['textScale'] ?? 1.0).toDouble();
+
+    final textDirection =
+        values['textDirection'] ?? 'ltr';
 
     late final IconData iconData;
 
@@ -66,6 +75,8 @@ final iconDefinition = WidgetDefinition(
           'cake' => Icons.cake,
           'android' => Icons.android,
           'flutter_dash' => Icons.flutter_dash,
+          'arrow_back' => Icons.arrow_back,
+          'arrow_forward' => Icons.arrow_forward,
           _ => Icons.favorite,
         };
         break;
@@ -79,6 +90,8 @@ final iconDefinition = WidgetDefinition(
           'cake' => Symbols.cake,
           'android' => Symbols.android,
           'flutter_dash' => Symbols.flutter_dash,
+          'arrow_back' => Symbols.arrow_back,
+          'arrow_forward' => Symbols.arrow_forward,
           _ => Symbols.favorite,
         };
         break;
@@ -92,6 +105,8 @@ final iconDefinition = WidgetDefinition(
           'cake' => CupertinoIcons.gift,
           'android' => CupertinoIcons.device_phone_portrait,
           'flutter_dash' => CupertinoIcons.bolt,
+          'arrow_back' => CupertinoIcons.back,
+          'arrow_forward' => CupertinoIcons.forward,
           _ => CupertinoIcons.heart,
         };
         break;
@@ -100,27 +115,53 @@ final iconDefinition = WidgetDefinition(
         iconData = Icons.favorite;
     }
 
-    return Center(
-      child: Icon(
-        iconData,
-        size: size,
-        color: Color(colorValue),
+    return MediaQuery(
+      data: MediaQueryData(
+        textScaler: TextScaler.linear(textScale),
+      ),
+      child: Directionality(
+        textDirection: switch (textDirection) {
+          'rtl' => TextDirection.rtl,
+          _ => TextDirection.ltr,
+        },
+        child: Center(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                iconData,
+                size: size,
+                color: Color(colorValue),
 
-        // Material Symbolsだけ意味を持つ（他は無視される）
-        fill: fill,
-        weight: weight,
-        grade: grade,
-        opticalSize: opticalSize,
+                fill: fill,
+                weight: weight,
+                grade: grade,
+                opticalSize: opticalSize,
 
-        shadows: showShadow
-            ? const [
-          Shadow(
-            offset: Offset(3, 3),
-            blurRadius: 6,
-            color: Colors.black38,
+                applyTextScaling: applyTextScaling,
+
+                shadows: showShadow
+                    ? const [
+                  Shadow(
+                    offset: Offset(3, 3),
+                    blurRadius: 6,
+                    color: Colors.black38,
+                  ),
+                ]
+                    : null,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                iconKey
+                    .replaceAll('_', ' ')
+                    .split(' ')
+                    .map((s) => s[0].toUpperCase() + s.substring(1))
+                    .join(' '),
+                style: const TextStyle(fontSize: 24),
+              ),
+            ],
           ),
-        ]
-            : null,
+        ),
       ),
     );
   },
@@ -128,6 +169,7 @@ final iconDefinition = WidgetDefinition(
   touchParams: [
     TouchParam(
       key: 'dataset',
+      category: TouchCategory.preview,
       uiType: TouchUiType.enumDropdown,
       label: 'Icon Dataset',
       initialValue: 'Material Icons',
@@ -141,7 +183,7 @@ final iconDefinition = WidgetDefinition(
       key: 'icon',
       uiType: TouchUiType.enumDropdown,
       label: 'Icon',
-      initialValue: 'Icons.favorite',
+      initialValue: 'favorite',
       items: [
         'favorite',
         'home',
@@ -151,6 +193,8 @@ final iconDefinition = WidgetDefinition(
         'cake',
         'android',
         'flutter_dash',
+        'arrow_back',
+        'arrow_forward',
       ],
     ),
 
@@ -211,6 +255,34 @@ final iconDefinition = WidgetDefinition(
       uiType: TouchUiType.checkbox,
       label: 'Shadow',
       initialValue: false,
+    ),
+
+    TouchParam(
+      key: 'applyTextScaling',
+      uiType: TouchUiType.checkbox,
+      label: 'Apply Text Scaling',
+      initialValue: true,
+    ),
+
+    TouchParam(
+      key: 'textScale',
+      uiType: TouchUiType.slider,
+      label: 'Text Scale',
+      initialValue: 1.0,
+      min: 0.5,
+      max: 3.0,
+    ),
+
+    TouchParam(
+      key: 'textDirection',
+      category: TouchCategory.preview,
+      uiType: TouchUiType.segmented,
+      label: 'Text Direction',
+      initialValue: 'ltr',
+      items: const [
+        'ltr',
+        'rtl',
+      ],
     ),
 
   ],

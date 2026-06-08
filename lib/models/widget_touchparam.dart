@@ -1,8 +1,11 @@
+import '../touch/touch_category.dart';
 import '../ui/touch_ui_type.dart';
 
 class TouchParam {
   final String key;
   final TouchUiType uiType;
+  final TouchCategory? category;
+
   final String? label;
   final num? min;
   final num? max;
@@ -14,6 +17,9 @@ class TouchParam {
   const TouchParam({
     required this.key,
     required this.uiType,
+
+    this.category,
+
     this.label,
     this.min,
     this.max,

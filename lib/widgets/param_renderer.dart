@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/widget_touchparam.dart';
+import '../touch/touch_category.dart';
 import '../ui/touch_ui_type.dart';
 
 class ParamRenderer extends StatelessWidget {
@@ -22,11 +23,30 @@ class ParamRenderer extends StatelessWidget {
     );
   }
 
+  Widget buildParamLabel(
+      TouchParam param,
+      String text,
+      ) {
+    return Row(
+      children: [
+        if (param.category == TouchCategory.preview) ...[
+          const Icon(
+            Icons.settings,
+            size: 16,
+            color: Colors.blue,
+          ),
+          const SizedBox(width: 4),
+        ],
+        Text(text),
+      ],
+    );
+  }
+
   Widget _buildParam(TouchParam param) {
     switch (param.uiType) {
     // ----------------------------
-    // Slider
-    // ----------------------------
+// Slider
+// ----------------------------
       case TouchUiType.slider:
         final value =
         ((values[param.key] ?? param.initialValue ?? 0) as num)
@@ -35,7 +55,10 @@ class ParamRenderer extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${param.key}: ${value.toInt()}'),
+            buildParamLabel(
+              param,
+              '${param.label ?? param.key}: ${value.toInt()}',
+            ),
             Slider(
               min: (param.min ?? 0).toDouble(),
               max: (param.max ?? 100).toDouble(),
@@ -44,9 +67,10 @@ class ParamRenderer extends StatelessWidget {
             ),
           ],
         );
-    // ----------------------------
-    // Slider(Int)
-    // ----------------------------
+
+// ----------------------------
+// Slider(Double)
+// ----------------------------
       case TouchUiType.sliderDouble:
         final value =
         ((values[param.key] ?? param.initialValue ?? 0) as num)
@@ -55,7 +79,10 @@ class ParamRenderer extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${param.label ?? param.key}: ${value.toStringAsFixed(2)}'),
+            buildParamLabel(
+              param,
+              '${param.label ?? param.key}: ${value.toStringAsFixed(2)}',
+            ),
             Slider(
               min: (param.min ?? 0).toDouble(),
               max: (param.max ?? 100).toDouble(),
@@ -65,10 +92,9 @@ class ParamRenderer extends StatelessWidget {
           ],
         );
 
-
-    // ----------------------------
-    // discreteSlider
-    // ----------------------------
+// ----------------------------
+// discreteSlider
+// ----------------------------
       case TouchUiType.discreteSlider:
         final value =
         ((values[param.key] ?? param.initialValue ?? 0) as num)
@@ -77,26 +103,28 @@ class ParamRenderer extends StatelessWidget {
         final min = (param.min ?? 0).toDouble();
         final max = (param.max ?? 100).toDouble();
 
-        // 目盛り間隔を自動計算
         int divisions;
         final range = max - min;
 
         if (range <= 10) {
-          divisions = range.toInt(); // 0～10 → 1刻み
+          divisions = range.toInt();
         } else {
-          divisions = (range / 10).round(); // 0～100 → 10刻み
+          divisions = (range / 10).round();
         }
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${param.key}: ${value.toInt()}'),
+            buildParamLabel(
+              param,
+              '${param.label ?? param.key}: ${value.toInt()}',
+            ),
             Slider(
               min: min,
               max: max,
               divisions: divisions,
               value: value.clamp(min, max),
-              label: value.toInt().toString(), // 吹き出し表示
+              label: value.toInt().toString(),
               onChanged: (v) => onChanged(
                 param.key,
                 v.round(),
@@ -104,9 +132,10 @@ class ParamRenderer extends StatelessWidget {
             ),
           ],
         );
-    // ----------------------------
-    // Segmented Button
-    // ----------------------------
+
+// ----------------------------
+// Segmented Button
+// ----------------------------
       case TouchUiType.segmented:
         final value =
             values[param.key] ??
@@ -116,10 +145,11 @@ class ParamRenderer extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Text(param.label ?? param.key),
+            buildParamLabel(
+              param,
+              param.label ?? param.key,
             ),
+            const SizedBox(height: 8),
             Center(
               child: SegmentedButton<String>(
                 segments: [
@@ -137,9 +167,10 @@ class ParamRenderer extends StatelessWidget {
             ),
           ],
         );
-    // ----------------------------
-    // Checkbox
-    // ----------------------------
+
+// ----------------------------
+// Checkbox
+// ----------------------------
       case TouchUiType.checkbox:
         final value =
             values[param.key] ??
@@ -151,12 +182,15 @@ class ParamRenderer extends StatelessWidget {
         return CheckboxListTile(
           value: safeValue,
           onChanged: (v) => onChanged(param.key, v ?? false),
-          title: Text(param.key),
+          title: buildParamLabel(
+            param,
+            param.label ?? param.key,
+          ),
         );
 
-    // ----------------------------
-    // Radio Button (Dataset)
-    // ----------------------------
+// ----------------------------
+// Radio Button
+// ----------------------------
       case TouchUiType.radio:
         final value =
             values[param.key] ??
@@ -167,16 +201,15 @@ class ParamRenderer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Text(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 8,
+              ),
+              child: buildParamLabel(
+                param,
                 param.label ?? param.key,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
               ),
             ),
-
-            // ラジオリスト
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Column(
@@ -200,9 +233,9 @@ class ParamRenderer extends StatelessWidget {
           ],
         );
 
-    // ----------------------------
-    // Enum dropdown
-    // ----------------------------
+// ----------------------------
+// Enum dropdown
+// ----------------------------
       case TouchUiType.enumDropdown:
         final items = param.items ?? [];
 
@@ -220,15 +253,11 @@ class ParamRenderer extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            buildParamLabel(
+              param,
               param.label ?? param.key,
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-              ),
             ),
             const SizedBox(height: 4),
-
             DropdownButtonFormField<String>(
               value: safeValue,
               items: items
@@ -248,8 +277,8 @@ class ParamRenderer extends StatelessWidget {
         );
 
     // ----------------------------
-    // Triple Dropdown
-    // ----------------------------
+// Triple Dropdown
+// ----------------------------
       case TouchUiType.tripleDropdown:
         final items = param.intItems ?? [];
 
@@ -261,7 +290,9 @@ class ParamRenderer extends StatelessWidget {
 
         final value =
             (values[param.key] as List<int>?) ??
-                (rawInitial is List ? rawInitial.map((e) => e as int).toList() : null) ??
+                (rawInitial is List
+                    ? rawInitial.map((e) => e as int).toList()
+                    : null) ??
                 [items.first, items.first, items.first];
 
         int getValue(int index) {
@@ -306,15 +337,11 @@ class ParamRenderer extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            buildParamLabel(
+              param,
               param.label ?? param.key,
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-              ),
             ),
             const SizedBox(height: 4),
-
             Row(
               children: [
                 buildDropdown(0),
@@ -333,24 +360,28 @@ class ParamRenderer extends StatelessWidget {
           ],
         );
 
-    // ----------------------------
-    // Text
-    // ----------------------------
+// ----------------------------
+// Text
+// ----------------------------
       case TouchUiType.text:
         return ListTile(
-          title: Text('${param.key} (Text)'),
+          title: buildParamLabel(
+            param,
+            '${param.label ?? param.key} (Text)',
+          ),
         );
 
-    // ----------------------------
-    // Color Picker
-    // ----------------------------
+// ----------------------------
+// Color Picker
+// ----------------------------
       case TouchUiType.colorPicker:
         final value =
             values[param.key] ??
                 param.initialValue ??
                 Colors.white.value;
 
-        final safeValue = value is int ? value : Colors.white.value;
+        final safeValue =
+        value is int ? value : Colors.white.value;
 
         const colors = [
           Colors.white,
@@ -372,8 +403,14 @@ class ParamRenderer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Text(param.label ?? param.key),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 8,
+              ),
+              child: buildParamLabel(
+                param,
+                param.label ?? param.key,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -384,7 +421,10 @@ class ParamRenderer extends StatelessWidget {
                   final selected = safeValue == color.value;
 
                   return GestureDetector(
-                    onTap: () => onChanged(param.key, color.value),
+                    onTap: () => onChanged(
+                      param.key,
+                      color.value,
+                    ),
                     child: Container(
                       width: 32,
                       height: 32,
@@ -392,7 +432,9 @@ class ParamRenderer extends StatelessWidget {
                         color: color,
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: selected ? Colors.blue : Colors.grey,
+                          color: selected
+                              ? Colors.blue
+                              : Colors.grey,
                           width: selected ? 3 : 1,
                         ),
                       ),
@@ -400,7 +442,8 @@ class ParamRenderer extends StatelessWidget {
                           ? Icon(
                         Icons.check,
                         size: 18,
-                        color: color.computeLuminance() > 0.5
+                        color:
+                        color.computeLuminance() > 0.5
                             ? Colors.black
                             : Colors.white,
                       )
