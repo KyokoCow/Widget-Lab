@@ -1,10 +1,13 @@
 enum TouchUiType {
   slider,
+  sliderDouble,
   discreteSlider,
+  segmented,
   checkbox,
-  color,
+  colorPicker,
   text,
   edgeInsets,
   enumDropdown,
   tripleDropdown,
+  radio,
 }

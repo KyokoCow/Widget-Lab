@@ -20,6 +20,7 @@ class _LearnPageState extends State<LearnPage>
     "Layout": [],
     "Input": [],
     "Display": [],
+    "Material": [],
   };
 
   @override
@@ -50,6 +51,8 @@ class _LearnPageState extends State<LearnPage>
         return Icons.keyboard;
       case 'display':
         return Icons.visibility;
+      case 'material':
+        return Icons.dashboard_customize;
       default:
         return Icons.extension;
     }
@@ -64,7 +67,7 @@ class _LearnPageState extends State<LearnPage>
           children: const [
             Text("Learn"),
             Text(
-              "v1.0 | 4 widgets",
+              "v1.0 | 10 widgets",
               style: TextStyle(fontSize: 12),
             ),
           ],

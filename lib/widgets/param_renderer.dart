@@ -44,6 +44,27 @@ class ParamRenderer extends StatelessWidget {
             ),
           ],
         );
+    // ----------------------------
+    // Slider(Int)
+    // ----------------------------
+      case TouchUiType.sliderDouble:
+        final value =
+        ((values[param.key] ?? param.initialValue ?? 0) as num)
+            .toDouble();
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('${param.label ?? param.key}: ${value.toStringAsFixed(2)}'),
+            Slider(
+              min: (param.min ?? 0).toDouble(),
+              max: (param.max ?? 100).toDouble(),
+              value: value,
+              onChanged: (v) => onChanged(param.key, v),
+            ),
+          ],
+        );
+
 
     // ----------------------------
     // discreteSlider
@@ -83,7 +104,39 @@ class ParamRenderer extends StatelessWidget {
             ),
           ],
         );
+    // ----------------------------
+    // Segmented Button
+    // ----------------------------
+      case TouchUiType.segmented:
+        final value =
+            values[param.key] ??
+                param.initialValue ??
+                (param.items?.isNotEmpty == true ? param.items!.first : '');
 
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Text(param.label ?? param.key),
+            ),
+            Center(
+              child: SegmentedButton<String>(
+                segments: [
+                  for (final item in param.items ?? [])
+                    ButtonSegment<String>(
+                      value: item,
+                      label: Text(item),
+                    ),
+                ],
+                selected: {value.toString()},
+                onSelectionChanged: (selection) {
+                  onChanged(param.key, selection.first);
+                },
+              ),
+            ),
+          ],
+        );
     // ----------------------------
     // Checkbox
     // ----------------------------
@@ -99,6 +152,52 @@ class ParamRenderer extends StatelessWidget {
           value: safeValue,
           onChanged: (v) => onChanged(param.key, v ?? false),
           title: Text(param.key),
+        );
+
+    // ----------------------------
+    // Radio Button (Dataset)
+    // ----------------------------
+      case TouchUiType.radio:
+        final value =
+            values[param.key] ??
+                param.initialValue ??
+                (param.items?.isNotEmpty == true ? param.items!.first : '');
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Text(
+                param.label ?? param.key,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+            // ラジオリスト
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Column(
+                children: [
+                  for (final item in (param.items ?? []))
+                    RadioListTile<String>(
+                      value: item,
+                      groupValue: value.toString(),
+                      onChanged: (v) {
+                        if (v != null) {
+                          onChanged(param.key, v);
+                        }
+                      },
+                      title: Text(item),
+                      dense: true,
+                      visualDensity: VisualDensity.compact,
+                    ),
+                ],
+              ),
+            ),
+          ],
         );
 
     // ----------------------------
@@ -243,11 +342,75 @@ class ParamRenderer extends StatelessWidget {
         );
 
     // ----------------------------
-    // Color
+    // Color Picker
     // ----------------------------
-      case TouchUiType.color:
-        return ListTile(
-          title: Text('${param.key} (Color)'),
+      case TouchUiType.colorPicker:
+        final value =
+            values[param.key] ??
+                param.initialValue ??
+                Colors.white.value;
+
+        final safeValue = value is int ? value : Colors.white.value;
+
+        const colors = [
+          Colors.white,
+          Colors.black,
+          Colors.red,
+          Colors.pink,
+          Colors.orange,
+          Colors.yellow,
+          Colors.green,
+          Colors.teal,
+          Colors.blue,
+          Colors.indigo,
+          Colors.purple,
+          Colors.brown,
+          Colors.grey,
+        ];
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Text(param.label ?? param.key),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: colors.map((color) {
+                  final selected = safeValue == color.value;
+
+                  return GestureDetector(
+                    onTap: () => onChanged(param.key, color.value),
+                    child: Container(
+                      width: 32,
+                      height: 32,
+                      decoration: BoxDecoration(
+                        color: color,
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: selected ? Colors.blue : Colors.grey,
+                          width: selected ? 3 : 1,
+                        ),
+                      ),
+                      child: selected
+                          ? Icon(
+                        Icons.check,
+                        size: 18,
+                        color: color.computeLuminance() > 0.5
+                            ? Colors.black
+                            : Colors.white,
+                      )
+                          : null,
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          ],
         );
 
     // ----------------------------
