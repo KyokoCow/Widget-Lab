@@ -51,7 +51,6 @@ final iconDefinition = WidgetDefinition(
     final weight = (values['weight'] ?? 400.0).toDouble();
     final grade = (values['grade'] ?? 0.0).toDouble();
     final opticalSize = (values['opticalSize'] ?? 24.0).toDouble();
-    final showShadow = values['showShadow'] ?? false;
     final colorValue =
         (values['color'] as num?)?.toInt() ?? 0xFF2196F3;
     final applyTextScaling =
@@ -62,6 +61,19 @@ final iconDefinition = WidgetDefinition(
 
     final textDirection =
         values['textDirection'] ?? 'ltr';
+
+    final shadowDx =
+    (values['shadowDx'] ?? 3.0).toDouble();
+
+    final shadowDy =
+    (values['shadowDy'] ?? 3.0).toDouble();
+
+    final shadowBlur =
+    (values['shadowBlur'] ?? 6.0).toDouble();
+
+    final shadowColor =
+        (values['shadowColor'] as num?)?.toInt() ??
+            Colors.black.value;
 
     late final IconData iconData;
 
@@ -134,15 +146,16 @@ final iconDefinition = WidgetDefinition(
 
                 applyTextScaling: applyTextScaling,
 
-                shadows: showShadow
-                    ? const [
+                shadows: [
                   Shadow(
-                    offset: Offset(3, 3),
-                    blurRadius: 6,
-                    color: Colors.black38,
+                    offset: Offset(
+                      shadowDx,
+                      shadowDy,
+                    ),
+                    blurRadius: shadowBlur,
+                    color: Color(shadowColor),
                   ),
-                ]
-                    : null,
+                ],
               ),
               const SizedBox(width: 8),
               Text(
@@ -243,10 +256,34 @@ final iconDefinition = WidgetDefinition(
     ),
 
     TouchParam(
-      key: 'showShadow',
-      uiType: TouchUiType.checkbox,
-      label: 'Shadow',
-      initialValue: false,
+      key: 'shadowDx',
+      uiType: TouchUiType.sliderDouble,
+      label: 'Shadow X',
+      min: -20,
+      max: 20,
+      initialValue: 3.0,
+    ),
+    TouchParam(
+      key: 'shadowDy',
+      uiType: TouchUiType.sliderDouble,
+      label: 'Shadow Y',
+      min: -20,
+      max: 20,
+      initialValue: 3.0,
+    ),
+    TouchParam(
+      key: 'shadowBlur',
+      uiType: TouchUiType.sliderDouble,
+      label: 'Shadow Blur',
+      min: 0,
+      max: 30,
+      initialValue: 6.0,
+    ),
+    TouchParam(
+      key: 'shadowColor',
+      uiType: TouchUiType.colorPicker,
+      label: 'Shadow Color',
+      initialValue: Colors.black.value,
     ),
 
     TouchParam(
