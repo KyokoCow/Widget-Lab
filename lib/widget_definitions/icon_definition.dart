@@ -45,6 +45,7 @@ final iconDefinition = WidgetDefinition(
     final dataset = values['dataset'] ?? 'Material Icons';
 
     final iconKey = values['icon'] ?? 'favorite';
+    final showShadow = values['showShadow'] ?? true;
 
     final size = (values['size'] ?? 48.0).toDouble();
     final fill = (values['fill'] ?? 0.0).toDouble();
@@ -146,7 +147,8 @@ final iconDefinition = WidgetDefinition(
 
                 applyTextScaling: applyTextScaling,
 
-                shadows: [
+                shadows: showShadow
+                    ? [
                   Shadow(
                     offset: Offset(
                       shadowDx,
@@ -155,7 +157,8 @@ final iconDefinition = WidgetDefinition(
                     blurRadius: shadowBlur,
                     color: Color(shadowColor),
                   ),
-                ],
+                ]
+                    : null,
               ),
               const SizedBox(width: 8),
               Text(
@@ -255,6 +258,12 @@ final iconDefinition = WidgetDefinition(
       max: 48.0,
     ),
 
+    TouchParam(
+      key: 'showShadow',
+      uiType: TouchUiType.checkbox,
+      label: 'Shadow',
+      initialValue: true,
+    ),
     TouchParam(
       key: 'shadowDx',
       uiType: TouchUiType.sliderDouble,
