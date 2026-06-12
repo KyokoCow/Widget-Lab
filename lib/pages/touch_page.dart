@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../models/preview_state.dart';
 import '../models/widget_definition.dart';
 import '../widgets/param_renderer.dart';
 
@@ -20,6 +21,7 @@ class TouchPage extends StatefulWidget {
 class _TouchPageState
     extends State<TouchPage> {
   late Map<String, dynamic> values;
+  late PreviewState previewState;
 
   @override
   void initState() {
@@ -31,6 +33,7 @@ class _TouchPageState
             ? (p.initialValue ?? p.min ?? 0).toDouble()
             : p.initialValue,
     };
+    previewState = PreviewState();
   }
 
   void updateValue(
