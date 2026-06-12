@@ -57,9 +57,6 @@ final textFieldDefinition = WidgetDefinition(
     final width =
     (values['width'] ?? 240.0).toDouble();
 
-    final text =
-        values['text'] ?? '';
-
     final hintText =
         values['hintText'] ?? '';
 
@@ -69,12 +66,26 @@ final textFieldDefinition = WidgetDefinition(
     final readOnly =
         values['readOnly'] ?? false;
 
+    // ----------------------------
+    // StateをValuesの中に保存
+    // ----------------------------
+    values['_state'] ??= {
+      'controller': TextEditingController(
+        text: values['text'] ?? '',
+      ),
+    };
+
+    final state =
+    values['_state'] as Map<String, dynamic>;
+
+    final controller =
+    state['controller']
+    as TextEditingController;
+
     return SizedBox(
       width: width,
       child: TextField(
-        controller: TextEditingController(
-          text: text,
-        ),
+        controller: controller,
         decoration: InputDecoration(
           hintText: hintText,
         ),
