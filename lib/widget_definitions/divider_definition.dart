@@ -12,6 +12,7 @@ final dividerDefinition = WidgetDefinition(
   category: 'Display',
   parentId: 'StatelessWidget',
   description: '水平の区切り線を表示するWidget',
+
     miniPreviewBuilder: () => Container(
       width: 40,
       height: 40,
