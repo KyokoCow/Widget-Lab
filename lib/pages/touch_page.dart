@@ -156,7 +156,10 @@ class _TouchPageState
       );
     }
 
-    return builder(values);
+    return builder(
+      values,
+      previewState,
+    );
   }
 
   /* =========================

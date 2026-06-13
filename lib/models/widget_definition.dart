@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui_catalog/models/preview_state.dart';
 import 'package:flutter_ui_catalog/models/widget_param.dart';
 import 'package:flutter_ui_catalog/models/widget_touchparam.dart';
 
@@ -15,7 +16,10 @@ class WidgetDefinition {
   final List<TouchParam> touchParams;
 
 
-  final Widget Function(Map<String, dynamic> values)? previewBuilder;
+  final Widget Function(
+      Map<String, dynamic> values,
+      PreviewState state,
+      )? previewBuilder;
   final Widget Function()? miniPreviewBuilder;
 
   final String Function(Map<String, dynamic>)? codeBuilder;
