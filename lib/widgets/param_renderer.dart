@@ -31,9 +31,17 @@ class ParamRenderer extends StatelessWidget {
       children: [
         if (param.category == TouchCategory.preview) ...[
           const Icon(
-            Icons.settings,
+            Icons.visibility,
             size: 16,
             color: Colors.blue,
+          ),
+          const SizedBox(width: 4),
+        ],
+        if (param.category == TouchCategory.config) ...[
+          const Icon(
+            Icons.settings,
+            size: 16,
+            color: Colors.orange,
           ),
           const SizedBox(width: 4),
         ],
@@ -167,7 +175,39 @@ class ParamRenderer extends StatelessWidget {
             ),
           ],
         );
+// ----------------------------
+// Choice Chip
+// ----------------------------
+      case TouchUiType.choiceChip:
+        final value =
+            values[param.key] ??
+                param.initialValue ??
+                (param.items?.isNotEmpty == true ? param.items!.first : '');
 
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildParamLabel(
+              param,
+              param.label ?? param.key,
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                for (final item in param.items ?? [])
+                  ChoiceChip(
+                    label: Text(item),
+                    selected: value == item,
+                    onSelected: (_) {
+                      onChanged(param.key, item);
+                    },
+                  ),
+              ],
+            ),
+          ],
+        );
 // ----------------------------
 // Checkbox
 // ----------------------------
@@ -364,11 +404,28 @@ class ParamRenderer extends StatelessWidget {
 // Text
 // ----------------------------
       case TouchUiType.text:
-        return ListTile(
-          title: buildParamLabel(
-            param,
-            '${param.label ?? param.key} (Text)',
-          ),
+        final value =
+        (values[param.key] ?? param.initialValue ?? '').toString();
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildParamLabel(
+              param,
+              param.label ?? param.key,
+            ),
+            const SizedBox(height: 8),
+            TextFormField(
+              initialValue: value,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                isDense: true,
+              ),
+              onChanged: (text) {
+                onChanged(param.key, text);
+              },
+            ),
+          ],
         );
 
 // ----------------------------

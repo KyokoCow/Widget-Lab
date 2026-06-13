@@ -1,3 +1,4 @@
 enum TouchCategory {
   preview,
+  config,
 }

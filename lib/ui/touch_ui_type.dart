@@ -4,6 +4,7 @@ enum TouchUiType {
   discreteSlider,
   segmented,
   checkbox,
+  choiceChip,
   colorPicker,
   text,
   edgeInsets,
