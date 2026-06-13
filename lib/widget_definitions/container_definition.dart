@@ -14,7 +14,7 @@ final containerDefinition = WidgetDefinition(
   description: 'サイズや背景色を設定できる箱',
 
 
-  previewBuilder: (values) {
+  previewBuilder: (values,previewState) {
     final width = (values['width'] ?? 100).toDouble();
     final height = (values['height'] ?? 80).toDouble();
 

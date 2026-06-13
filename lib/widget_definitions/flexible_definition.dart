@@ -13,7 +13,7 @@ final flexibleDefinition = WidgetDefinition(
     description: 'RowやColumn内で余ったスペースを柔軟に分配するWidget',
     miniPreviewBuilder: () => const Icon(Icons.fit_screen_outlined),
 
-    previewBuilder: (values) {
+    previewBuilder: (values,previewState) {
       final outer =
           (values['flexRatio'] as List<int>?) ?? [1, 1, 1];
 

@@ -12,7 +12,7 @@ final rowDefinition = WidgetDefinition(
   parentId: 'flex',
   description: '子Widgetを横一列に並べるレイアウト',
 
-    previewBuilder: (values) {
+    previewBuilder: (values,previewState) {
       final mainAxisAlignment =
           values['mainAxisAlignment'] ?? 'spaceEvenly';
       final crossAxisAlignment =

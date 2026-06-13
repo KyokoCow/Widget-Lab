@@ -53,7 +53,10 @@ final textFieldDefinition = WidgetDefinition(
     ),
   ],
 
-  previewBuilder: (values) {
+  previewBuilder: (
+      values,
+      previewState,
+      ) {
     final width =
     (values['width'] ?? 240.0).toDouble();
 
@@ -66,21 +69,13 @@ final textFieldDefinition = WidgetDefinition(
     final readOnly =
         values['readOnly'] ?? false;
 
-    // ----------------------------
-    // StateをValuesの中に保存
-    // ----------------------------
-    values['_state'] ??= {
-      'controller': TextEditingController(
-        text: values['text'] ?? '',
-      ),
-    };
-
-    final state =
-    values['_state'] as Map<String, dynamic>;
+    previewState.textController ??=
+        TextEditingController(
+          text: values['text'] ?? '',
+        );
 
     final controller =
-    state['controller']
-    as TextEditingController;
+    previewState.textController!;
 
     return SizedBox(
       width: width,

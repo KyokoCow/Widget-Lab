@@ -26,7 +26,7 @@ final dividerDefinition = WidgetDefinition(
       ),
     ),
 
-    previewBuilder: (values) {
+    previewBuilder: (values,previewState) {
       final height =
       (values['height'] ?? 16.0).toDouble();
       final thickness =

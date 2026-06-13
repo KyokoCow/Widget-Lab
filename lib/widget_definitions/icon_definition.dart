@@ -41,7 +41,7 @@ final iconDefinition = WidgetDefinition(
     ],
   ),
 
-  previewBuilder: (values) {
+  previewBuilder: (values,previewState) {
     final dataset = values['dataset'] ?? 'Material Icons';
 
     final iconKey = values['icon'] ?? 'favorite';

@@ -25,7 +25,7 @@ final verticalDividerDefinition = WidgetDefinition(
     ),
   ),
 
-  previewBuilder: (values) {
+  previewBuilder: (values,previewState) {
     final width =
     (values['width'] ?? 16.0).toDouble();
     final thickness =
