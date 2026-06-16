@@ -1,6 +1,12 @@
 import '../touch/touch_category.dart';
 import '../ui/touch_ui_type.dart';
 
+typedef TouchEnabled =
+bool Function(Map<String, dynamic> values);
+
+typedef TouchNumProvider =
+num Function(Map<String, dynamic> values);
+
 class TouchParam {
   final String key;
   final TouchUiType uiType;
@@ -13,6 +19,13 @@ class TouchParam {
 
   final List<String>? items;
   final List<int>? intItems;
+  final TouchEnabled? enabled;
+  final TouchNumProvider? minProvider;
+  final TouchNumProvider? maxProvider;
+
+  final List<String> Function(
+      Map<String, dynamic> values,
+      )? itemsProvider;
 
   const TouchParam({
     required this.key,
@@ -26,5 +39,9 @@ class TouchParam {
     this.initialValue,
     this.items,
     this.intItems,
+    this.enabled,
+    this.minProvider,
+    this.maxProvider,
+    this.itemsProvider,
   });
 }

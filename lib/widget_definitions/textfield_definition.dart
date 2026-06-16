@@ -5,6 +5,9 @@ import '../models/widget_param.dart';
 import '../models/widget_touchparam.dart';
 import '../touch/touch_category.dart';
 import '../ui/touch_ui_type.dart';
+import '../utils/build_icon.dart';
+import '../utils/icon_utils.dart';
+import '../utils/safe_value.dart';
 
 final textFieldDefinition = WidgetDefinition(
   id: 'textField',
@@ -256,6 +259,24 @@ final textFieldDefinition = WidgetDefinition(
       nullable: false,
       description: '描画範囲の切り抜き方法',
     ),
+
+    WidgetParam(
+      name: 'cursorOpacityAnimates',
+      type: 'bool?',
+      typeKind: TypeKind.primitive,
+      parameterKind: ParameterKind.named,
+      nullable: true,
+      description: 'カーソルをフェードアニメーションで点滅させるか',
+    ),
+
+    WidgetParam(
+      name: 'ignorePointers',
+      type: 'bool?',
+      typeKind: TypeKind.primitive,
+      parameterKind: ParameterKind.named,
+      nullable: true,
+      description: 'ポインター操作を無視するか',
+    ),
   ],
 
   touchParams: [
@@ -281,37 +302,103 @@ final textFieldDefinition = WidgetDefinition(
 
     TouchParam(
       key: 'textInputAction',
-      uiType: TouchUiType.enumDropdown,
-      label: 'Input Action',
-      initialValue: 'done',
+      uiType: TouchUiType.choiceChip,
+      label: 'Text Input Action',
+
+      itemsProvider: (values) {
+        final keyboardType =
+        values['keyboardType'];
+
+        final maxLines =
+            values['maxLines'] ?? 1;
+
+        final items = [
+          'done',
+          'next',
+          'previous',
+          'search',
+          'send',
+          'go',
+          'continueAction',
+          'join',
+          'route',
+        ];
+
+        if (keyboardType == 'multiline' ||
+            maxLines == 1) {
+          items.add('newline');
+        }
+
+        return items;
+      },
+    ),
+
+    TouchParam(
+      key: 'textDirection',
+      category: TouchCategory.config,
+      uiType: TouchUiType.choiceChip,
+      label: 'Text Direction',
+      initialValue: 'ltr',
       items: [
-        'done',
-        'next',
-        'search',
-        'send',
-        'go',
+        'ltr',
+        'rtl',
       ],
     ),
 
     TouchParam(
       key: 'textAlign',
-      uiType: TouchUiType.segmented,
+      uiType: TouchUiType.choiceChip,
       label: 'Text Align',
       initialValue: 'start',
       items: [
         'start',
-        'center',
         'end',
+        'left',
+        'right',
+        'center',
+        'justify',
       ],
     ),
 
     TouchParam(
+      key: 'textAlignVertical',
+      category: TouchCategory.config,
+      uiType: TouchUiType.choiceChip,
+      label: 'Text Align Vertical',
+      initialValue: 'center',
+      items: [
+        'top',
+        'center',
+        'bottom',
+      ],
+    ),
+
+    TouchParam(
+      key: 'minLines',
+      uiType: TouchUiType.discreteSlider,
+      label: 'Min Lines',
+      initialValue: 1,
+      min: 1,
+      max: 10,
+      enabled: (values) =>
+          !(values['obscureText'] ?? false) &&
+          !(values['expands'] ?? false),
+      maxProvider: (values) =>
+      values['maxLines'] ?? 10,
+    ),
+
+    TouchParam(
       key: 'maxLines',
-      uiType: TouchUiType.slider,
+      uiType: TouchUiType.discreteSlider,
       label: 'Max Lines',
       initialValue: 1,
       min: 1,
       max: 10,
+      enabled: (values) =>
+          !(values['obscureText'] ?? false) &&
+          !(values['expands'] ?? false),
+      minProvider: (values) =>
+      values['minLines'] ?? 1,
     ),
 
     TouchParam(
@@ -346,6 +433,8 @@ final textFieldDefinition = WidgetDefinition(
       uiType: TouchUiType.checkbox,
       label: 'Obscure Text',
       initialValue: false,
+      enabled: (values) =>
+          !(values['expands'] ?? false),
     ),
 
     TouchParam(
@@ -363,13 +452,6 @@ final textFieldDefinition = WidgetDefinition(
     ),
 
     TouchParam(
-      key: 'autofocus',
-      uiType: TouchUiType.checkbox,
-      label: 'Autofocus',
-      initialValue: false,
-    ),
-
-    TouchParam(
       key: 'showCursor',
       uiType: TouchUiType.checkbox,
       label: 'Show Cursor',
@@ -381,6 +463,8 @@ final textFieldDefinition = WidgetDefinition(
       uiType: TouchUiType.checkbox,
       label: 'Expands',
       initialValue: false,
+      enabled: (values) =>
+          !(values['obscureText'] ?? false),
     ),
 
     TouchParam(
@@ -395,15 +479,6 @@ final textFieldDefinition = WidgetDefinition(
         'sentences',
       ],
     ),
-
-      TouchParam(
-        key: 'minLines',
-        uiType: TouchUiType.slider,
-        label: 'Min Lines',
-        initialValue: 1,
-        min: 1,
-        max: 10,
-      ),
 
       TouchParam(
         key: 'obscuringCharacter',
@@ -578,6 +653,8 @@ final textFieldDefinition = WidgetDefinition(
       initialValue: 12,
       min: 0,
       max: 32,
+      enabled: (values) =>
+          !(values['isDense'] ?? false),
     ),
 
     TouchParam(
@@ -588,6 +665,8 @@ final textFieldDefinition = WidgetDefinition(
       initialValue: 12,
       min: 0,
       max: 32,
+      enabled: (values) =>
+          !(values['isDense'] ?? false),
     ),
 
     TouchParam(
@@ -622,6 +701,128 @@ final textFieldDefinition = WidgetDefinition(
       label: 'Decoration Enabled',
       initialValue: true,
     ),
+
+    TouchParam(
+      key: 'cursorRadius',
+      uiType: TouchUiType.sliderDouble,
+      label: 'Cursor Radius',
+      initialValue: 0.0,
+      min: 0.0,
+      max: 16.0,
+    ),
+
+    TouchParam(
+      key: 'cursorOpacityAnimates',
+      uiType: TouchUiType.checkbox,
+      label: 'Cursor Opacity Animates',
+      initialValue: true,
+    ),
+
+    TouchParam(
+      key: 'ignorePointers',
+      uiType: TouchUiType.checkbox,
+      label: 'Ignore Pointers',
+      initialValue: false,
+    ),
+
+    TouchParam(
+      key: 'fontSize',
+      category: TouchCategory.config,
+      uiType: TouchUiType.sliderDouble,
+      label: 'Font Size',
+      initialValue: 16.0,
+      min: 8.0,
+      max: 40.0,
+    ),
+
+    TouchParam(
+      key: 'fontWeight',
+      category: TouchCategory.config,
+      uiType: TouchUiType.segmented,
+      label: 'Font Weight',
+      initialValue: 'normal',
+      items: [
+        'normal',
+        'bold',
+      ],
+    ),
+
+    TouchParam(
+      key: 'fontStyle',
+      category: TouchCategory.config,
+      uiType: TouchUiType.segmented,
+      label: 'Font Style',
+      initialValue: 'normal',
+      items: [
+        'normal',
+        'italic',
+      ],
+    ),
+
+    TouchParam(
+      key: 'textColor',
+      category: TouchCategory.config,
+      uiType: TouchUiType.colorPicker,
+      label: 'Text Color',
+      initialValue: Colors.black.value,
+    ),
+
+    TouchParam(
+      key: 'letterSpacing',
+      category: TouchCategory.config,
+      uiType: TouchUiType.sliderDouble,
+      label: 'Letter Spacing',
+      initialValue: 0.0,
+      min: -2.0,
+      max: 10.0,
+    ),
+
+    TouchParam(
+      key: 'wordSpacing',
+      category: TouchCategory.config,
+      uiType: TouchUiType.sliderDouble,
+      label: 'Word Spacing',
+      initialValue: 0.0,
+      min: 0.0,
+      max: 20.0,
+    ),
+
+    TouchParam(
+      key: 'textHeight',
+      category: TouchCategory.config,
+      uiType: TouchUiType.sliderDouble,
+      label: 'Line Height',
+      initialValue: 1.0,
+      min: 0.5,
+      max: 3.0,
+    ),
+
+    TouchParam(
+      key: 'prefixIcon',
+      category: TouchCategory.config,
+      uiType: TouchUiType.iconPicker,
+      label: 'Prefix Icon',
+      initialValue: 'none',
+      items: kDefaultIconItems,
+    ),
+
+    TouchParam(
+      key: 'suffixIcon',
+      category: TouchCategory.config,
+      uiType: TouchUiType.iconPicker,
+      label: 'Suffix Icon',
+      initialValue: 'none',
+      items: kDefaultIconItems,
+    ),
+
+    TouchParam(
+      key: 'icon',
+      category: TouchCategory.config,
+      uiType: TouchUiType.iconPicker,
+      label: 'Icon',
+      initialValue: 'none',
+      items: kDefaultIconItems,
+    ),
   ],
 
   previewBuilder: (
@@ -637,6 +838,47 @@ final textFieldDefinition = WidgetDefinition(
         );
 
     final controller = previewState.textController!;
+    final expands = values['expands'] ?? false;
+    final obscureText =
+        values['obscureText'] ?? false;
+    final minLines =
+    obscureText
+        ? 1
+        : expands
+        ? null
+        : (values['minLines'] ?? 1).toInt();
+
+    final maxLines =
+    obscureText
+        ? 1
+        : expands
+        ? null
+        : (values['maxLines'] ?? 1).toInt();
+
+    final isDense =
+        values['isDense'] ?? false;
+
+    final keyboardTypeValue =
+        values['keyboardType'];
+
+    final textInputActionValue =
+        values['textInputAction'];
+
+    final keyboardType =
+    textInputActionValue == 'newline' &&
+        maxLines != 1
+        ? TextInputType.multiline
+        : switch (keyboardTypeValue) {
+      'number' => TextInputType.number,
+      'phone' => TextInputType.phone,
+      'emailAddress' =>
+      TextInputType.emailAddress,
+      'url' => TextInputType.url,
+      'multiline' =>
+      TextInputType.multiline,
+      _ => TextInputType.text,
+    };
+
 
     return SizedBox(
       width: width,
@@ -659,32 +901,79 @@ final textFieldDefinition = WidgetDefinition(
           TextCapitalization.none,
         },
 
-        keyboardType: switch (values['keyboardType']) {
-          'number' => TextInputType.number,
-          'phone' => TextInputType.phone,
-          'emailAddress' => TextInputType.emailAddress,
-          'url' => TextInputType.url,
-          'multiline' => TextInputType.multiline,
-          _ => TextInputType.text,
-        },
+        keyboardType: keyboardType,
 
         textInputAction: switch (values['textInputAction']) {
           'next' => TextInputAction.next,
+          'previous' => TextInputAction.previous,
           'search' => TextInputAction.search,
           'send' => TextInputAction.send,
           'go' => TextInputAction.go,
+          'newline' => TextInputAction.newline,
+          'continueAction' => TextInputAction.continueAction,
+          'join' => TextInputAction.join,
+          'route' => TextInputAction.route,
           _ => TextInputAction.done,
         },
 
         textAlign: switch (values['textAlign']) {
+          'left' => TextAlign.left,
+          'right' => TextAlign.right,
           'center' => TextAlign.center,
+          'justify' => TextAlign.justify,
           'end' => TextAlign.end,
           _ => TextAlign.start,
         },
 
-        minLines: (values['minLines'] ?? 1).toInt(),
+        textAlignVertical: switch (
+        values['textAlignVertical']) {
+          'top' => TextAlignVertical.top,
+          'bottom' => TextAlignVertical.bottom,
+          _ => TextAlignVertical.center,
+        },
 
-        maxLines: (values['maxLines'] ?? 1).toInt(),
+        textDirection: switch (values['textDirection']) {
+          'rtl' => TextDirection.rtl,
+          _ => TextDirection.ltr,
+        },
+
+        style: TextStyle(
+          fontSize:
+          (values['fontSize'] ?? 16.0).toDouble(),
+
+          color: safeColor(
+            values['textColor'],
+            fallback: Colors.black,
+          ),
+
+          fontWeight:
+          switch (values['fontWeight']) {
+            'bold' => FontWeight.bold,
+            _ => FontWeight.normal,
+          },
+
+          fontStyle:
+          switch (values['fontStyle']) {
+            'italic' => FontStyle.italic,
+            _ => FontStyle.normal,
+          },
+
+          letterSpacing:
+          (values['letterSpacing'] ?? 0.0)
+              .toDouble(),
+
+          wordSpacing:
+          (values['wordSpacing'] ?? 0.0)
+              .toDouble(),
+
+          height:
+          (values['textHeight'] ?? 1.0)
+              .toDouble(),
+        ),
+
+        expands: expands,
+        minLines: minLines,
+        maxLines: maxLines,
 
         maxLength: (values['maxLength'] ?? 20).toInt(),
 
@@ -712,21 +1001,33 @@ final textFieldDefinition = WidgetDefinition(
         showCursor:
         values['showCursor'] ?? true,
 
-        expands:
-        values['expands'] ?? false,
+
+
+        cursorRadius: Radius.circular(
+          (values['cursorRadius'] ?? 0.0).toDouble(),
+        ),
+
+        cursorOpacityAnimates:
+        values['cursorOpacityAnimates'] ?? true,
+
+        ignorePointers:
+        values['ignorePointers'] ?? false,
 
         // ------------------
         // InputDecoration
         // ------------------
 
         decoration: InputDecoration(
-          hintText: values['hintText'],
-          labelText: values['labelText'],
-          helperText: values['helperText'],
-          errorText: values['errorText'],
-          prefixText: values['prefixText'],
-          suffixText: values['suffixText'],
-          counterText: values['counterText'],
+          hintText: safeText(values['hintText']),
+          labelText: safeText(values['labelText']),
+          helperText: safeText(values['helperText']),
+          errorText: safeText(values['errorText']),
+          prefixText: safeText(values['prefixText']),
+          suffixText: safeText(values['suffixText']),
+          counterText: safeText(values['counterText']),
+          icon: buildIcon(values['icon']),
+          prefixIcon: buildIcon(values['prefixIcon']),
+          suffixIcon: buildIcon(values['suffixIcon']),
 
           enabled:
           values['decorationEnabled'] ?? true,
@@ -734,9 +1035,9 @@ final textFieldDefinition = WidgetDefinition(
           filled:
           values['filled'] ?? false,
 
-          fillColor: values['fillColor'],
-          focusColor: values['focusColor'],
-          hoverColor: values['hoverColor'],
+          fillColor: safeColor(values['fillColor']),
+          focusColor: safeColor(values['focusColor']),
+          hoverColor: safeColor(values['hoverColor']),
 
           isDense:
           values['isDense'] ?? false,
@@ -747,7 +1048,9 @@ final textFieldDefinition = WidgetDefinition(
           alignLabelWithHint:
           values['alignLabelWithHint'] ?? false,
 
-          contentPadding: EdgeInsets.symmetric(
+          contentPadding: isDense
+              ? null
+              : EdgeInsets.symmetric(
             horizontal: (
                 values['contentPaddingHorizontal'] ?? 12.0)
                 .toDouble(),
@@ -781,8 +1084,10 @@ final textFieldDefinition = WidgetDefinition(
                     .toDouble(),
               ),
               borderSide: BorderSide(
-                color: values['borderColor'] ??
-                    Colors.grey,
+                color: safeColor(
+                  values['borderColor'],
+                  fallback: Colors.grey,
+                ),
                 width: (
                     values['borderWidth'] ?? 1.0)
                     .toDouble(),
@@ -795,8 +1100,10 @@ final textFieldDefinition = WidgetDefinition(
                     .toDouble(),
               ),
               borderSide: BorderSide(
-                color: values['borderColor'] ??
-                    Colors.grey,
+                color: safeColor(
+                  values['borderColor'],
+                  fallback: Colors.grey,
+                ),
                 width: (
                     values['borderWidth'] ?? 1.0)
                     .toDouble(),

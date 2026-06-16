@@ -6,6 +6,7 @@ enum TouchUiType {
   checkbox,
   choiceChip,
   colorPicker,
+  iconPicker,
   text,
   edgeInsets,
   enumDropdown,
