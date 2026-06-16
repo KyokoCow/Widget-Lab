@@ -62,7 +62,13 @@ class ParamBuilder {
         if (param.category == TouchCategory.config)
           const Icon(Icons.settings, size: 16, color: Colors.orange),
         const SizedBox(width: 4),
-        Text(text),
+        Text(
+          text,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ],
     );
   }

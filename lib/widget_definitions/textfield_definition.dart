@@ -297,8 +297,7 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'keyboardType',
       uiType: TouchUiType.enumDropdown,
-      // 入力制約・バリデーション系
-      listCategory: TouchListCategory.input,
+      listCategory: TouchListCategory.keyboard,
       label: 'Keyboard Type',
       initialValue: 'text',
       items: [
@@ -314,8 +313,7 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'textInputAction',
       uiType: TouchUiType.choiceChip,
-      // 入力制約・バリデーション系
-      listCategory: TouchListCategory.input,
+      listCategory: TouchListCategory.keyboard,
       label: 'Text Input Action',
 
       itemsProvider: (values) {
@@ -350,6 +348,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'textDirection',
       category: TouchCategory.config,
       uiType: TouchUiType.choiceChip,
+      listCategory: TouchListCategory.text,
       label: 'Text Direction',
       initialValue: 'ltr',
       items: [
@@ -361,8 +360,7 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'textAlign',
       uiType: TouchUiType.choiceChip,
-      // 見た目系（label, hint, borderなど）
-      listCategory: TouchListCategory.decoration,
+      listCategory: TouchListCategory.text,
       label: 'Text Align',
       initialValue: 'start',
       items: [
@@ -379,6 +377,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'textAlignVertical',
       category: TouchCategory.config,
       uiType: TouchUiType.choiceChip,
+      listCategory: TouchListCategory.text,
       label: 'Text Align Vertical',
       initialValue: 'center',
       items: [
@@ -391,12 +390,13 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'minLines',
       uiType: TouchUiType.discreteSlider,
+      listCategory: TouchListCategory.field,
       label: 'Min Lines',
       initialValue: 1,
       min: 1,
       max: 10,
       enabled: (values) =>
-          !(values['obscureText'] ?? false) &&
+      !(values['obscureText'] ?? false) &&
           !(values['expands'] ?? false),
       maxProvider: (values) =>
       values['maxLines'] ?? 10,
@@ -405,12 +405,13 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'maxLines',
       uiType: TouchUiType.discreteSlider,
+      listCategory: TouchListCategory.field,
       label: 'Max Lines',
       initialValue: 1,
       min: 1,
       max: 10,
       enabled: (values) =>
-          !(values['obscureText'] ?? false) &&
+      !(values['obscureText'] ?? false) &&
           !(values['expands'] ?? false),
       minProvider: (values) =>
       values['minLines'] ?? 1,
@@ -419,6 +420,7 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'maxLength',
       uiType: TouchUiType.slider,
+      listCategory: TouchListCategory.inputRule,
       label: 'Max Length',
       initialValue: 20,
       min: 1,
@@ -428,6 +430,7 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'cursorWidth',
       uiType: TouchUiType.sliderDouble,
+      listCategory: TouchListCategory.cursor,
       label: 'Cursor Width',
       initialValue: 2.0,
       min: 1.0,
@@ -437,6 +440,7 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'cursorHeight',
       uiType: TouchUiType.sliderDouble,
+      listCategory: TouchListCategory.cursor,
       label: 'Cursor Height',
       initialValue: 20.0,
       min: 0.0,
@@ -446,15 +450,17 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'obscureText',
       uiType: TouchUiType.checkbox,
+      listCategory: TouchListCategory.inputRule,
       label: 'Obscure Text',
       initialValue: false,
       enabled: (values) =>
-          !(values['expands'] ?? false),
+      !(values['expands'] ?? false),
     ),
 
     TouchParam(
       key: 'readOnly',
       uiType: TouchUiType.checkbox,
+      listCategory: TouchListCategory.inputRule,
       label: 'Read Only',
       initialValue: false,
     ),
@@ -462,6 +468,7 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'enabled',
       uiType: TouchUiType.checkbox,
+      listCategory: TouchListCategory.inputRule,
       label: 'Enabled',
       initialValue: true,
     ),
@@ -469,6 +476,7 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'showCursor',
       uiType: TouchUiType.checkbox,
+      listCategory: TouchListCategory.cursor,
       label: 'Show Cursor',
       initialValue: true,
     ),
@@ -476,15 +484,17 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'expands',
       uiType: TouchUiType.checkbox,
+      listCategory: TouchListCategory.field,
       label: 'Expands',
       initialValue: false,
       enabled: (values) =>
-          !(values['obscureText'] ?? false),
+      !(values['obscureText'] ?? false),
     ),
 
     TouchParam(
       key: 'textCapitalization',
       uiType: TouchUiType.segmented,
+      listCategory: TouchListCategory.keyboard,
       label: 'Text Capitalization',
       initialValue: 'none',
       items: [
@@ -495,12 +505,13 @@ final textFieldDefinition = WidgetDefinition(
       ],
     ),
 
-      TouchParam(
-        key: 'obscuringCharacter',
-        uiType: TouchUiType.text,
-        label: 'Obscure Character',
-        initialValue: '*',
-      ),
+    TouchParam(
+      key: 'obscuringCharacter',
+      uiType: TouchUiType.text,
+      listCategory: TouchListCategory.inputRule,
+      label: 'Obscure Character',
+      initialValue: '*',
+    ),
 
 
     // ============================
@@ -511,6 +522,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'hintText',
       category: TouchCategory.config,
       uiType: TouchUiType.text,
+      listCategory: TouchListCategory.placeholderLabel,
       label: 'Hint Text',
       initialValue: '',
     ),
@@ -519,6 +531,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'labelText',
       category: TouchCategory.config,
       uiType: TouchUiType.text,
+      listCategory: TouchListCategory.placeholderLabel,
       label: 'Label Text',
       initialValue: '',
     ),
@@ -527,6 +540,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'helperText',
       category: TouchCategory.config,
       uiType: TouchUiType.text,
+      listCategory: TouchListCategory.placeholderLabel,
       label: 'Helper Text',
       initialValue: '',
     ),
@@ -535,6 +549,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'errorText',
       category: TouchCategory.config,
       uiType: TouchUiType.text,
+      listCategory: TouchListCategory.placeholderLabel,
       label: 'Error Text',
       initialValue: '',
     ),
@@ -543,6 +558,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'prefixText',
       category: TouchCategory.config,
       uiType: TouchUiType.text,
+      listCategory: TouchListCategory.placeholderLabel,
       label: 'Prefix Text',
       initialValue: '',
     ),
@@ -551,6 +567,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'suffixText',
       category: TouchCategory.config,
       uiType: TouchUiType.text,
+      listCategory: TouchListCategory.placeholderLabel,
       label: 'Suffix Text',
       initialValue: '',
     ),
@@ -559,6 +576,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'counterText',
       category: TouchCategory.config,
       uiType: TouchUiType.text,
+      listCategory: TouchListCategory.placeholderLabel,
       label: 'Counter Text',
       initialValue: '',
     ),
@@ -567,6 +585,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'buildCounter',
       category: TouchCategory.config,
       uiType: TouchUiType.segmented,
+      listCategory: TouchListCategory.placeholderLabel,
       label: 'Build Counter',
       initialValue: 'default',
       items: [
@@ -580,6 +599,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'filled',
       category: TouchCategory.config,
       uiType: TouchUiType.checkbox,
+      listCategory: TouchListCategory.field,
       label: 'Filled',
       initialValue: false,
     ),
@@ -588,6 +608,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'fillColor',
       category: TouchCategory.config,
       uiType: TouchUiType.colorPicker,
+      listCategory: TouchListCategory.field,
       label: 'Fill Color',
       initialValue: Colors.white,
     ),
@@ -596,6 +617,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'focusColor',
       category: TouchCategory.config,
       uiType: TouchUiType.colorPicker,
+      listCategory: TouchListCategory.field,
       label: 'Focus Color',
       initialValue: Colors.blue,
     ),
@@ -604,6 +626,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'hoverColor',
       category: TouchCategory.config,
       uiType: TouchUiType.colorPicker,
+      listCategory: TouchListCategory.field,
       label: 'Hover Color',
       initialValue: Colors.transparent,
     ),
@@ -612,6 +635,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'isDense',
       category: TouchCategory.config,
       uiType: TouchUiType.checkbox,
+      listCategory: TouchListCategory.field,
       label: 'Dense',
       initialValue: false,
     ),
@@ -620,6 +644,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'isCollapsed',
       category: TouchCategory.config,
       uiType: TouchUiType.checkbox,
+      listCategory: TouchListCategory.field,
       label: 'Collapsed',
       initialValue: false,
     ),
@@ -628,6 +653,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'alignLabelWithHint',
       category: TouchCategory.config,
       uiType: TouchUiType.checkbox,
+      listCategory: TouchListCategory.placeholderLabel,
       label: 'Align Label',
       initialValue: false,
     ),
@@ -636,6 +662,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'borderStyle',
       category: TouchCategory.config,
       uiType: TouchUiType.segmented,
+      listCategory: TouchListCategory.field,
       label: 'Border',
       initialValue: 'outline',
       items: [
@@ -649,6 +676,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'borderRadius',
       category: TouchCategory.config,
       uiType: TouchUiType.sliderDouble,
+      listCategory: TouchListCategory.field,
       label: 'Border Radius',
       initialValue: 4,
       min: 0,
@@ -659,6 +687,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'borderWidth',
       category: TouchCategory.config,
       uiType: TouchUiType.sliderDouble,
+      listCategory: TouchListCategory.field,
       label: 'Border Width',
       initialValue: 1,
       min: 0,
@@ -669,6 +698,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'borderColor',
       category: TouchCategory.config,
       uiType: TouchUiType.colorPicker,
+      listCategory: TouchListCategory.field,
       label: 'Border Color',
       initialValue: Colors.grey,
     ),
@@ -677,30 +707,33 @@ final textFieldDefinition = WidgetDefinition(
       key: 'contentPaddingHorizontal',
       category: TouchCategory.config,
       uiType: TouchUiType.sliderDouble,
+      listCategory: TouchListCategory.field,
       label: 'Padding H',
       initialValue: 12,
       min: 0,
       max: 32,
       enabled: (values) =>
-          !(values['isDense'] ?? false),
+      !(values['isDense'] ?? false),
     ),
 
     TouchParam(
       key: 'contentPaddingVertical',
       category: TouchCategory.config,
       uiType: TouchUiType.sliderDouble,
+      listCategory: TouchListCategory.field,
       label: 'Padding V',
       initialValue: 12,
       min: 0,
       max: 32,
       enabled: (values) =>
-          !(values['isDense'] ?? false),
+      !(values['isDense'] ?? false),
     ),
 
     TouchParam(
       key: 'floatingLabelBehavior',
       category: TouchCategory.config,
       uiType: TouchUiType.segmented,
+      listCategory: TouchListCategory.placeholderLabel,
       label: 'Floating Label',
       initialValue: 'auto',
       items: [
@@ -714,6 +747,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'floatingLabelAlignment',
       category: TouchCategory.config,
       uiType: TouchUiType.segmented,
+      listCategory: TouchListCategory.placeholderLabel,
       label: 'Label Alignment',
       initialValue: 'start',
       items: [
@@ -726,6 +760,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'decorationEnabled',
       category: TouchCategory.config,
       uiType: TouchUiType.checkbox,
+      listCategory: TouchListCategory.field,
       label: 'Decoration Enabled',
       initialValue: true,
     ),
@@ -733,6 +768,7 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'cursorRadius',
       uiType: TouchUiType.sliderDouble,
+      listCategory: TouchListCategory.cursor,
       label: 'Cursor Radius',
       initialValue: 0.0,
       min: 0.0,
@@ -742,6 +778,7 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'cursorOpacityAnimates',
       uiType: TouchUiType.checkbox,
+      listCategory: TouchListCategory.cursor,
       label: 'Cursor Opacity Animates',
       initialValue: true,
     ),
@@ -749,6 +786,7 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'ignorePointers',
       uiType: TouchUiType.checkbox,
+      listCategory: TouchListCategory.inputRule,
       label: 'Ignore Pointers',
       initialValue: false,
     ),
@@ -757,6 +795,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'fontSize',
       category: TouchCategory.config,
       uiType: TouchUiType.sliderDouble,
+      listCategory: TouchListCategory.text,
       label: 'Font Size',
       initialValue: 16.0,
       min: 8.0,
@@ -767,6 +806,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'fontWeight',
       category: TouchCategory.config,
       uiType: TouchUiType.segmented,
+      listCategory: TouchListCategory.text,
       label: 'Font Weight',
       initialValue: 'normal',
       items: [
@@ -779,6 +819,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'fontStyle',
       category: TouchCategory.config,
       uiType: TouchUiType.segmented,
+      listCategory: TouchListCategory.text,
       label: 'Font Style',
       initialValue: 'normal',
       items: [
@@ -791,6 +832,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'textColor',
       category: TouchCategory.config,
       uiType: TouchUiType.colorPicker,
+      listCategory: TouchListCategory.text,
       label: 'Text Color',
       initialValue: Colors.black.value,
     ),
@@ -799,6 +841,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'letterSpacing',
       category: TouchCategory.config,
       uiType: TouchUiType.sliderDouble,
+      listCategory: TouchListCategory.text,
       label: 'Letter Spacing',
       initialValue: 0.0,
       min: -2.0,
@@ -809,6 +852,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'wordSpacing',
       category: TouchCategory.config,
       uiType: TouchUiType.sliderDouble,
+      listCategory: TouchListCategory.text,
       label: 'Word Spacing',
       initialValue: 0.0,
       min: 0.0,
@@ -819,6 +863,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'textHeight',
       category: TouchCategory.config,
       uiType: TouchUiType.sliderDouble,
+      listCategory: TouchListCategory.text,
       label: 'Line Height',
       initialValue: 1.0,
       min: 0.5,
@@ -829,6 +874,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'prefixIcon',
       category: TouchCategory.config,
       uiType: TouchUiType.iconPicker,
+      listCategory: TouchListCategory.icon,
       label: 'Prefix Icon',
       initialValue: 'none',
       items: kDefaultIconItems,
@@ -838,6 +884,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'suffixIcon',
       category: TouchCategory.config,
       uiType: TouchUiType.iconPicker,
+      listCategory: TouchListCategory.icon,
       label: 'Suffix Icon',
       initialValue: 'none',
       items: kDefaultIconItems,
@@ -847,6 +894,7 @@ final textFieldDefinition = WidgetDefinition(
       key: 'icon',
       category: TouchCategory.config,
       uiType: TouchUiType.iconPicker,
+      listCategory: TouchListCategory.icon,
       label: 'Icon',
       initialValue: 'none',
       items: kDefaultIconItems,

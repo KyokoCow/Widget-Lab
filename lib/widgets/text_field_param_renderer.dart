@@ -30,11 +30,16 @@ class TextFieldParamRenderer extends StatelessWidget {
     return ListView(
       children: grouped.entries.map((entry) {
         return Card(
+          color: _categoryColor(entry.key),
           child: ExpansionTile(
-            title: Text(labelForTouchListCategory(entry.key)),
-            children: entry.value
-                .map(builder.build) // ←ここが共通
-                .toList(),
+            title: Row(
+              children: [
+                Text(labelForTouchListCategory(entry.key)),
+                const SizedBox(width: 8),
+                Text('(${entry.value.length})'),
+              ],
+            ),
+            children: entry.value.map(builder.build).toList(),
           ),
         );
       }).toList(),
@@ -56,4 +61,29 @@ Map<TouchListCategory, List<TouchParam>> groupParamsByListCategory(
   }
 
   return map;
+}
+
+Color _categoryColor(TouchListCategory category) {
+  switch (category) {
+    case TouchListCategory.field:
+      return Colors.blue.shade50;
+
+    case TouchListCategory.placeholderLabel:
+      return Colors.green.shade50;
+
+    case TouchListCategory.inputRule:
+      return Colors.red.shade50;
+
+    case TouchListCategory.keyboard:
+      return Colors.orange.shade50;
+
+    case TouchListCategory.text:
+      return Colors.purple.shade50;
+
+    case TouchListCategory.cursor:
+      return Colors.teal.shade50;
+
+    case TouchListCategory.icon:
+      return Colors.amber.shade50;
+  }
 }

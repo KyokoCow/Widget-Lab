@@ -4,10 +4,11 @@ enum TouchCategory {
 }
 
 enum TouchListCategory {
-  basic,
-  text,
-  decoration,
-  cursor,
-  input,
-  behavior,
+  field,             // フィールド
+  placeholderLabel,  // プレースホルダー・ラベル
+  inputRule,         // 入力ルール
+  keyboard,          // キーボード
+  text,              // テキスト
+  cursor,            // カーソル
+  icon,              // アイコン
 }
