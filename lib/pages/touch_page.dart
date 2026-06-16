@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import '../models/preview_state.dart';
 import '../models/widget_definition.dart';
 import '../widgets/param_renderer.dart';
+import '../widgets/text_field_param_renderer.dart';
 
 class TouchPage extends StatefulWidget {
   final WidgetDefinition definition;
@@ -223,8 +224,18 @@ class _TouchPageState
   ========================= */
 
   Widget _buildParamArea() {
+    final definition = widget.definition;
+
+    if (definition.id == 'textField') {
+      return TextFieldParamRenderer(
+        params: definition.touchParams,
+        values: values,
+        onChanged: updateValue,
+      );
+    }
+
     return ParamRenderer(
-      touchParams: widget.definition.touchParams,
+      touchParams: definition.touchParams,
       values: values,
       onChanged: updateValue,
     );

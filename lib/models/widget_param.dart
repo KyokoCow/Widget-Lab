@@ -2,6 +2,7 @@ enum TypeKind {
   primitive,
   enumType,
   classType,
+  functionType,
 }
 
 enum ParameterKind {

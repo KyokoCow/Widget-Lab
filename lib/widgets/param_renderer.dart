@@ -642,13 +642,7 @@ class ParamRenderer extends StatelessWidget {
           ],
         );
 
-    // ----------------------------
-    // EdgeInsets
-    // ----------------------------
-      case TouchUiType.edgeInsets:
-        return ListTile(
-          title: Text('${param.key} (EdgeInsets)'),
-        );
+
     }
   }
 }

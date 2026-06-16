@@ -277,6 +277,15 @@ final textFieldDefinition = WidgetDefinition(
       nullable: true,
       description: 'ポインター操作を無視するか',
     ),
+
+    WidgetParam(
+      name: 'buildCounter',
+      type: 'InputCounterWidgetBuilder?',
+      typeKind: TypeKind.functionType,
+      parameterKind: ParameterKind.named,
+      nullable: true,
+      description: '入力文字数カウンターの表示方法をカスタマイズ',
+    ),
   ],
 
   touchParams: [
@@ -288,6 +297,8 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'keyboardType',
       uiType: TouchUiType.enumDropdown,
+      // 入力制約・バリデーション系
+      listCategory: TouchListCategory.input,
       label: 'Keyboard Type',
       initialValue: 'text',
       items: [
@@ -303,6 +314,8 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'textInputAction',
       uiType: TouchUiType.choiceChip,
+      // 入力制約・バリデーション系
+      listCategory: TouchListCategory.input,
       label: 'Text Input Action',
 
       itemsProvider: (values) {
@@ -348,6 +361,8 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'textAlign',
       uiType: TouchUiType.choiceChip,
+      // 見た目系（label, hint, borderなど）
+      listCategory: TouchListCategory.decoration,
       label: 'Text Align',
       initialValue: 'start',
       items: [
@@ -546,6 +561,19 @@ final textFieldDefinition = WidgetDefinition(
       uiType: TouchUiType.text,
       label: 'Counter Text',
       initialValue: '',
+    ),
+
+    TouchParam(
+      key: 'buildCounter',
+      category: TouchCategory.config,
+      uiType: TouchUiType.segmented,
+      label: 'Build Counter',
+      initialValue: 'default',
+      items: [
+        'default',
+        'hidden',
+        'original',
+      ],
     ),
 
     TouchParam(
@@ -1012,6 +1040,28 @@ final textFieldDefinition = WidgetDefinition(
 
         ignorePointers:
         values['ignorePointers'] ?? false,
+
+        buildCounter: switch (values['buildCounter']) {
+          'hidden' => (
+              BuildContext context, {
+                required int currentLength,
+                required bool isFocused,
+                required int? maxLength,
+              }) =>
+          null,
+
+          'original' => (
+              BuildContext context, {
+                required int currentLength,
+                required bool isFocused,
+                required int? maxLength,
+              }) =>
+              Text(
+                'あと${(maxLength ?? 0) - currentLength}文字入力可能',
+              ),
+
+          _ => null,
+        },
 
         // ------------------
         // InputDecoration

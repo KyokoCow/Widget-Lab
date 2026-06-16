@@ -8,7 +8,6 @@ enum TouchUiType {
   colorPicker,
   iconPicker,
   text,
-  edgeInsets,
   enumDropdown,
   tripleDropdown,
   radio,

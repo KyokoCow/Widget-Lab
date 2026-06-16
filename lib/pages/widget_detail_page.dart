@@ -273,10 +273,15 @@ class WidgetDetailPage extends StatelessWidget {
     switch (kind) {
       case TypeKind.primitive:
         return Colors.blue.shade50;
+
       case TypeKind.enumType:
         return Colors.green.shade50;
+
       case TypeKind.classType:
         return Colors.orange.shade50;
+
+      case TypeKind.functionType:
+        return Colors.purple.shade50;
     }
   }
 
@@ -285,12 +290,14 @@ class WidgetDetailPage extends StatelessWidget {
       TypeKind.primitive => Colors.blue,
       TypeKind.enumType => Colors.green,
       TypeKind.classType => Colors.orange,
+      TypeKind.functionType => Colors.purple,
     };
 
     final label = switch (kind) {
       TypeKind.primitive => 'Primitive',
       TypeKind.enumType => 'Enum',
       TypeKind.classType => 'Class',
+      TypeKind.functionType => 'Function',
     };
 
     return Container(

@@ -11,6 +11,7 @@ class TouchParam {
   final String key;
   final TouchUiType uiType;
   final TouchCategory? category;
+  final TouchListCategory? listCategory; // UI折りたたみ用
 
   final String? label;
   final num? min;
@@ -32,6 +33,7 @@ class TouchParam {
     required this.uiType,
 
     this.category,
+    this.listCategory,
 
     this.label,
     this.min,
