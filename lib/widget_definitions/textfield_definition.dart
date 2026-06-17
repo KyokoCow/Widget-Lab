@@ -15,7 +15,6 @@ final textFieldDefinition = WidgetDefinition(
   category: 'Input',
   parentId: 'StatefulWidget',
   description: 'ユーザーがテキストを入力できるWidget',
-
   params: [
     WidgetParam(
       name: 'controller',
@@ -25,7 +24,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: true,
       description: '入力内容を管理するコントローラー',
     ),
-
     WidgetParam(
       name: 'focusNode',
       type: 'FocusNode?',
@@ -34,7 +32,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: true,
       description: 'フォーカス状態を管理する',
     ),
-
     WidgetParam(
       name: 'decoration',
       type: 'InputDecoration?',
@@ -43,7 +40,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: true,
       description: 'ラベルや枠線などの装飾',
     ),
-
     WidgetParam(
       name: 'keyboardType',
       type: 'TextInputType?',
@@ -52,7 +48,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: true,
       description: '表示するキーボードの種類',
     ),
-
     WidgetParam(
       name: 'textInputAction',
       type: 'TextInputAction?',
@@ -61,7 +56,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: true,
       description: 'キーボードのアクションボタン',
     ),
-
     WidgetParam(
       name: 'textCapitalization',
       type: 'TextCapitalization',
@@ -70,7 +64,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: false,
       description: '自動大文字化の方法',
     ),
-
     WidgetParam(
       name: 'style',
       type: 'TextStyle?',
@@ -79,7 +72,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: true,
       description: '入力文字のスタイル',
     ),
-
     WidgetParam(
       name: 'textAlign',
       type: 'TextAlign',
@@ -88,7 +80,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: false,
       description: '文字の配置',
     ),
-
     WidgetParam(
       name: 'textDirection',
       type: 'TextDirection?',
@@ -97,7 +88,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: true,
       description: '文字の表示方向',
     ),
-
     WidgetParam(
       name: 'readOnly',
       type: 'bool',
@@ -106,7 +96,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: false,
       description: '読み取り専用にする',
     ),
-
     WidgetParam(
       name: 'showCursor',
       type: 'bool?',
@@ -115,7 +104,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: true,
       description: 'カーソルを表示するか',
     ),
-
     WidgetParam(
       name: 'autofocus',
       type: 'bool',
@@ -124,7 +112,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: false,
       description: '表示時に自動でフォーカスする',
     ),
-
     WidgetParam(
       name: 'obscuringCharacter',
       type: 'String',
@@ -133,7 +120,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: false,
       description: '伏せ字に使用する文字',
     ),
-
     WidgetParam(
       name: 'obscureText',
       type: 'bool',
@@ -142,7 +128,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: false,
       description: '入力文字を伏せ字で表示する',
     ),
-
     WidgetParam(
       name: 'enableSuggestions',
       type: 'bool',
@@ -151,7 +136,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: false,
       description: '入力候補を表示する',
     ),
-
     WidgetParam(
       name: 'maxLines',
       type: 'int?',
@@ -160,7 +144,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: true,
       description: '最大行数',
     ),
-
     WidgetParam(
       name: 'minLines',
       type: 'int?',
@@ -169,7 +152,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: true,
       description: '最小行数',
     ),
-
     WidgetParam(
       name: 'expands',
       type: 'bool',
@@ -178,7 +160,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: false,
       description: '親いっぱいに広げる',
     ),
-
     WidgetParam(
       name: 'maxLength',
       type: 'int?',
@@ -187,7 +168,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: true,
       description: '入力可能な最大文字数',
     ),
-
     WidgetParam(
       name: 'enabled',
       type: 'bool?',
@@ -196,7 +176,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: true,
       description: '入力を有効にする',
     ),
-
     WidgetParam(
       name: 'cursorWidth',
       type: 'double',
@@ -205,7 +184,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: false,
       description: 'カーソルの太さ',
     ),
-
     WidgetParam(
       name: 'cursorHeight',
       type: 'double?',
@@ -214,7 +192,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: true,
       description: 'カーソルの高さ',
     ),
-
     WidgetParam(
       name: 'cursorRadius',
       type: 'Radius?',
@@ -223,7 +200,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: true,
       description: 'カーソル先端の丸み',
     ),
-
     WidgetParam(
       name: 'cursorColor',
       type: 'Color?',
@@ -232,7 +208,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: true,
       description: 'カーソルの色',
     ),
-
     WidgetParam(
       name: 'mouseCursor',
       type: 'MouseCursor?',
@@ -241,7 +216,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: true,
       description: 'マウスカーソルの種類',
     ),
-
     WidgetParam(
       name: 'scrollPadding',
       type: 'EdgeInsets',
@@ -250,7 +224,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: false,
       description: '表示時に確保する余白',
     ),
-
     WidgetParam(
       name: 'clipBehavior',
       type: 'Clip',
@@ -259,7 +232,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: false,
       description: '描画範囲の切り抜き方法',
     ),
-
     WidgetParam(
       name: 'cursorOpacityAnimates',
       type: 'bool?',
@@ -268,7 +240,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: true,
       description: 'カーソルをフェードアニメーションで点滅させるか',
     ),
-
     WidgetParam(
       name: 'ignorePointers',
       type: 'bool?',
@@ -277,7 +248,6 @@ final textFieldDefinition = WidgetDefinition(
       nullable: true,
       description: 'ポインター操作を無視するか',
     ),
-
     WidgetParam(
       name: 'buildCounter',
       type: 'InputCounterWidgetBuilder?',
@@ -287,9 +257,7 @@ final textFieldDefinition = WidgetDefinition(
       description: '入力文字数カウンターの表示方法をカスタマイズ',
     ),
   ],
-
   touchParams: [
-
     // ============================
     // TextField
     // ============================
@@ -315,13 +283,10 @@ final textFieldDefinition = WidgetDefinition(
       uiType: TouchUiType.choiceChip,
       listCategory: TouchListCategory.keyboard,
       label: 'Text Input Action',
-
       itemsProvider: (values) {
-        final keyboardType =
-        values['keyboardType'];
+        final keyboardType = values['keyboardType'];
 
-        final maxLines =
-            values['maxLines'] ?? 1;
+        final maxLines = values['maxLines'] ?? 1;
 
         final items = [
           'done',
@@ -335,8 +300,7 @@ final textFieldDefinition = WidgetDefinition(
           'route',
         ];
 
-        if (keyboardType == 'multiline' ||
-            maxLines == 1) {
+        if (keyboardType == 'multiline' || maxLines == 1) {
           items.add('newline');
         }
 
@@ -396,10 +360,8 @@ final textFieldDefinition = WidgetDefinition(
       min: 1,
       max: 10,
       enabled: (values) =>
-      !(values['obscureText'] ?? false) &&
-          !(values['expands'] ?? false),
-      maxProvider: (values) =>
-      values['maxLines'] ?? 10,
+          !(values['obscureText'] ?? false) && !(values['expands'] ?? false),
+      maxProvider: (values) => values['maxLines'] ?? 10,
     ),
 
     TouchParam(
@@ -411,10 +373,8 @@ final textFieldDefinition = WidgetDefinition(
       min: 1,
       max: 10,
       enabled: (values) =>
-      !(values['obscureText'] ?? false) &&
-          !(values['expands'] ?? false),
-      minProvider: (values) =>
-      values['minLines'] ?? 1,
+          !(values['obscureText'] ?? false) && !(values['expands'] ?? false),
+      minProvider: (values) => values['minLines'] ?? 1,
     ),
 
     TouchParam(
@@ -453,8 +413,7 @@ final textFieldDefinition = WidgetDefinition(
       listCategory: TouchListCategory.inputRule,
       label: 'Obscure Text',
       initialValue: false,
-      enabled: (values) =>
-      !(values['expands'] ?? false),
+      enabled: (values) => !(values['expands'] ?? false),
     ),
 
     TouchParam(
@@ -487,8 +446,7 @@ final textFieldDefinition = WidgetDefinition(
       listCategory: TouchListCategory.field,
       label: 'Expands',
       initialValue: false,
-      enabled: (values) =>
-      !(values['obscureText'] ?? false),
+      enabled: (values) => !(values['obscureText'] ?? false),
     ),
 
     TouchParam(
@@ -512,7 +470,6 @@ final textFieldDefinition = WidgetDefinition(
       label: 'Obscure Character',
       initialValue: '*',
     ),
-
 
     // ============================
     // InputDecoration
@@ -712,8 +669,7 @@ final textFieldDefinition = WidgetDefinition(
       initialValue: 12,
       min: 0,
       max: 32,
-      enabled: (values) =>
-      !(values['isDense'] ?? false),
+      enabled: (values) => !(values['isDense'] ?? false),
     ),
 
     TouchParam(
@@ -725,8 +681,7 @@ final textFieldDefinition = WidgetDefinition(
       initialValue: 12,
       min: 0,
       max: 32,
-      enabled: (values) =>
-      !(values['isDense'] ?? false),
+      enabled: (values) => !(values['isDense'] ?? false),
     ),
 
     TouchParam(
@@ -900,319 +855,285 @@ final textFieldDefinition = WidgetDefinition(
       items: kDefaultIconItems,
     ),
   ],
-
   previewBuilder: (
-      values,
-      previewState,
-      ) {
-    final width =
-    (values['width'] ?? 240.0).toDouble();
+    values,
+    previewState,
+  ) {
+    final width = (values['width'] ?? 240.0).toDouble();
 
-    previewState.textController ??=
-        TextEditingController(
-          text: values['text'] ?? '',
-        );
+    previewState.textController ??= TextEditingController(
+      text: values['text'] ?? '',
+    );
+    previewState.focusNode ??= FocusNode();
+
+    String _currentBorder({
+      required bool hasError,
+      required bool enabled,
+      required bool focused,
+    }) {
+      if (!enabled) {
+        return 'disabledBorder';
+      }
+
+      if (hasError && focused) {
+        return 'focusedErrorBorder';
+      }
+
+      if (hasError) {
+        return 'errorBorder';
+      }
+
+      if (focused) {
+        return 'focusedBorder';
+      }
+
+      return 'enabledBorder';
+    }
 
     final controller = previewState.textController!;
     final expands = values['expands'] ?? false;
-    final obscureText =
-        values['obscureText'] ?? false;
-    final minLines =
-    obscureText
+    final obscureText = values['obscureText'] ?? false;
+    final minLines = obscureText
         ? 1
         : expands
-        ? null
-        : (values['minLines'] ?? 1).toInt();
+            ? null
+            : (values['minLines'] ?? 1).toInt();
 
-    final maxLines =
-    obscureText
+    final maxLines = obscureText
         ? 1
         : expands
-        ? null
-        : (values['maxLines'] ?? 1).toInt();
+            ? null
+            : (values['maxLines'] ?? 1).toInt();
 
-    final isDense =
-        values['isDense'] ?? false;
+    final isDense = values['isDense'] ?? false;
 
-    final keyboardTypeValue =
-        values['keyboardType'];
+    final keyboardTypeValue = values['keyboardType'];
 
-    final textInputActionValue =
-        values['textInputAction'];
+    final textInputActionValue = values['textInputAction'];
 
-    final keyboardType =
-    textInputActionValue == 'newline' &&
-        maxLines != 1
+    final keyboardType = textInputActionValue == 'newline' && maxLines != 1
         ? TextInputType.multiline
         : switch (keyboardTypeValue) {
-      'number' => TextInputType.number,
-      'phone' => TextInputType.phone,
-      'emailAddress' =>
-      TextInputType.emailAddress,
-      'url' => TextInputType.url,
-      'multiline' =>
-      TextInputType.multiline,
-      _ => TextInputType.text,
-    };
-
+            'number' => TextInputType.number,
+            'phone' => TextInputType.phone,
+            'emailAddress' => TextInputType.emailAddress,
+            'url' => TextInputType.url,
+            'multiline' => TextInputType.multiline,
+            _ => TextInputType.text,
+          };
 
     return SizedBox(
       width: width,
-      child: TextField(
-        controller: controller,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(height: 24),
+          Expanded(
+            child: TextField(
+              controller: controller,
+              focusNode: previewState.focusNode,
 
-        // ------------------
-        // TextField
-        // ------------------
+              // ------------------
+              // TextField
+              // ------------------
 
-        textCapitalization:
-        switch (values['textCapitalization']) {
-          'characters' =>
-          TextCapitalization.characters,
-          'words' =>
-          TextCapitalization.words,
-          'sentences' =>
-          TextCapitalization.sentences,
-          _ =>
-          TextCapitalization.none,
-        },
+              textCapitalization: switch (values['textCapitalization']) {
+                'characters' => TextCapitalization.characters,
+                'words' => TextCapitalization.words,
+                'sentences' => TextCapitalization.sentences,
+                _ => TextCapitalization.none,
+              },
 
-        keyboardType: keyboardType,
+              keyboardType: keyboardType,
 
-        textInputAction: switch (values['textInputAction']) {
-          'next' => TextInputAction.next,
-          'previous' => TextInputAction.previous,
-          'search' => TextInputAction.search,
-          'send' => TextInputAction.send,
-          'go' => TextInputAction.go,
-          'newline' => TextInputAction.newline,
-          'continueAction' => TextInputAction.continueAction,
-          'join' => TextInputAction.join,
-          'route' => TextInputAction.route,
-          _ => TextInputAction.done,
-        },
+              textInputAction: switch (values['textInputAction']) {
+                'next' => TextInputAction.next,
+                'previous' => TextInputAction.previous,
+                'search' => TextInputAction.search,
+                'send' => TextInputAction.send,
+                'go' => TextInputAction.go,
+                'newline' => TextInputAction.newline,
+                'continueAction' => TextInputAction.continueAction,
+                'join' => TextInputAction.join,
+                'route' => TextInputAction.route,
+                _ => TextInputAction.done,
+              },
 
-        textAlign: switch (values['textAlign']) {
-          'left' => TextAlign.left,
-          'right' => TextAlign.right,
-          'center' => TextAlign.center,
-          'justify' => TextAlign.justify,
-          'end' => TextAlign.end,
-          _ => TextAlign.start,
-        },
+              textAlign: switch (values['textAlign']) {
+                'left' => TextAlign.left,
+                'right' => TextAlign.right,
+                'center' => TextAlign.center,
+                'justify' => TextAlign.justify,
+                'end' => TextAlign.end,
+                _ => TextAlign.start,
+              },
 
-        textAlignVertical: switch (
-        values['textAlignVertical']) {
-          'top' => TextAlignVertical.top,
-          'bottom' => TextAlignVertical.bottom,
-          _ => TextAlignVertical.center,
-        },
+              textAlignVertical: switch (values['textAlignVertical']) {
+                'top' => TextAlignVertical.top,
+                'bottom' => TextAlignVertical.bottom,
+                _ => TextAlignVertical.center,
+              },
 
-        textDirection: switch (values['textDirection']) {
-          'rtl' => TextDirection.rtl,
-          _ => TextDirection.ltr,
-        },
+              textDirection: switch (values['textDirection']) {
+                'rtl' => TextDirection.rtl,
+                _ => TextDirection.ltr,
+              },
 
-        style: TextStyle(
-          fontSize:
-          (values['fontSize'] ?? 16.0).toDouble(),
-
-          color: safeColor(
-            values['textColor'],
-            fallback: Colors.black,
-          ),
-
-          fontWeight:
-          switch (values['fontWeight']) {
-            'bold' => FontWeight.bold,
-            _ => FontWeight.normal,
-          },
-
-          fontStyle:
-          switch (values['fontStyle']) {
-            'italic' => FontStyle.italic,
-            _ => FontStyle.normal,
-          },
-
-          letterSpacing:
-          (values['letterSpacing'] ?? 0.0)
-              .toDouble(),
-
-          wordSpacing:
-          (values['wordSpacing'] ?? 0.0)
-              .toDouble(),
-
-          height:
-          (values['textHeight'] ?? 1.0)
-              .toDouble(),
-        ),
-
-        expands: expands,
-        minLines: minLines,
-        maxLines: maxLines,
-
-        maxLength: (values['maxLength'] ?? 20).toInt(),
-
-        cursorWidth:
-        (values['cursorWidth'] ?? 2.0).toDouble(),
-
-        cursorHeight:
-        (values['cursorHeight'] ?? null)?.toDouble(),
-
-        obscuringCharacter:
-        (values['obscureCharacter'] ?? '*').toString(),
-
-        obscureText:
-        values['obscureText'] ?? false,
-
-        readOnly:
-        values['readOnly'] ?? false,
-
-        enabled:
-        values['enabled'] ?? true,
-
-        autofocus:
-        values['autofocus'] ?? false,
-
-        showCursor:
-        values['showCursor'] ?? true,
-
-
-
-        cursorRadius: Radius.circular(
-          (values['cursorRadius'] ?? 0.0).toDouble(),
-        ),
-
-        cursorOpacityAnimates:
-        values['cursorOpacityAnimates'] ?? true,
-
-        ignorePointers:
-        values['ignorePointers'] ?? false,
-
-        buildCounter: switch (values['buildCounter']) {
-          'hidden' => (
-              BuildContext context, {
-                required int currentLength,
-                required bool isFocused,
-                required int? maxLength,
-              }) =>
-          null,
-
-          'original' => (
-              BuildContext context, {
-                required int currentLength,
-                required bool isFocused,
-                required int? maxLength,
-              }) =>
-              Text(
-                'あと${(maxLength ?? 0) - currentLength}文字入力可能',
-              ),
-
-          _ => null,
-        },
-
-        // ------------------
-        // InputDecoration
-        // ------------------
-
-        decoration: InputDecoration(
-          hintText: safeText(values['hintText']),
-          labelText: safeText(values['labelText']),
-          helperText: safeText(values['helperText']),
-          errorText: safeText(values['errorText']),
-          prefixText: safeText(values['prefixText']),
-          suffixText: safeText(values['suffixText']),
-          counterText: safeText(values['counterText']),
-          icon: buildIcon(values['icon']),
-          prefixIcon: buildIcon(values['prefixIcon']),
-          suffixIcon: buildIcon(values['suffixIcon']),
-
-          enabled:
-          values['decorationEnabled'] ?? true,
-
-          filled:
-          values['filled'] ?? false,
-
-          fillColor: safeColor(values['fillColor']),
-          focusColor: safeColor(values['focusColor']),
-          hoverColor: safeColor(values['hoverColor']),
-
-          isDense:
-          values['isDense'] ?? false,
-
-          isCollapsed:
-          values['isCollapsed'] ?? false,
-
-          alignLabelWithHint:
-          values['alignLabelWithHint'] ?? false,
-
-          contentPadding: isDense
-              ? null
-              : EdgeInsets.symmetric(
-            horizontal: (
-                values['contentPaddingHorizontal'] ?? 12.0)
-                .toDouble(),
-            vertical: (
-                values['contentPaddingVertical'] ?? 12.0)
-                .toDouble(),
-          ),
-
-          floatingLabelBehavior:
-          switch (values['floatingLabelBehavior']) {
-            'always' =>
-            FloatingLabelBehavior.always,
-            'never' =>
-            FloatingLabelBehavior.never,
-            _ =>
-            FloatingLabelBehavior.auto,
-          },
-
-          floatingLabelAlignment:
-          switch (values['floatingLabelAlignment']) {
-            'center' =>
-            FloatingLabelAlignment.center,
-            _ =>
-            FloatingLabelAlignment.start,
-          },
-
-          border: switch (values['borderStyle']) {
-            'underline' => UnderlineInputBorder(
-              borderRadius: BorderRadius.circular(
-                (values['borderRadius'] ?? 4.0)
-                    .toDouble(),
-              ),
-              borderSide: BorderSide(
+              style: TextStyle(
+                fontSize: (values['fontSize'] ?? 16.0).toDouble(),
                 color: safeColor(
-                  values['borderColor'],
-                  fallback: Colors.grey,
+                  values['textColor'],
+                  fallback: Colors.black,
                 ),
-                width: (
-                    values['borderWidth'] ?? 1.0)
-                    .toDouble(),
+                fontWeight: switch (values['fontWeight']) {
+                  'bold' => FontWeight.bold,
+                  _ => FontWeight.normal,
+                },
+                fontStyle: switch (values['fontStyle']) {
+                  'italic' => FontStyle.italic,
+                  _ => FontStyle.normal,
+                },
+                letterSpacing: (values['letterSpacing'] ?? 0.0).toDouble(),
+                wordSpacing: (values['wordSpacing'] ?? 0.0).toDouble(),
+                height: (values['textHeight'] ?? 1.0).toDouble(),
+              ),
+
+              expands: expands,
+              minLines: minLines,
+              maxLines: maxLines,
+
+              maxLength: (values['maxLength'] ?? 20).toInt(),
+
+              cursorWidth: (values['cursorWidth'] ?? 2.0).toDouble(),
+
+              cursorHeight: (values['cursorHeight'] ?? null)?.toDouble(),
+
+              obscuringCharacter:
+                  (values['obscureCharacter'] ?? '*').toString(),
+
+              obscureText: values['obscureText'] ?? false,
+
+              readOnly: values['readOnly'] ?? false,
+
+              enabled: values['enabled'] ?? true,
+
+              autofocus: values['autofocus'] ?? false,
+
+              showCursor: values['showCursor'] ?? true,
+
+              cursorRadius: Radius.circular(
+                (values['cursorRadius'] ?? 0.0).toDouble(),
+              ),
+
+              cursorOpacityAnimates: values['cursorOpacityAnimates'] ?? true,
+
+              ignorePointers: values['ignorePointers'] ?? false,
+
+              buildCounter: switch (values['buildCounter']) {
+                'hidden' => (
+                    BuildContext context, {
+                    required int currentLength,
+                    required bool isFocused,
+                    required int? maxLength,
+                  }) =>
+                      null,
+                'original' => (
+                    BuildContext context, {
+                    required int currentLength,
+                    required bool isFocused,
+                    required int? maxLength,
+                  }) =>
+                      Text(
+                        'あと${(maxLength ?? 0) - currentLength}文字入力可能',
+                      ),
+                _ => null,
+              },
+
+              // ------------------
+              // InputDecoration
+              // ------------------
+
+              decoration: InputDecoration(
+                hintText: safeText(values['hintText']),
+                labelText: safeText(values['labelText']),
+                helperText: safeText(values['helperText']),
+                errorText: safeText(values['errorText']),
+                prefixText: safeText(values['prefixText']),
+                suffixText: safeText(values['suffixText']),
+                counterText: safeText(values['counterText']),
+                icon: buildIcon(values['icon']),
+                prefixIcon: buildIcon(values['prefixIcon']),
+                suffixIcon: buildIcon(values['suffixIcon']),
+                enabled: values['decorationEnabled'] ?? true,
+                filled: values['filled'] ?? false,
+                fillColor: safeColor(values['fillColor']),
+                focusColor: safeColor(values['focusColor']),
+                hoverColor: safeColor(values['hoverColor']),
+                isDense: values['isDense'] ?? false,
+                isCollapsed: values['isCollapsed'] ?? false,
+                alignLabelWithHint: values['alignLabelWithHint'] ?? false,
+                contentPadding: isDense
+                    ? null
+                    : EdgeInsets.symmetric(
+                        horizontal: (values['contentPaddingHorizontal'] ?? 12.0)
+                            .toDouble(),
+                        vertical: (values['contentPaddingVertical'] ?? 12.0)
+                            .toDouble(),
+                      ),
+                floatingLabelBehavior: switch (
+                    values['floatingLabelBehavior']) {
+                  'always' => FloatingLabelBehavior.always,
+                  'never' => FloatingLabelBehavior.never,
+                  _ => FloatingLabelBehavior.auto,
+                },
+                floatingLabelAlignment: switch (
+                    values['floatingLabelAlignment']) {
+                  'center' => FloatingLabelAlignment.center,
+                  _ => FloatingLabelAlignment.start,
+                },
+                border: switch (values['borderStyle']) {
+                  'underline' => UnderlineInputBorder(
+                      borderRadius: BorderRadius.circular(
+                        (values['borderRadius'] ?? 4.0).toDouble(),
+                      ),
+                      borderSide: BorderSide(
+                        color: safeColor(
+                          values['borderColor'],
+                          fallback: Colors.grey,
+                        ),
+                        width: (values['borderWidth'] ?? 1.0).toDouble(),
+                      ),
+                    ),
+                  'none' => InputBorder.none,
+                  _ => OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(
+                        (values['borderRadius'] ?? 4.0).toDouble(),
+                      ),
+                      borderSide: BorderSide(
+                        color: safeColor(
+                          values['borderColor'],
+                          fallback: Colors.grey,
+                        ),
+                        width: (values['borderWidth'] ?? 1.0).toDouble(),
+                      ),
+                    ),
+                },
               ),
             ),
-            'none' => InputBorder.none,
-            _ => OutlineInputBorder(
-              borderRadius: BorderRadius.circular(
-                (values['borderRadius'] ?? 4.0)
-                    .toDouble(),
-              ),
-              borderSide: BorderSide(
-                color: safeColor(
-                  values['borderColor'],
-                  fallback: Colors.grey,
-                ),
-                width: (
-                    values['borderWidth'] ?? 1.0)
-                    .toDouble(),
-              ),
-            ),
-          },
-        ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            '使用中: ${_currentBorder(
+              hasError: (values['errorText'] ?? '').toString().isNotEmpty,
+              enabled: values['enabled'] ?? true,
+              focused: previewState.isFocused,
+            )}',
+          ),
+        ],
       ),
     );
   },
-
   miniPreviewBuilder: () {
     return const SizedBox(
       width: 120,
@@ -1223,16 +1144,12 @@ final textFieldDefinition = WidgetDefinition(
       ),
     );
   },
-
   codeBuilder: (values) {
-    final hintText =
-        values['hintText'] ?? '';
+    final hintText = values['hintText'] ?? '';
 
-    final enabled =
-        values['enabled'] ?? true;
+    final enabled = values['enabled'] ?? true;
 
-    final readOnly =
-        values['readOnly'] ?? false;
+    final readOnly = values['readOnly'] ?? false;
 
     return '''
 TextField(

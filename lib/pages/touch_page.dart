@@ -35,6 +35,11 @@ class _TouchPageState
             : p.initialValue,
     };
     previewState = PreviewState();
+
+    previewState.focusNode ??= FocusNode()
+      ..addListener(() {
+        setState(() {});
+      });
   }
 
   void updateValue(
