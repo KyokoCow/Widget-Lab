@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../constants/ui_spacing.dart';
 import '../models/widget_touchparam.dart';
 import '../touch/touch_category.dart';
 import '../ui/touch_ui_type.dart';
@@ -130,23 +131,28 @@ class ParamBuilder {
         break;
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        buildParamLabel(param, labelText),
-        Slider(
-          min: min,
-          max: max,
-          divisions: divisions,
-          value: safeValue,
-          onChanged: isEnabled
-              ? (v) => onChanged(
-            param.key,
-            onChangedValue(v),
-          )
-              : null,
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: UiSpacing.page,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          buildParamLabel(param, labelText),
+          Slider(
+            min: min,
+            max: max,
+            divisions: divisions,
+            value: safeValue,
+            onChanged: isEnabled
+                ? (v) => onChanged(
+              param.key,
+              onChangedValue(v),
+            )
+                : null,
+          ),
+        ],
+      ),
     );
   }
 
@@ -244,22 +250,21 @@ class ParamBuilder {
         break;
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 8,
-          ),
-          child: buildParamLabel(
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: UiSpacing.page,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          buildParamLabel(
             param,
             param.label ?? param.key,
           ),
-        ),
-        const SizedBox(height: 8),
-        content,
-      ],
+          const SizedBox(height: UiSpacing.item),
+          content,
+        ],
+      ),
     );
   }
 
@@ -371,26 +376,31 @@ class ParamBuilder {
 
     final isEnabled = param.enabled?.call(values) ?? true;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        buildParamLabel(
-          param,
-          param.label ?? param.key,
-        ),
-        const SizedBox(height: 8),
-        TextFormField(
-          initialValue: value,
-          enabled: isEnabled,
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-            isDense: true,
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: UiSpacing.page,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          buildParamLabel(
+            param,
+            param.label ?? param.key,
           ),
-          onChanged: (text) {
-            onChanged(param.key, text);
-          },
-        ),
-      ],
+          const SizedBox(height: 8),
+          TextFormField(
+            initialValue: value,
+            enabled: isEnabled,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              isDense: true,
+            ),
+            onChanged: (text) {
+              onChanged(param.key, text);
+            },
+          ),
+        ],
+      ),
     );
   }
 
@@ -420,8 +430,8 @@ class ParamBuilder {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 8,
+            horizontal: UiSpacing.page,
+            vertical: UiSpacing.item,
           ),
           child: buildParamLabel(
             param,
@@ -485,9 +495,12 @@ class ParamBuilder {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildParamLabel(
-          param,
-          param.label ?? param.key,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: UiSpacing.page),
+          child: buildParamLabel(
+            param,
+            param.label ?? param.key,
+          ),
         ),
         const SizedBox(height: 8),
         Wrap(
