@@ -280,12 +280,12 @@ final textFieldDefinition = WidgetDefinition(
 
     TouchParam(
       key: 'textInputAction',
-      uiType: TouchUiType.choiceChip,
+      uiType: TouchUiType.enumDropdown,
       listCategory: TouchListCategory.keyboard,
       label: 'Text Input Action',
+      initialValue: 'done',
       itemsProvider: (values) {
         final keyboardType = values['keyboardType'];
-
         final maxLines = values['maxLines'] ?? 1;
 
         final items = [
@@ -300,7 +300,7 @@ final textFieldDefinition = WidgetDefinition(
           'route',
         ];
 
-        if (keyboardType == 'multiline' || maxLines == 1) {
+        if (keyboardType == 'multiline' || maxLines != 1) {
           items.add('newline');
         }
 
@@ -311,7 +311,7 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'textDirection',
       category: TouchCategory.config,
-      uiType: TouchUiType.choiceChip,
+      uiType: TouchUiType.segmented,
       listCategory: TouchListCategory.text,
       label: 'Text Direction',
       initialValue: 'ltr',
@@ -323,7 +323,7 @@ final textFieldDefinition = WidgetDefinition(
 
     TouchParam(
       key: 'textAlign',
-      uiType: TouchUiType.choiceChip,
+      uiType: TouchUiType.enumDropdown,
       listCategory: TouchListCategory.text,
       label: 'Text Align',
       initialValue: 'start',
@@ -340,7 +340,7 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'textAlignVertical',
       category: TouchCategory.config,
-      uiType: TouchUiType.choiceChip,
+      uiType: TouchUiType.enumDropdown,
       listCategory: TouchListCategory.text,
       label: 'Text Align Vertical',
       initialValue: 'center',
@@ -389,7 +389,7 @@ final textFieldDefinition = WidgetDefinition(
 
     TouchParam(
       key: 'cursorWidth',
-      uiType: TouchUiType.sliderDouble,
+      uiType: TouchUiType.slider,
       listCategory: TouchListCategory.cursor,
       label: 'Cursor Width',
       initialValue: 2.0,
@@ -399,7 +399,7 @@ final textFieldDefinition = WidgetDefinition(
 
     TouchParam(
       key: 'cursorHeight',
-      uiType: TouchUiType.sliderDouble,
+      uiType: TouchUiType.slider,
       listCategory: TouchListCategory.cursor,
       label: 'Cursor Height',
       initialValue: 20.0,
@@ -451,7 +451,7 @@ final textFieldDefinition = WidgetDefinition(
 
     TouchParam(
       key: 'textCapitalization',
-      uiType: TouchUiType.segmented,
+      uiType: TouchUiType.enumDropdown,
       listCategory: TouchListCategory.keyboard,
       label: 'Text Capitalization',
       initialValue: 'none',
@@ -571,24 +571,6 @@ final textFieldDefinition = WidgetDefinition(
     ),
 
     TouchParam(
-      key: 'focusColor',
-      category: TouchCategory.config,
-      uiType: TouchUiType.colorPicker,
-      listCategory: TouchListCategory.field,
-      label: 'Focus Color',
-      initialValue: Colors.blue,
-    ),
-
-    TouchParam(
-      key: 'hoverColor',
-      category: TouchCategory.config,
-      uiType: TouchUiType.colorPicker,
-      listCategory: TouchListCategory.field,
-      label: 'Hover Color',
-      initialValue: Colors.transparent,
-    ),
-
-    TouchParam(
       key: 'isDense',
       category: TouchCategory.config,
       uiType: TouchUiType.checkbox,
@@ -632,7 +614,7 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'borderRadius',
       category: TouchCategory.config,
-      uiType: TouchUiType.sliderDouble,
+      uiType: TouchUiType.slider,
       listCategory: TouchListCategory.field,
       label: 'Border Radius',
       initialValue: 4,
@@ -643,12 +625,28 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'borderWidth',
       category: TouchCategory.config,
-      uiType: TouchUiType.sliderDouble,
+      uiType: TouchUiType.slider,
       listCategory: TouchListCategory.field,
       label: 'Border Width',
       initialValue: 1,
       min: 0,
       max: 8,
+    ),
+
+    TouchParam(
+      key: 'useDefaultErrorBorder',
+      uiType: TouchUiType.checkbox,
+      listCategory: TouchListCategory.field,
+      label: 'Use Default Error Border',
+      initialValue: true,
+    ),
+
+    TouchParam(
+      key: 'useDefaultFocusedErrorBorder',
+      uiType: TouchUiType.checkbox,
+      listCategory: TouchListCategory.field,
+      label: 'Use Default Focused Error Border',
+      initialValue: true,
     ),
 
     TouchParam(
@@ -663,7 +661,7 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'contentPaddingHorizontal',
       category: TouchCategory.config,
-      uiType: TouchUiType.sliderDouble,
+      uiType: TouchUiType.slider,
       listCategory: TouchListCategory.field,
       label: 'Padding H',
       initialValue: 12,
@@ -675,7 +673,7 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'contentPaddingVertical',
       category: TouchCategory.config,
-      uiType: TouchUiType.sliderDouble,
+      uiType: TouchUiType.slider,
       listCategory: TouchListCategory.field,
       label: 'Padding V',
       initialValue: 12,
@@ -722,7 +720,7 @@ final textFieldDefinition = WidgetDefinition(
 
     TouchParam(
       key: 'cursorRadius',
-      uiType: TouchUiType.sliderDouble,
+      uiType: TouchUiType.slider,
       listCategory: TouchListCategory.cursor,
       label: 'Cursor Radius',
       initialValue: 0.0,
@@ -749,7 +747,7 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'fontSize',
       category: TouchCategory.config,
-      uiType: TouchUiType.sliderDouble,
+      uiType: TouchUiType.slider,
       listCategory: TouchListCategory.text,
       label: 'Font Size',
       initialValue: 16.0,
@@ -795,7 +793,7 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'letterSpacing',
       category: TouchCategory.config,
-      uiType: TouchUiType.sliderDouble,
+      uiType: TouchUiType.slider,
       listCategory: TouchListCategory.text,
       label: 'Letter Spacing',
       initialValue: 0.0,
@@ -806,7 +804,7 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'wordSpacing',
       category: TouchCategory.config,
-      uiType: TouchUiType.sliderDouble,
+      uiType: TouchUiType.slider,
       listCategory: TouchListCategory.text,
       label: 'Word Spacing',
       initialValue: 0.0,
@@ -817,7 +815,7 @@ final textFieldDefinition = WidgetDefinition(
     TouchParam(
       key: 'textHeight',
       category: TouchCategory.config,
-      uiType: TouchUiType.sliderDouble,
+      uiType: TouchUiType.slider,
       listCategory: TouchListCategory.text,
       label: 'Line Height',
       initialValue: 1.0,
@@ -921,6 +919,41 @@ final textFieldDefinition = WidgetDefinition(
             'multiline' => TextInputType.multiline,
             _ => TextInputType.text,
           };
+    final obscuringCharacter =
+    (values['obscuringCharacter'] ?? '*').toString();
+
+    final safeObscuringCharacter =
+    obscuringCharacter.runes.length == 1
+        ? obscuringCharacter
+        : '*';
+
+    final customBorder = switch (values['borderStyle']) {
+      'underline' => UnderlineInputBorder(
+        borderRadius: BorderRadius.circular(
+          (values['borderRadius'] ?? 4.0).toDouble(),
+        ),
+        borderSide: BorderSide(
+          color: safeColor(
+            values['borderColor'],
+            fallback: Colors.grey,
+          ),
+          width: (values['borderWidth'] ?? 1.0).toDouble(),
+        ),
+      ),
+      'none' => InputBorder.none,
+      _ => OutlineInputBorder(
+        borderRadius: BorderRadius.circular(
+          (values['borderRadius'] ?? 4.0).toDouble(),
+        ),
+        borderSide: BorderSide(
+          color: safeColor(
+            values['borderColor'],
+            fallback: Colors.grey,
+          ),
+          width: (values['borderWidth'] ?? 1.0).toDouble(),
+        ),
+      ),
+    };
 
     return SizedBox(
       width: width,
@@ -1009,16 +1042,13 @@ final textFieldDefinition = WidgetDefinition(
 
               cursorHeight: (values['cursorHeight'] ?? null)?.toDouble(),
 
-              obscuringCharacter:
-                  (values['obscureCharacter'] ?? '*').toString(),
+              obscuringCharacter: safeObscuringCharacter,
 
               obscureText: values['obscureText'] ?? false,
 
               readOnly: values['readOnly'] ?? false,
 
               enabled: values['enabled'] ?? true,
-
-              autofocus: values['autofocus'] ?? false,
 
               showCursor: values['showCursor'] ?? true,
 
@@ -1068,8 +1098,6 @@ final textFieldDefinition = WidgetDefinition(
                 enabled: values['decorationEnabled'] ?? true,
                 filled: values['filled'] ?? false,
                 fillColor: safeColor(values['fillColor']),
-                focusColor: safeColor(values['focusColor']),
-                hoverColor: safeColor(values['hoverColor']),
                 isDense: values['isDense'] ?? false,
                 isCollapsed: values['isCollapsed'] ?? false,
                 alignLabelWithHint: values['alignLabelWithHint'] ?? false,
@@ -1092,33 +1120,19 @@ final textFieldDefinition = WidgetDefinition(
                   'center' => FloatingLabelAlignment.center,
                   _ => FloatingLabelAlignment.start,
                 },
-                border: switch (values['borderStyle']) {
-                  'underline' => UnderlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                        (values['borderRadius'] ?? 4.0).toDouble(),
-                      ),
-                      borderSide: BorderSide(
-                        color: safeColor(
-                          values['borderColor'],
-                          fallback: Colors.grey,
-                        ),
-                        width: (values['borderWidth'] ?? 1.0).toDouble(),
-                      ),
-                    ),
-                  'none' => InputBorder.none,
-                  _ => OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                        (values['borderRadius'] ?? 4.0).toDouble(),
-                      ),
-                      borderSide: BorderSide(
-                        color: safeColor(
-                          values['borderColor'],
-                          fallback: Colors.grey,
-                        ),
-                        width: (values['borderWidth'] ?? 1.0).toDouble(),
-                      ),
-                    ),
-                },
+                border: customBorder,
+                enabledBorder: customBorder,
+                focusedBorder: customBorder,
+                disabledBorder: customBorder,
+                errorBorder:
+                values['useDefaultErrorBorder'] ?? true
+                    ? null
+                    : customBorder,
+
+                focusedErrorBorder:
+                values['useDefaultFocusedErrorBorder'] ?? true
+                    ? null
+                    : customBorder,
               ),
             ),
           ),

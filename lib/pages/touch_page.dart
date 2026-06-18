@@ -47,7 +47,37 @@ class _TouchPageState
       dynamic value,
       ) {
     setState(() {
+      // まず変更された値を反映
       values[key] = value;
+
+      // keyboardType または maxLines が変わったら
+      // textInputAction を補正する
+      if (key == 'keyboardType' || key == 'maxLines') {
+        final keyboardType = values['keyboardType'];
+        final maxLines = values['maxLines'] ?? 1;
+
+        final validItems = [
+          'done',
+          'next',
+          'previous',
+          'search',
+          'send',
+          'go',
+          'continueAction',
+          'join',
+          'route',
+        ];
+
+        if (keyboardType == 'multiline' || maxLines != 1) {
+          validItems.add('newline');
+        }
+
+        final currentAction = values['textInputAction'];
+
+        if (!validItems.contains(currentAction)) {
+          values['textInputAction'] = 'done';
+        }
+      }
     });
   }
 
