@@ -709,14 +709,14 @@ final textFieldDefinition = WidgetDefinition(
       ],
     ),
 
-    TouchParam(
-      key: 'decorationEnabled',
-      category: TouchCategory.config,
-      uiType: TouchUiType.checkbox,
-      listCategory: TouchListCategory.field,
-      label: 'Decoration Enabled',
-      initialValue: true,
-    ),
+    // TouchParam(
+    //   key: 'decorationEnabled',
+    //   category: TouchCategory.config,
+    //   uiType: TouchUiType.checkbox,
+    //   listCategory: TouchListCategory.field,
+    //   label: 'Decoration Enabled',
+    //   initialValue: true,
+    // ),
 
     TouchParam(
       key: 'cursorRadius',
@@ -1095,7 +1095,7 @@ final textFieldDefinition = WidgetDefinition(
                 icon: buildIcon(values['icon']),
                 prefixIcon: buildIcon(values['prefixIcon']),
                 suffixIcon: buildIcon(values['suffixIcon']),
-                enabled: values['decorationEnabled'] ?? true,
+                //enabled: values['decorationEnabled'] ?? true,
                 filled: values['filled'] ?? false,
                 fillColor: safeColor(values['fillColor']),
                 isDense: values['isDense'] ?? false,
