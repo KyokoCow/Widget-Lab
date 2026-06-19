@@ -295,9 +295,6 @@ final textFieldDefinition = WidgetDefinition(
           'search',
           'send',
           'go',
-          'continueAction',
-          'join',
-          'route',
         ];
 
         if (keyboardType == 'multiline' || maxLines != 1) {
@@ -430,6 +427,14 @@ final textFieldDefinition = WidgetDefinition(
       listCategory: TouchListCategory.inputRule,
       label: 'Enabled',
       initialValue: true,
+    ),
+
+    TouchParam(
+      key: 'ignorePointers',
+      uiType: TouchUiType.checkbox,
+      listCategory: TouchListCategory.inputRule,
+      label: 'Ignore Pointers',
+      initialValue: false,
     ),
 
     TouchParam(
@@ -736,13 +741,6 @@ final textFieldDefinition = WidgetDefinition(
       initialValue: true,
     ),
 
-    TouchParam(
-      key: 'ignorePointers',
-      uiType: TouchUiType.checkbox,
-      listCategory: TouchListCategory.inputRule,
-      label: 'Ignore Pointers',
-      initialValue: false,
-    ),
 
     TouchParam(
       key: 'fontSize',
@@ -962,6 +960,14 @@ final textFieldDefinition = WidgetDefinition(
         mainAxisSize: MainAxisSize.min,
         children: [
           const SizedBox(height: 24),
+          Text(
+            '使用中: ${_currentBorder(
+              hasError: (values['errorText'] ?? '').toString().isNotEmpty,
+              enabled: values['enabled'] ?? true,
+              focused: previewState.isFocused,
+            )}',
+          ),
+          const SizedBox(height: 8),
           Expanded(
             child: TextField(
               controller: controller,
@@ -987,9 +993,6 @@ final textFieldDefinition = WidgetDefinition(
                 'send' => TextInputAction.send,
                 'go' => TextInputAction.go,
                 'newline' => TextInputAction.newline,
-                'continueAction' => TextInputAction.continueAction,
-                'join' => TextInputAction.join,
-                'route' => TextInputAction.route,
                 _ => TextInputAction.done,
               },
 
@@ -1135,14 +1138,6 @@ final textFieldDefinition = WidgetDefinition(
                     : customBorder,
               ),
             ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            '使用中: ${_currentBorder(
-              hasError: (values['errorText'] ?? '').toString().isNotEmpty,
-              enabled: values['enabled'] ?? true,
-              focused: previewState.isFocused,
-            )}',
           ),
         ],
       ),
