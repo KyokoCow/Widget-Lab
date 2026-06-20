@@ -58,10 +58,7 @@ String? safeText(
       String? fallback,
     }) {
   if (value is String) {
-    final text = value.trim();
-    if (text.isNotEmpty) {
-      return text;
-    }
+    return value.isEmpty ? fallback : value;
   }
   return fallback;
 }
