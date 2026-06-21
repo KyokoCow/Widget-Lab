@@ -486,7 +486,7 @@ final textFieldDefinition = WidgetDefinition(
       uiType: TouchUiType.text,
       listCategory: TouchListCategory.placeholderLabel,
       label: 'Hint Text',
-      initialValue: '',
+      initialValue: null,
     ),
 
     TouchParam(
@@ -495,7 +495,7 @@ final textFieldDefinition = WidgetDefinition(
       uiType: TouchUiType.text,
       listCategory: TouchListCategory.placeholderLabel,
       label: 'Label Text',
-      initialValue: '',
+      initialValue: null,
     ),
 
     TouchParam(
@@ -504,7 +504,7 @@ final textFieldDefinition = WidgetDefinition(
       uiType: TouchUiType.text,
       listCategory: TouchListCategory.placeholderLabel,
       label: 'Helper Text',
-      initialValue: '',
+      initialValue: null,
     ),
 
     TouchParam(
@@ -513,7 +513,7 @@ final textFieldDefinition = WidgetDefinition(
       uiType: TouchUiType.text,
       listCategory: TouchListCategory.placeholderLabel,
       label: 'Error Text',
-      initialValue: '',
+      initialValue: null,
     ),
 
     TouchParam(
@@ -522,7 +522,7 @@ final textFieldDefinition = WidgetDefinition(
       uiType: TouchUiType.text,
       listCategory: TouchListCategory.placeholderLabel,
       label: 'Prefix Text',
-      initialValue: '',
+      initialValue: null,
     ),
 
     TouchParam(
@@ -531,7 +531,7 @@ final textFieldDefinition = WidgetDefinition(
       uiType: TouchUiType.text,
       listCategory: TouchListCategory.placeholderLabel,
       label: 'Suffix Text',
-      initialValue: '',
+      initialValue: null,
     ),
 
     TouchParam(
@@ -540,7 +540,7 @@ final textFieldDefinition = WidgetDefinition(
       uiType: TouchUiType.text,
       listCategory: TouchListCategory.placeholderLabel,
       label: 'Counter Text',
-      initialValue: '',
+      initialValue: null,
     ),
 
     TouchParam(
@@ -1087,14 +1087,15 @@ final textFieldDefinition = WidgetDefinition(
               // InputDecoration
               // ------------------
 
+
               decoration: InputDecoration(
-                hintText: safeText(values['hintText']),
-                labelText: safeText(values['labelText']),
-                helperText: safeText(values['helperText']),
-                errorText: safeText(values['errorText']),
-                prefixText: safeText(values['prefixText']),
-                suffixText: safeText(values['suffixText']),
-                counterText: safeText(values['counterText']),
+                hintText: values['hintText'],
+                labelText: values['labelText'],
+                helperText: values['helperText'],
+                errorText: values['errorText'],
+                prefixText: values['prefixText'],
+                suffixText: values['suffixText'],
+                counterText: values['counterText'],
                 icon: buildIcon(values['icon']),
                 prefixIcon: buildIcon(values['prefixIcon']),
                 suffixIcon: buildIcon(values['suffixIcon']),

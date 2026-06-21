@@ -396,7 +396,10 @@ class ParamBuilder {
               isDense: true,
             ),
             onChanged: (text) {
-              onChanged(param.key, text);
+              onChanged(
+                param.key,
+                text.isEmpty ? null : text,
+              );
             },
           ),
         ],

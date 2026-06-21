@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../models/preview_state.dart';
 import '../models/widget_definition.dart';
+import '../ui/touch_ui_type.dart';
 import '../widgets/param_renderer.dart';
 import '../widgets/text_field_param_renderer.dart';
 
@@ -30,7 +31,9 @@ class _TouchPageState
 
     values = {
       for (final p in widget.definition.touchParams)
-        p.key: (p.initialValue ?? p.min ?? 0) is num
+        p.key: p.uiType == TouchUiType.text
+            ? p.initialValue
+            : (p.initialValue ?? p.min ?? 0) is num
             ? (p.initialValue ?? p.min ?? 0).toDouble()
             : p.initialValue,
     };

@@ -64,11 +64,11 @@ class _LearnPageState extends State<LearnPage>
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
+          children: [
             Text("Learn"),
             Text(
-              "v1.0 | 10 widgets",
-              style: TextStyle(fontSize: 12),
+              "v0.1.0 | ${widgetDefinitions.length} widgets",
+              style: const TextStyle(fontSize: 12),
             ),
           ],
         ),

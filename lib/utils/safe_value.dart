@@ -52,13 +52,3 @@ String safeString(
   }
   return fallback;
 }
-
-String? safeText(
-    dynamic value, {
-      String? fallback,
-    }) {
-  if (value is String) {
-    return value.isEmpty ? fallback : value;
-  }
-  return fallback;
-}
