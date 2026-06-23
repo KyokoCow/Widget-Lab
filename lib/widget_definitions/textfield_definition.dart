@@ -664,6 +664,15 @@ final textFieldDefinition = WidgetDefinition(
     ),
 
     TouchParam(
+      key: 'useContentPadding',
+      category: TouchCategory.config,
+      uiType: TouchUiType.checkbox,
+      listCategory: TouchListCategory.field,
+      label: 'Use Content Padding',
+      initialValue: true,
+    ),
+
+    TouchParam(
       key: 'contentPaddingHorizontal',
       category: TouchCategory.config,
       uiType: TouchUiType.slider,
@@ -672,7 +681,8 @@ final textFieldDefinition = WidgetDefinition(
       initialValue: 12,
       min: 0,
       max: 32,
-      enabled: (values) => !(values['isDense'] ?? false),
+      enabled: (values) =>
+      values['useContentPadding'] ?? true,
     ),
 
     TouchParam(
@@ -684,7 +694,8 @@ final textFieldDefinition = WidgetDefinition(
       initialValue: 12,
       min: 0,
       max: 32,
-      enabled: (values) => !(values['isDense'] ?? false),
+      enabled: (values) =>
+      values['useContentPadding'] ?? true,
     ),
 
     TouchParam(
@@ -1105,14 +1116,17 @@ final textFieldDefinition = WidgetDefinition(
                 isDense: values['isDense'] ?? false,
                 isCollapsed: values['isCollapsed'] ?? false,
                 alignLabelWithHint: values['alignLabelWithHint'] ?? false,
-                contentPadding: isDense
-                    ? null
-                    : EdgeInsets.symmetric(
-                        horizontal: (values['contentPaddingHorizontal'] ?? 12.0)
-                            .toDouble(),
-                        vertical: (values['contentPaddingVertical'] ?? 12.0)
-                            .toDouble(),
-                      ),
+                contentPadding:
+                values['useContentPadding'] ?? true
+                    ? EdgeInsets.symmetric(
+                  horizontal:
+                  (values['contentPaddingHorizontal'] ?? 12.0)
+                      .toDouble(),
+                  vertical:
+                  (values['contentPaddingVertical'] ?? 12.0)
+                      .toDouble(),
+                )
+                    : null,
                 floatingLabelBehavior: switch (
                     values['floatingLabelBehavior']) {
                   'always' => FloatingLabelBehavior.always,
