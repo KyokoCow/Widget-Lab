@@ -230,8 +230,11 @@ class ParamBuilder {
         break;
 
       case SelectionMode.dropdown:
+        final safeValue =
+        items.contains(value) ? value : null;
+
         content = DropdownButtonFormField<String>(
-          value: value,
+          value: safeValue,
           items: items
               .map(
                 (e) => DropdownMenuItem(
