@@ -267,7 +267,7 @@ final stackDefinition = WidgetDefinition(
         key: 'usePositioned',
         uiType: TouchUiType.checkbox,
         category: TouchCategory.config,
-        label: 'Use Positioned',
+        label: 'Use Positioned(Container B)',
         initialValue: false,
       ),
       TouchParam(
@@ -355,13 +355,12 @@ final stackDefinition = WidgetDefinition(
       ),
       TouchParam(
         key: 'fit',
-        uiType: TouchUiType.enumDropdown,
+        uiType: TouchUiType.segmented,
         label: 'Fit',
         initialValue: 'loose',
         items: [
           'loose',
           'expand',
-          'passthrough',
         ],
       ),
     ],
@@ -373,6 +372,14 @@ final stackDefinition = WidgetDefinition(
         parameterKind: ParameterKind.named,
         nullable: false,
         description: 'Positionedを使用しない子Widgetの配置基準',
+      ),
+      WidgetParam(
+        name: 'textDirection',
+        type: 'TextDirection?',
+        typeKind: TypeKind.enumType,
+        parameterKind: ParameterKind.named,
+        nullable: true,
+        description: 'start/endの解釈に使用する文字方向',
       ),
       WidgetParam(
         name: 'fit',
@@ -397,13 +404,5 @@ final stackDefinition = WidgetDefinition(
         parameterKind: ParameterKind.named,
         nullable: false,
         description: '重ねて配置する子Widgetのリスト',
-      ),
-      WidgetParam(
-        name: 'textDirection',
-        type: 'TextDirection?',
-        typeKind: TypeKind.enumType,
-        parameterKind: ParameterKind.named,
-        nullable: true,
-        description: 'start/endの解釈に使用する文字方向',
       ),
     ]);
