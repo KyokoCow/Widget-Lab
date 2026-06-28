@@ -1,4 +1,5 @@
 
+import 'package:flutter_ui_catalog/widget_definitions/padding_definition.dart';
 import 'package:flutter_ui_catalog/widget_definitions/row_definition.dart';
 import 'package:flutter_ui_catalog/widget_definitions/scaffold_definition.dart';
 import 'package:flutter_ui_catalog/widget_definitions/spacer_definition.dart';
@@ -26,6 +27,7 @@ final widgetDefinitions = [
   dividerDefinition,
   expandedDefinition,
   flexibleDefinition,
+  paddingDefinition,
   rowDefinition,
   scaffoldDefinition,
   spacerDefinition,
