@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/widget_definition.dart';
 import '../models/widget_param.dart';
 import '../models/widget_touchparam.dart';
+import '../touch/touch_category.dart';
 import '../ui/touch_ui_type.dart';
 
 final paddingDefinition = WidgetDefinition(
@@ -38,7 +39,36 @@ final paddingDefinition = WidgetDefinition(
       final right = (values['right'] ?? 16.0).toDouble();
       final bottom = (values['bottom'] ?? 16.0).toDouble();
 
-      final EdgeInsets padding = switch (paddingType) {
+      final useDirectional = values['useDirectional'] ?? false;
+      final textDirection = values['textDirection'] ?? 'ltr';
+
+      final EdgeInsetsGeometry padding = useDirectional
+          ? switch (paddingType) {
+        'all' => EdgeInsetsDirectional.all(all),
+
+        'symmetric' => EdgeInsetsDirectional.symmetric(
+          horizontal: horizontal,
+          vertical: vertical,
+        ),
+
+        'only' => switch (onlyDirection) {
+          'start' => EdgeInsetsDirectional.only(start: onlyValue),
+          'top' => EdgeInsetsDirectional.only(top: onlyValue),
+          'end' => EdgeInsetsDirectional.only(end: onlyValue),
+          'bottom' => EdgeInsetsDirectional.only(bottom: onlyValue),
+          _ => EdgeInsetsDirectional.only(start: onlyValue),
+        },
+
+        'fromLTRB' => EdgeInsetsDirectional.fromSTEB(
+          left,
+          top,
+          right,
+          bottom,
+        ),
+
+        _ => EdgeInsetsDirectional.all(all),
+      }
+          : switch (paddingType) {
         'all' => EdgeInsets.all(all),
 
         'symmetric' => EdgeInsets.symmetric(
@@ -72,16 +102,21 @@ final paddingDefinition = WidgetDefinition(
             const SizedBox(height: 8),
             Expanded(
               child: Center(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                  ),
-                  child: Padding(
-                    padding: padding,
-                    child: Container(
-                      width: 60,
-                      height: 60,
-                      color: Colors.blue,
+                child: Directionality(
+                  textDirection: textDirection == 'rtl'
+                      ? TextDirection.rtl
+                      : TextDirection.ltr,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                    ),
+                    child: Padding(
+                      padding: padding,
+                      child: Container(
+                        width: 60,
+                        height: 60,
+                        color: Colors.blue,
+                      ),
                     ),
                   ),
                 ),
@@ -107,16 +142,49 @@ final paddingDefinition = WidgetDefinition(
     ),
 
     TouchParam(
+      key: 'useDirectional',
+      uiType: TouchUiType.checkbox,
+      category: TouchCategory.config,
+      label: 'Use EdgeInsetsDirectional',
+      initialValue: false,
+    ),
+
+    TouchParam(
+      key: 'textDirection',
+      uiType: TouchUiType.segmented,
+      label: 'Text Direction',
+      initialValue: 'ltr',
+      enabled: (values) => values['useDirectional'] ?? false,
+      items: [
+        'ltr',
+        'rtl',
+      ],
+    ),
+
+    TouchParam(
       key: 'onlyDirection',
       uiType: TouchUiType.enumDropdown,
       label: 'Only Direction',
       initialValue: 'left',
-      items: [
-        'left',
-        'top',
-        'right',
-        'bottom',
-      ],
+      itemsProvider: (values) {
+        final directional = values['useDirectional'] ?? false;
+
+        if (directional) {
+          return [
+            'start',
+            'top',
+            'end',
+            'bottom',
+          ];
+        }
+
+        return [
+          'left',
+          'top',
+          'right',
+          'bottom',
+        ];
+      },
       enabled: (values) => values['paddingType'] == 'only',
     ),
 
@@ -155,7 +223,17 @@ final paddingDefinition = WidgetDefinition(
     TouchParam(
       key: 'onlyValue',
       uiType: TouchUiType.slider,
-      label: 'Only Value',
+      labelProvider: (values) {
+        return switch (values['onlyDirection']) {
+          'left' => 'Left',
+          'top' => 'Top',
+          'right' => 'Right',
+          'bottom' => 'Bottom',
+          'start' => 'Start',
+          'end' => 'End',
+          _ => 'Only Value',
+        };
+      },
       initialValue: 16.0,
       min: 0,
       max: 50,

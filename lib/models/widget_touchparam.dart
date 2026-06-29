@@ -23,6 +23,7 @@ class TouchParam {
   final TouchEnabled? enabled;
   final TouchNumProvider? minProvider;
   final TouchNumProvider? maxProvider;
+  final String Function(Map<String, dynamic> values)? labelProvider;
 
   final List<String> Function(
       Map<String, dynamic> values,
@@ -45,5 +46,6 @@ class TouchParam {
     this.minProvider,
     this.maxProvider,
     this.itemsProvider,
+    this.labelProvider,
   });
 }

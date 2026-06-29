@@ -108,25 +108,26 @@ class ParamBuilder {
       }
     }
 
-    String labelText;
-    dynamic onChangedValue;
+
+    final displayLabel =
+        param.labelProvider?.call(values) ?? param.label ?? param.key;
+
+    late final String labelText;
+    late final dynamic Function(double) onChangedValue;
 
     switch (mode) {
       case SliderMode.integer:
-        labelText =
-        '${param.label ?? param.key}: ${value.toInt()}';
+        labelText = '$displayLabel: ${value.toInt()}';
         onChangedValue = (double v) => v.round();
         break;
 
       case SliderMode.doubleValue:
-        labelText =
-        '${param.label ?? param.key}: ${value.toStringAsFixed(2)}';
+        labelText = '$displayLabel: ${value.toStringAsFixed(2)}';
         onChangedValue = (double v) => v;
         break;
 
       case SliderMode.discrete:
-        labelText =
-        '${param.label ?? param.key}: ${value.toInt()}';
+        labelText = '$displayLabel: ${value.toInt()}';
         onChangedValue = (double v) => v.round();
         break;
     }
